@@ -9,11 +9,12 @@ const NavBar = () => {
         <NavBtn text="About" />
         <NavBtn text="Prices" />
       </div>
+
       <img src={Logo} alt="" className="h-14 w-14 justify-self-start" />
 
       <div className="flex gap-2 basis-60 justify-end">
-        <NavBtn text="Blog" />
-        <NavBtn text="Contact" />
+        <NavBtn text="Blog" right={true} />
+        <NavBtn text="Contact" right={true} />
       </div>
     </div>
   );

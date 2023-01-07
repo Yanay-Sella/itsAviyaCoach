@@ -3,10 +3,7 @@ import PlanCard from "./components/PlanCard";
 
 const Plans = () => {
   return (
-    <div
-      style={{ height: "500px" }}
-      className="flex flex-col self-stretch bg-secondary items-center gap-20"
-    >
+    <div className="flex flex-col self-stretch bg-secondary items-center gap-20 sectiony">
       <h1 className="text-4xl">Choose your plan then</h1>
       <div className="flex gap-40 items-center">
         <PlanCard

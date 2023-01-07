@@ -16,6 +16,11 @@ code {
     monospace;
 }
 
+.sectiony {
+  width: 1200px !important;
+  height: 500px !important;
+}
+
 .flip-card {
   background-color: transparent;
   width: 200px;
