@@ -1,9 +1,11 @@
 import React from "react";
 
-const NavBtn = ({ text }) => {
+const NavBtn = ({ text, to, size }) => {
   return (
-    <div className="flex align-center p-2 h-10 basis-40 rounded-full text-center hover:underline text-lg">
-      <p>{`${text}`}</p>
+    <div
+      className={`flex justify-center align-center basis-40 rounded-full text-center hover:underline text-${size}`}
+    >
+      <a href={`${to}`} className="text-center">{`${text}`}</a>
     </div>
   );
 };
