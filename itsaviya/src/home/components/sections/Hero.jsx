@@ -4,13 +4,17 @@ import "../../../index.css";
 const Hero = () => {
   return (
     <section
-      className="flex items-center justify-between bg-primary sectiony"
+      className="flex md:flex-row flex-col gap-20 self-stretch content-center items-center justify-between bg-primary sectiony"
       id="me"
     >
-      <img src={heroImage} alt="aviyaImage" className="h-96 w-96" />
-      <div className="flex flex-col gap-10">
-        <h1 className="text-7xl">Aviya Shechtman</h1>
-        <p className="text-2xl">Workouts made fun</p>
+      <img
+        src={heroImage}
+        alt="aviyaImage"
+        className="md:h-96 md:w-96 h-80 w-80 shrink"
+      />
+      <div className="flex flex-col gap-10 shrink md:items-end items-center">
+        <h1 className="md:text-7xl text-5xl text-center">Aviya Shechtman</h1>
+        <p className="md:text-3xl text-2xl text-center">Workouts made fun</p>
       </div>
     </section>
   );

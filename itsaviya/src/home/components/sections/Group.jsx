@@ -1,15 +1,21 @@
 import React from "react";
-import aboutImage from "../../images/1x.jpg";
+import personalImg from "../../images/4x.jpg";
 
-const About = () => {
+const Group = () => {
   return (
     <section
       className="flex md:flex-row flex-col gap-20 self-stretch content-center items-center justify-between bg-primary sectiony"
-      id="about"
+      id="personal"
     >
-      <div className="flex flex-col gap-10 md:items-start items-center">
-        <h1 className="text-5xl">My story</h1>
-        <p className="text-xl max-w-3xl">
+      <img
+        src={personalImg}
+        alt="aviyaImage"
+        className="md:h-96 md:w-96 h-80 w-80 shrink"
+      />
+
+      <div className="flex flex-col gap-10">
+        <h1 className="text-5xl">Group Training</h1>
+        <p className="text-xl w-96">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsum beatae
           iusto cum iste eaque enim quidem, a quos rerum ratione recusandae
           repellat maxime temporibus! Sed id quasi maiores! Dolore provident
@@ -17,13 +23,8 @@ const About = () => {
           voluptatibus.
         </p>
       </div>
-      <img
-        src={aboutImage}
-        alt="aviyaImage"
-        className="md:h-96 md:w-96 h-80 w-80 shrink"
-      />
     </section>
   );
 };
 
-export default About;
+export default Group;

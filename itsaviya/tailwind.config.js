@@ -13,3 +13,8 @@ module.exports = {
   },
   plugins: [],
 };
+
+/**         primary: "#f4f1bb ",
+        secondary: "#AF6E4D",
+        thirdy: "#deddcc",
+        fourthy: "#095236", */

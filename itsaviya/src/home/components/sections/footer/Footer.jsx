@@ -12,7 +12,7 @@ import {
 
 const Footer = () => {
   return (
-    <div className="flex justify-around items-center self-stretch py-14">
+    <div className="flex justify-between items-center self-stretch py-14 md:px-0 px-5">
       <section className="flex flex-col items-center">
         <img src={logo} alt="logo" />
         <div className="flex gap-4 text-xl">
