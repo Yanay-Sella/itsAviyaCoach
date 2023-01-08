@@ -1,12 +1,14 @@
 import React from "react";
 import "../../../../../index.css";
+
+import BtnAvi from "../../../../../general/BtnAvi";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faDumbbell,
   faMoneyBill1,
   faHourglassHalf,
 } from "@fortawesome/free-solid-svg-icons";
-import BtnAvi from "../../../../../general/BtnAvi";
 
 const PlanCard = ({ header, youGet, youGive, time, frontText }) => {
   return (
@@ -19,26 +21,20 @@ const PlanCard = ({ header, youGet, youGive, time, frontText }) => {
           <div className="flex flex-col gap-6">
             <h1 className="text-2xl w-full">{header}</h1>
             <div className="flex flex-col items-start gap-3 self-center">
-              <div className="flex items-center self-stretch gap-1 text-lg">
-                <div>
-                  <FontAwesomeIcon icon={faDumbbell} />
-                </div>
+              <div className="flex items-center self-stretch gap-2 text-lg">
+                <FontAwesomeIcon icon={faDumbbell} className="w-7" />
                 <p>{youGet}</p>
               </div>
 
-              <div className="flex items-center self-stretch gap-1 text-lg">
-                <div>
-                  <FontAwesomeIcon icon={faMoneyBill1} />
-                </div>
+              <div className="flex items-center self-stretch gap-2 text-lg">
+                <FontAwesomeIcon icon={faMoneyBill1} className="w-7" />
                 <div className="">
                   <p>{youGive}</p>
                 </div>
               </div>
 
-              <div className="flex items-center self-stretch gap-1 text-lg">
-                <div>
-                  <FontAwesomeIcon icon={faHourglassHalf} />
-                </div>
+              <div className="flex items-center self-stretch gap-2 text-lg">
+                <FontAwesomeIcon icon={faHourglassHalf} className="w-7" />
                 <div className="">
                   <p>{time}</p>
                 </div>

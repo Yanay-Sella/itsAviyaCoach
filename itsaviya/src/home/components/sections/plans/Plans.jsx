@@ -3,9 +3,13 @@ import PlanCard from "./components/PlanCard";
 
 const Plans = () => {
   return (
-    <div className="flex flex-col self-stretch bg-secondary items-center gap-20 sectiony">
+    <section
+      className="flex flex-col self-stretch bg-secondary items-center gap-20 sectiony"
+      id="plans"
+      style={{ width: "100vw" }}
+    >
       <h1 className="text-4xl">Choose your plan then</h1>
-      <div className="flex gap-40 items-center">
+      <div className="flex gap-52 items-center justify-between">
         <PlanCard
           frontText="SINGLE WORKOUT"
           header="single workout"
@@ -16,7 +20,7 @@ const Plans = () => {
 
         <PlanCard
           frontText="TRIPLE WORKOUT"
-          header="Premuim plan"
+          header="Triple workout"
           youGet={"3 Workouts"}
           youGive="200$"
           time="single use"
@@ -30,7 +34,7 @@ const Plans = () => {
           time="one month"
         />
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -3,7 +3,10 @@ import aboutImage from "../../images/1x.jpg";
 
 const About = () => {
   return (
-    <div className="flex items-center justify-around bg-primary sectiony gap-28">
+    <section
+      className="flex items-center justify-between bg-primary sectiony"
+      id="about"
+    >
       <div className="flex flex-col gap-10">
         <h1 className="text-5xl">My story</h1>
         <p className="text-xl w-96">
@@ -15,7 +18,7 @@ const About = () => {
         </p>
       </div>
       <img src={aboutImage} alt="aviyaImage" className="h-96 w-96" />
-    </div>
+    </section>
   );
 };
 
