@@ -1,15 +1,19 @@
 import React from "react";
 import PlanCard from "./components/PlanCard";
 
-const Plans = () => {
+const PersonalPlans = () => {
   return (
     <section
-      className="flex flex-col self-stretch bg-secondary items-center gap-20 sectiony"
-      id="plans"
-      style={{ width: "100vw" }}
+      className="flex flex-col self-center items-center gap-14 sectiony py-8 justify-center "
+      id="personal-plans"
+      // style={{ width: "100vw" }}
     >
-      <h1 className="text-4xl">Choose your plan then</h1>
-      <div className="flex gap-52 items-center justify-between">
+      <div className="flex flex-col items-center gap-4">
+        <h1 className="text-4xl">Private workouts</h1>
+        {/* <h1 className="text-2xl">Personal attention</h1>
+        <h1 className="text-lg">Focus on your own goals</h1> */}
+      </div>
+      <div className="flex gap-10 md:gap-32 items-center sm:flex-row flex-col self-stretch">
         <PlanCard
           frontText="SINGLE WORKOUT"
           header="single workout"
@@ -38,4 +42,4 @@ const Plans = () => {
   );
 };
 
-export default Plans;
+export default PersonalPlans;
