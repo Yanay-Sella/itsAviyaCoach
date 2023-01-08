@@ -82,7 +82,7 @@ const Info = ({ name, text, imageSrc, header, leftImg }) => {
           {header}
         </h1>
         <p
-          className={`md:text-xl text-lg max-w-3xl ${
+          className={`md:text-xl text-lg max-w-3xl md:text-left ${
             leftImg && `md:text-right`
           } text-center`}
         >
