@@ -10,7 +10,7 @@ import aboutImg from "../../general/images/1x.jpg";
 import personalImg from "../../general/images/4x.jpg";
 import groupImg from "../../general/images/4x.jpg";
 
-import InfoSection from "./components/sections/InfoSection.jsx"; //a section with an image and text next to it
+import InfoSection from "../../general/InfoSection.jsx"; //a section with an image and text next to it
 import Footer from "./components/sections/footer/Footer";
 const Home = () => {
   const smapleText =

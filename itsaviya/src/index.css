@@ -13,7 +13,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* color: #434337; */
+  background-color: #f6f6f4; /* this is the primary color of the tailwind*/
+  /* color: #434337; this is the text color, no need to apply in the css*/
 }
 
 code {

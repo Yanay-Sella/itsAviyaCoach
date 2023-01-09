@@ -10,7 +10,9 @@ const NavBar = () => {
         <NavBtn text="Plans" to="#plans" size="lg" />
       </div>
 
-      <img src={Logo} alt="" className="h-28 w-28 justify-self-start" />
+      <a href="/home">
+        <img src={Logo} alt="" className="h-28 w-28 justify-self-start" />
+      </a>
 
       <div className="flex flex-wrap md:gap-14 gap-5 justify-end">
         <NavBtn text="Blog" to="/blog" size="lg" />
