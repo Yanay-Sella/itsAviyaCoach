@@ -2,6 +2,7 @@ import React from "react";
 
 import NavBar from "../../general/navbar/NavBar";
 import InfoSection from "../../general/InfoSection";
+import Footer from "../../general/footer/Footer";
 
 import blogImg from "../../general/images/1x.jpg";
 
@@ -19,6 +20,7 @@ const Blog = () => {
           text={smapleText}
           imageSrc={blogImg}
         />
+        <Footer />
       </div>
     </main>
   );

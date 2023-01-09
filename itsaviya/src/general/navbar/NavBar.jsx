@@ -1,6 +1,6 @@
 import React from "react";
 import NavBtn from "./NavBtn.jsx";
-import Logo from "../images/aviyaLogo.png";
+import Logo from "../images/aviyaLogo2Small.png";
 
 const NavBar = () => {
   return (

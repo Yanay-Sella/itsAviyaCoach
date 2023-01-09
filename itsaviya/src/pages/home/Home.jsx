@@ -11,7 +11,7 @@ import personalImg from "../../general/images/4x.jpg";
 import groupImg from "../../general/images/4x.jpg";
 
 import InfoSection from "../../general/InfoSection.jsx"; //a section with an image and text next to it
-import Footer from "./components/sections/footer/Footer";
+import Footer from "../../general/footer/Footer";
 const Home = () => {
   const smapleText =
     "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsum beatae iusto cum iste eaque enim quidem, a quos rerum ratione recusandae repellat maxime temporibus! Sed id quasi maiores! Dolore provident ipsam vitae ab nemo nihil delectus necessitatibus tempora ullam voluptatibus.";

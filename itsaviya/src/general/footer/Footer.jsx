@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../../../../../general/images/aviyaLogo.png";
+import logo from "../images/aviyaLogo2Small.png";
 import FootLink from "./FootLink";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,15 +13,21 @@ const Footer = () => {
   return (
     <div className="flex justify-between items-center self-stretch py-14 md:px-0 px-5">
       <section className="flex flex-col items-center">
-        <img src={logo} alt="logo" />
+        <img src={logo} alt="logo" className="h-28 w-28" />
         <div className="flex gap-4 text-xl">
-          <a href="https://www.tiktok.com/@aviyafit">
+          <a
+            href="https://www.tiktok.com/@aviyafit"
+            className="transition-all hover:scale-110"
+          >
             <FontAwesomeIcon icon={faTiktok} />
           </a>
-          <a href="https://www.instagram.com/itsaviyacoach/">
+          <a
+            href="https://www.instagram.com/itsaviyacoach/"
+            className="transition-all hover:scale-110"
+          >
             <FontAwesomeIcon icon={faInstagram} />
           </a>
-          <a href="#">
+          <a href="#" className="transition-all hover:scale-110">
             <FontAwesomeIcon icon={faFacebook} />
           </a>
         </div>
