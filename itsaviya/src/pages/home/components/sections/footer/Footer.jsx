@@ -1,6 +1,5 @@
 import React from "react";
-import NavBtn from "../../navbar/NavBtn";
-import logo from "../../../images/aviyaLogo.png";
+import logo from "../../../../../general/images/aviyaLogo.png";
 import FootLink from "./FootLink";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

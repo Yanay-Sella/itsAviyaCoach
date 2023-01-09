@@ -1,6 +1,6 @@
 import React from "react";
 import NavBtn from "./NavBtn.jsx";
-import Logo from "./../../images/aviyaLogo.png";
+import Logo from "../images/aviyaLogo.png";
 
 const NavBar = () => {
   return (
@@ -13,7 +13,7 @@ const NavBar = () => {
       <img src={Logo} alt="" className="h-28 w-28 justify-self-start" />
 
       <div className="flex flex-wrap md:gap-14 gap-5 justify-end">
-        <NavBtn text="Blog" to="#" size="lg" />
+        <NavBtn text="Blog" to="/blog" size="lg" />
         <NavBtn text="Contact" to="#" size="lg" />
       </div>
     </div>
