@@ -9,7 +9,7 @@ const PersonalPlans = () => {
       // style={{ width: "100vw" }}
     >
       <div className="flex flex-col items-center gap-4">
-        <h1 className="text-4xl">מה הסגנון שלך?</h1>
+        <h1 className="text-4xl">אז מה הכי מתאים לך?</h1>
         {/* <h1 className="text-2xl">Personal attention</h1>
         <h1 className="text-lg">Focus on your own goals</h1> */}
       </div>
