@@ -42,7 +42,7 @@ const PlanCard = ({ header, youGet, youGive, time, frontText }) => {
             </div>
           </div>
           <div className="justify-self-end mb-3">
-            <BtnAvi text="Get deal" />
+            <BtnAvi text="אני אקח את זה" />
           </div>
         </div>
       </div>

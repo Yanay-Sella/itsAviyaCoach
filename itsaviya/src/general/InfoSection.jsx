@@ -12,20 +12,23 @@ const InfoSection = ({ name, text, imageSrc, header, leftImg }) => {
         }`}
       >
         <h1
-          className={`md:text-5xl text-3xl md:text-left ${
-            leftImg && `md:text-right`
+          className={`md:text-5xl text-3xl md:text-left hebText text-bold header ${
+            leftImg && ` md:text-right`
           } text-center`}
         >
           {header}
         </h1>
-        <p
-          className={`md:text-xl text-lg max-w-3xl md:text-left ${
+
+        <div
+          className={`md:text-2xl text-lg md:text-left md:leading-8 hebText ${
             leftImg && `md:text-right`
           } text-center`}
+          style={{ maxWidth: "37rem" }}
         >
           {text}
-        </p>
+        </div>
       </div>
+
       <img
         src={imageSrc}
         alt="aviyaImage"

@@ -7,17 +7,18 @@ const Join = () => {
         <p className="text-lg mb-2"></p>
         <p
           className="md:text-6xl text-4xl text-center"
-          style={{ "max-width": "900px" }}
+          style={{ maxWidth: "900px" }}
         >
-          Book your session and face everyday physical and mental challenges
+          קשה לבחור? צרי קשר לייעוץ והתחילי להתמודד עם אתגרים פיזיים ומנטליים
+          בשגרה שלך
         </p>
         <p className="md:text-xl text-md text-center">
-          start your journey and become the best version of yourslef, with me
+          התחילי במסע יום-יומי, ביחד איתי
         </p>
       </div>
 
       <div className="flex items-center p-3 border-2 border-white rounded-full w-30 h-10 hover:cursor-pointer transition-all  hover:-translate-y-0.7 hover:scale-105">
-        <p>book now</p>
+        <p>שרייני לי אימון</p>
       </div>
     </div>
   );

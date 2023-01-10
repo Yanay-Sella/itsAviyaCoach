@@ -35,7 +35,7 @@ const GroupCard = ({ header, youGet, youGive, time, frontText }) => {
             </div>
           </div>
           <div className="justify-self-end mb-3">
-            <BtnAvi text="Get deal" />
+            <BtnAvi text="בא לנו את זה" />
           </div>
         </div>
       </div>

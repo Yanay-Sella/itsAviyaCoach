@@ -9,20 +9,20 @@ const GroupPlans = () => {
       style={{ width: "100vw" }}
     >
       <div className="flex flex-col items-center gap-4">
-        <h1 className="text-4xl">Group Workouts</h1>
+        <h1 className="text-4xl">תקבעו לעצמכן, עם החברות...</h1>
       </div>
       <div className="flex md:gap-60 gap-28 items-center md:flex-row flex-col">
         <GroupCard
-          frontText="DUO WORKOUT"
-          header="duo workout"
-          youGet={"2 people"}
-          youGive="100$"
+          frontText="אימון זוגי"
+          header="אימון זוגי"
+          youGet={"2 מתאמנות"}
+          youGive="200₪"
         />
         <GroupCard
-          frontText="LARGE GROUPS"
-          header="large groups"
-          youGet={"3-5 people"}
-          youGive="200$"
+          frontText="קבוצות גדולות"
+          header="קבוצות גדולות"
+          youGet={"3-5 מתאמנות"}
+          youGive="300₪"
         />
       </div>
     </section>

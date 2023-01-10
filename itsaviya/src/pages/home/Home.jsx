@@ -13,32 +13,31 @@ import groupImg from "../../general/images/4x.jpg";
 import InfoSection from "../../general/InfoSection.jsx"; //a section with an image and text next to it
 import Footer from "../../general/footer/Footer";
 const Home = () => {
-  const smapleText =
-    "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsum beatae iusto cum iste eaque enim quidem, a quos rerum ratione recusandae repellat maxime temporibus! Sed id quasi maiores! Dolore provident ipsam vitae ab nemo nihil delectus necessitatibus tempora ullam voluptatibus.";
-
   return (
     <main className="flex flex-col items-center bg-primary text-thirdy">
       <NavBar />
       <div className="flex flex-col mt-28 max-w-6xl md:gap-0 gap-20">
         <Hero />
+
         <InfoSection
-          header="My Story"
+          header="הסיפור שלי"
           name="about"
-          text={smapleText}
+          text={aboutP}
           imageSrc={aboutImg}
         />
         <Sale />
+
         <InfoSection
-          header="Personal Training"
+          header="אימונים אישיים"
           name="personal"
-          text={smapleText}
+          text={personalP}
           imageSrc={personalImg}
         />
         <PersonalPlans />
         <InfoSection
-          header="Group Training"
+          header="אימונים בקבוצות"
           name="group"
-          text={smapleText}
+          text={groupP}
           imageSrc={groupImg}
           leftImg={true}
         />
@@ -52,3 +51,33 @@ const Home = () => {
 };
 
 export default Home;
+
+const aboutP = (
+  <p>
+    היי לכן! שמי אביה, מתעמלת קרקע לשעבר, מאמנת כושר מוסמכת בהווה. מומחית אימוני
+    משקולות, משקל גוף וגמישות. מאמנת בסטודיו וגינות כושר באוויר הפתוח. כושר
+    גופני זורם אצלי בדם והוא התשוקה שלי! המקצוע לגמריי בחר בי ואני מתרגשת כל יום
+    מחדש שיש בי את הכוח לגרום לשינוי. התהליך שבנות עוברות איתי ממלא אותי בסיפוק
+    ואושר ואני יותר מאשמח שתהיי חלק מהמשפחה!
+  </p>
+);
+
+const personalP = (
+  <p>
+    היי לכן! שמי אביה, מתעמלת קרקע לשעבר, מאמנת כושר מוסמכת בהווה. מומחית אימוני
+    משקולות, משקל גוף וגמישות. מאמנת בסטודיו וגינות כושר באוויר הפתוח. כושר
+    גופני זורם אצלי בדם והוא התשוקה שלי! המקצוע לגמריי בחר בי ואני מתרגשת כל יום
+    מחדש שיש בי את הכוח לגרום לשינוי. התהליך שבנות עוברות איתי ממלא אותי בסיפוק
+    ואושר ואני יותר מאשמח שתהיי חלק מהמשפחה!
+  </p>
+);
+
+const groupP = (
+  <p>
+    היי לכן! שמי אביה, מתעמלת קרקע לשעבר, מאמנת כושר מוסמכת בהווה. מומחית אימוני
+    משקולות, משקל גוף וגמישות. מאמנת בסטודיו וגינות כושר באוויר הפתוח. כושר
+    גופני זורם אצלי בדם והוא התשוקה שלי! המקצוע לגמריי בחר בי ואני מתרגשת כל יום
+    מחדש שיש בי את הכוח לגרום לשינוי. התהליך שבנות עוברות איתי ממלא אותי בסיפוק
+    ואושר ואני יותר מאשמח שתהיי חלק מהמשפחה!
+  </p>
+);

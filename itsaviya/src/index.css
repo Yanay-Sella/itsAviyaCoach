@@ -15,6 +15,28 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #f6f6f4; /* this is the primary color of the tailwind*/
   /* color: #434337; this is the text color, no need to apply in the css*/
+  font-family: "Assistant", sans-serif;
+  font-weight: 500;
+}
+
+p {
+  direction: rtl;
+}
+
+h1 {
+  direction: rtl;
+}
+
+.hebText {
+  direction: rtl;
+}
+
+.header {
+  font-weight: 700;
+}
+
+.header2 {
+  font-weight: 600;
 }
 
 code {
@@ -23,8 +45,11 @@ code {
 }
 
 .sectiony {
-  /* width: 1200px; */
   min-height: 500px;
+}
+
+.post-prev {
+  min-height: 400px;
 }
 
 .flip-card {
