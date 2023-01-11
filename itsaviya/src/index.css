@@ -119,3 +119,19 @@ code {
 .flip-card-back2 {
   transform: rotateX(180deg);
 }
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  display: block;
+}
+
+.dropdown:hover .dropdown-content {
+  /* display: block; */
+}

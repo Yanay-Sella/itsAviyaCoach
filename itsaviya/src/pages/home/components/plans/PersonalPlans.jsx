@@ -25,7 +25,7 @@ const PersonalPlans = () => {
         <PlanCard
           frontText="שלושה אימונים"
           header="שלושה אימונים"
-          youGet={"3 Workouts"}
+          youGet={"3 אימונים"}
           youGive="300₪"
           time="חד פעמי"
         />
