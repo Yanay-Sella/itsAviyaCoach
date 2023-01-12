@@ -10,7 +10,9 @@ import {
   faHourglassHalf,
 } from "@fortawesome/free-solid-svg-icons";
 
-const PlanCard = ({ header, youGet, youGive, time, frontText }) => {
+import { Link } from "react-router-dom";
+
+const PlanCard = ({ header, youGet, youGive, time, frontText, link }) => {
   return (
     <div className="flip-card shrink">
       <div className="flip-card-inner">
@@ -38,7 +40,9 @@ const PlanCard = ({ header, youGet, youGive, time, frontText }) => {
             </div>
           </div>
           <div className="justify-self-end mb-3">
-            <BtnAvi text="אני אקח את זה" />
+            <a href={`${link}`} target="_blank">
+              <BtnAvi text="אני אקח את זה" />
+            </a>
           </div>
         </div>
       </div>

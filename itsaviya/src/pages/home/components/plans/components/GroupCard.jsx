@@ -10,7 +10,7 @@ import {
   faHourglassHalf,
 } from "@fortawesome/free-solid-svg-icons";
 
-const GroupCard = ({ header, youGet, youGive, time, frontText }) => {
+const GroupCard = ({ header, youGet, youGive, time, frontText, link }) => {
   return (
     <div className="flip-card2">
       <div className="flip-card-inner2">
@@ -33,7 +33,9 @@ const GroupCard = ({ header, youGet, youGive, time, frontText }) => {
             </div>
           </div>
           <div className="justify-self-end mb-3">
-            <BtnAvi text="בא לנו את זה" />
+            <a href={`${link}`} target="_blank">
+              <BtnAvi text="בא לנו את זה" />
+            </a>
           </div>
         </div>
       </div>

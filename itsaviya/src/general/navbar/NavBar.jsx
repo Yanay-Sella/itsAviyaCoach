@@ -34,7 +34,12 @@ const NavBar = () => {
 
       <div className="flex flex-wrap md:gap-14 gap-5 justify-end">
         <NavBtn text="בלוג" to="/blog" size="lg" />
-        <NavBtn text="צרי קשר" to="#" size="lg" />
+        <NavBtn
+          text="צרי קשר"
+          to="https://api.whatsapp.com/message/DUMPMY75L6YRC1?autoload=1&app_absent=0"
+          size="lg"
+          newTab={true}
+        />
       </div>
     </div>
   );

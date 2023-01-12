@@ -2,7 +2,7 @@ import React from "react";
 import Fade from "@mui/material/Fade";
 import { Button } from "@mui/material";
 
-const NavBtn = ({ text, to, size, dropdown, dropdownArr }) => {
+const NavBtn = ({ text, to, size, dropdown, dropdownArr, newTab }) => {
   const [checked, setChecked] = React.useState(false);
 
   return (
@@ -15,7 +15,11 @@ const NavBtn = ({ text, to, size, dropdown, dropdownArr }) => {
         setChecked(false);
       }}
     >
-      <a href={`${to}`} className="text-center">{`${text}`}</a>
+      <a
+        href={`${to}`}
+        target={`${newTab ? "_blank" : ""}`}
+        className="text-center"
+      >{`${text}`}</a>
       {dropdown && (
         <Fade in={checked}>
           <div className="dropdown-content bg-secondary rounded-md">
