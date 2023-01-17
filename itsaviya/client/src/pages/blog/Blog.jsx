@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import NavBar from "../../general/navbar/NavBar";
 import InfoSection from "../../general/InfoSection";
@@ -9,6 +9,8 @@ import blogImg from "../../general/images/1x.jpg";
 import samplePostImg from "../../general/images/3x.jpg";
 
 const Blog = () => {
+  const [blogArr, setBlogArr] = useState([]);
+  const url = "http://localhost:3001/api/blog";
   const blogP = (
     <p>
       היי לכן! שמי אביה, מתעמלת קרקע לשעבר, מאמנת כושר מוסמכת בהווה. מומחית
@@ -19,76 +21,22 @@ const Blog = () => {
     </p>
   );
 
-  const dummyBlog = {
-    engName: "how-to-start-working-out",
-    name: "איך להתחיל להתאמן?",
-    intro:
-      "איך לאכול בריא פירוט איך לאכול בריא פירוט איך לאכול בריא פירוט איך לאכול בריא פירוט איך לאכול בריא פירוט איך לאכול בריא פירוט איך לאכול בריא פירוט איך לאכול בריא פירוט איך לאכול בריא פירוט איך לאכול בריא פירוט איך לאכול בריא פירוט איך לאכול בריא פירוט ",
-    content: [
-      {
-        header: "קודם כל תתחילו להתאמן",
-        text: "היי לכן! שמי אביה, מתעמלת קרקע לשעבר, מאמנת כושר מוסמכת בהווה. מומחית אימוני משקולות, משקל גוף וגמישות. מאמנת בסטודיו וגינות כושר באוויר הפתוח. כושר גופני זורם אצלי בדם והוא התשוקה שלי! המקצוע לגמריי בחר בי ואני מתרגשת כל יום מחדש שיש בי את הכוח לגרום לשינוי. התהליך שבנות עוברות איתי ממלא אותי בסיפוק ואושר ואני יותר מאשמח שתהיי חלק מהמשפחה!",
-      },
-      {
-        header: "second header",
-        text: "lorem20",
-      },
-      {
-        header: "third header",
-        text: "lorem30",
-      },
-    ],
-    date: "today",
-    imageSrc: samplePostImg,
-  };
-
-  const dummyBlog2 = {
-    engName: "how-to-avoid-injuries",
-    name: "איך להימנע מפציעות ספורט?",
-    intro:
-      "איך לאכול בריא פירוט איך לאכול בריא פירוט איך לאכול בריא פירוט איך לאכול בריא פירוט איך לאכול בריא פירוט איך לאכול בריא פירוט איך לאכול בריא פירוט איך לאכול בריא פירוט איך לאכול בריא פירוט איך לאכול בריא פירוט איך לאכול בריא פירוט איך לאכול בריא פיר",
-    content: [
-      {
-        header: "קודם כל תתחילו להיזהר",
-        text: "היי לכן! שמי אביה, מתעמלת קרקע לשעבר, מאמנת כושר מוסמכת בהווה. מומחית אימוני משקולות, משקל גוף וגמישות. מאמנת בסטודיו וגינות כושר באוויר הפתוח. כושר גופני זורם אצלי בדם והוא התשוקה שלי! המקצוע לגמריי בחר בי ואני מתרגשת כל יום מחדש שיש בי את הכוח לגרום לשינוי. התהליך שבנות עוברות איתי ממלא אותי בסיפוק ואושר ואני יותר מאשמח שתהיי חלק מהמשפחה!",
-      },
-      {
-        header: "second header",
-        text: "lorem20",
-      },
-      {
-        header: "third header",
-        text: "lorem30",
-      },
-    ],
-    date: "today",
-    imageSrc: samplePostImg,
-  };
-
-  const dummyBlog3 = {
-    engName: "how-to-eat-healthy",
-    name: "איך לאכול בריא?",
-    intro:
-      "איך לאכול בריא פירוט איך לאכול בריא פירוט איך לאכול בריא פירוט איך לאכול בריא פירוט איך לאכול בריא פירוט איך לאכול בריא פירוט איך לאכול בריא פירוט איך לאכול בריא פירוט איך לאכול בריא פירוט איך לאכול בריא פירוט איך לאכול בריא פירוט איך לאכול בריא פירו",
-    content: [
-      {
-        header: "קודם כל תתחילו לאכול",
-        text: "היי לכן! שמי אביה, מתעמלת קרקע לשעבר, מאמנת כושר מוסמכת בהווה. מומחית אימוני משקולות, משקל גוף וגמישות. מאמנת בסטודיו וגינות כושר באוויר הפתוח. כושר גופני זורם אצלי בדם והוא התשוקה שלי! המקצוע לגמריי בחר בי ואני מתרגשת כל יום מחדש שיש בי את הכוח לגרום לשינוי. התהליך שבנות עוברות איתי ממלא אותי בסיפוק ואושר ואני יותר מאשמח שתהיי חלק מהמשפחה!",
-      },
-      {
-        header: "second header",
-        text: "lorem20",
-      },
-      {
-        header: "third header",
-        text: "lorem30",
-      },
-    ],
-    date: "today",
-    imageSrc: samplePostImg,
-  };
-
-  const blogArr = [dummyBlog, dummyBlog2, dummyBlog3];
+  //on load
+  useEffect(() => {
+    const getBlogsArr = async () => {
+      try {
+        const response = await fetch(url, {
+          method: "GET",
+        });
+        const resData = await response.json();
+        console.log(resData);
+        setBlogArr(resData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getBlogsArr();
+  }, []);
 
   return (
     <main className="flex flex-col items-center bg-primary text-thirdy">
