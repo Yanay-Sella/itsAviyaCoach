@@ -43,6 +43,7 @@ const Blog = () => {
       <NavBar />
       <div className="flex flex-col mt-28 max-w-6xl md:gap-0 gap-20">
         <InfoSection
+          leftImg={true}
           header="הבלוג שלי"
           name="blog"
           text={blogP}
