@@ -40,7 +40,7 @@ const PlanCard = ({ header, youGet, youGive, time, frontText, link }) => {
             </div>
           </div>
           <div className="justify-self-end mb-3">
-            <a href={`${link}`} target="_blank">
+            <a href={`${link}`} target="_blank" rel="noreferrer">
               <BtnAvi text="אני אקח את זה" />
             </a>
           </div>

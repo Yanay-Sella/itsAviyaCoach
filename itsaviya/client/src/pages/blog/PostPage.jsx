@@ -42,12 +42,12 @@ const PostPage = () => {
             key={name}
           />
 
-          <div className="flex flex-col gap-7">
+          <div className="flex flex-col gap-7 w-5/6 self-center">
             {content.map((e) => {
               return (
                 <div className="">
                   <h1 className="text-4xl mb-5">{e.header}</h1>
-                  <p>{e.text}</p>
+                  <p className="text-xl">{e.text}</p>
                 </div>
               );
             })}

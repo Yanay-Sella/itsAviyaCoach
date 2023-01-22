@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+// import * as dotenv from "dotenv";
+// dotenv.config();
 
 import NavBar from "../../general/navbar/NavBar";
 import InfoSection from "../../general/InfoSection";
@@ -10,7 +12,7 @@ import samplePostImg from "../../general/images/3x.jpg";
 
 const Blog = () => {
   const [blogArr, setBlogArr] = useState([]);
-  const url = "http://localhost:3001/api/blog";
+  const url = process.env.REACT_APP_SERVER_URL;
   const blogP = (
     <p>
       היי לכן! שמי אביה, מתעמלת קרקע לשעבר, מאמנת כושר מוסמכת בהווה. מומחית
