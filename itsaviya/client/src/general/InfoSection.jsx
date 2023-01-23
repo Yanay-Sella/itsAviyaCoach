@@ -23,7 +23,7 @@ const InfoSection = ({ name, text, imageSrc, header, leftImg }) => {
           className={`md:text-2xl text-lg md:text-left md:leading-8 hebText ${
             leftImg && `md:text-right`
           } text-center`}
-          style={{ maxWidth: "37rem" }}
+          style={{ width: "37rem" }}
         >
           {text}
         </div>

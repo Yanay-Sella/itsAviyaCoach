@@ -10,8 +10,6 @@ import {
   faHourglassHalf,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { Link } from "react-router-dom";
-
 const PlanCard = ({ header, youGet, youGive, time, frontText, link }) => {
   return (
     <div className="flip-card shrink">

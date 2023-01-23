@@ -5,7 +5,7 @@ const blogRoutes = require("./routes/blogs-routes.js");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
-//TODO: make an .env file
+//TODO: change mongo password
 const port = 3001;
 const atlasUri = process.env.ATLAS_URI;
 const clientURL = process.env.CLIENT_URL;
