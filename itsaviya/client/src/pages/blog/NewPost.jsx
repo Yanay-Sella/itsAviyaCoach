@@ -9,6 +9,8 @@ import InfoSection from "../../general/InfoSection";
 
 //TODO: fetch api to /api/blog/new
 const NewPost = () => {
+  const url = process.env.REACT_APP_SERVER_URL;
+
   //forming a blogModel. (date will be added automatically)
   const [name, setName] = useState("");
   const [title, setTitle] = useState("");
@@ -55,9 +57,22 @@ const NewPost = () => {
     });
   };
 
-  const sendPost = () => {
-    if (window.confirm("את בטוחה שאת רוצה להעלות את הפוסט?") == false) return;
-    else alert("yay");
+  const sendPost = async () => {
+    const bodi = { hello: "hi" };
+    if (!window.confirm("את בטוחה שאת רוצה להעלות את הפוסט?")) return;
+    else {
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(bodi),
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
   };
 
   return (

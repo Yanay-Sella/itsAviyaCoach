@@ -11,11 +11,9 @@ const atlasUri = process.env.ATLAS_URI;
 const clientURL = process.env.CLIENT_URL;
 
 const app = express();
-
-mongoose.set("strictQuery", false);
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({ origin: clientURL }));
+mongoose.set("strictQuery", false);
 
 //routes
 app.use("/api/blog", blogRoutes);

@@ -11,4 +11,8 @@ const getAllBlogs = async (req, res) => {
   res.json(blogs);
 };
 
-module.exports = { getBlogByTitle, getAllBlogs };
+const postNewBlog = async (req, res) => {
+  console.log(req.body);
+};
+
+module.exports = { getBlogByTitle, getAllBlogs, postNewBlog };
