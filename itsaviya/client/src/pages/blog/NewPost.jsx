@@ -7,7 +7,6 @@ import BtnAvi from "../../general/BtnAvi";
 import samplePostImg from "../../general/images/4x.jpg";
 import InfoSection from "../../general/InfoSection";
 
-//TODO: fetch api to /api/blog/new
 const NewPost = () => {
   const url = process.env.REACT_APP_SERVER_URL;
 
@@ -58,7 +57,8 @@ const NewPost = () => {
   };
 
   const sendPost = async () => {
-    const bodi = { hello: "hi" };
+    const post = { name, title, intro, content: article };
+
     if (!window.confirm("את בטוחה שאת רוצה להעלות את הפוסט?")) return;
     else {
       try {
@@ -67,7 +67,7 @@ const NewPost = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(bodi),
+          body: JSON.stringify(post),
         });
       } catch (error) {
         console.log(error);
@@ -86,6 +86,7 @@ const NewPost = () => {
             value={name}
             onChange={typeName}
             dir="rtl"
+            className="rounded-xl pr-2"
           />
           <input
             type="text"
@@ -93,6 +94,7 @@ const NewPost = () => {
             placeholder="שם פוסט"
             value={title}
             dir="rtl"
+            className="rounded-xl pr-2"
           />
           <textarea
             type="text"
@@ -100,6 +102,7 @@ const NewPost = () => {
             placeholder="תיאור פוסט"
             value={intro}
             dir="rtl"
+            className="rounded-xl pr-2"
           />
         </div>
 
