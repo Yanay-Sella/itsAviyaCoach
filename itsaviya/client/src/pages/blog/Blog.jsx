@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 // import * as dotenv from "dotenv";
 // dotenv.config();
 
+import Page from "../Page";
 import NavBar from "../../general/navbar/NavBar";
 import InfoSection from "../../general/InfoSection";
 import Footer from "../../general/footer/Footer";
@@ -12,7 +13,7 @@ import samplePostImg from "../../general/images/3x.jpg";
 
 const Blog = () => {
   const [blogArr, setBlogArr] = useState([]);
-  const url = process.env.REACT_APP_SERVER_URL;
+  const url = process.env.REACT_APP_SERVER_URL + "blog";
   const blogP = (
     <p>
       היי לכן! שמי אביה, מתעמלת קרקע לשעבר, מאמנת כושר מוסמכת בהווה. מומחית
@@ -41,24 +42,21 @@ const Blog = () => {
   }, []);
 
   return (
-    <main className="flex flex-col items-center bg-primary text-thirdy">
-      <NavBar />
-      <div className="flex flex-col mt-28 max-w-6xl md:gap-0 gap-20">
-        <InfoSection
-          leftImg={true}
-          header="הבלוג שלי"
-          name="blog"
-          text={blogP}
-          imageSrc={blogImg}
-        />
-        <div className="mt-16 flex flex-col gap-12">
-          {blogArr.map((element) => (
-            <PostPrev blogSummary={element} /> //here, the posts preview page will get a *summary* about the posts
-          ))}
-        </div>
-        <Footer />
+    <div className="flex flex-col mt-28 max-w-6xl md:gap-0 gap-20">
+      <InfoSection
+        leftImg={true}
+        header="הבלוג שלי"
+        name="blog"
+        text={blogP}
+        imageSrc={blogImg}
+      />
+      <div className="mt-16 flex flex-col gap-12">
+        {blogArr.map((element) => (
+          <PostPrev blogSummary={element} /> //here, the posts preview page will get a *summary* about the posts
+        ))}
       </div>
-    </main>
+      <Footer />
+    </div>
   );
 };
 

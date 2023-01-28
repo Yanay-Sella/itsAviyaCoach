@@ -14,39 +14,36 @@ import InfoSection from "../../general/InfoSection.jsx"; //a section with an ima
 import Footer from "../../general/footer/Footer";
 const Home = () => {
   return (
-    <main className="flex flex-col items-center bg-primary text-thirdy">
-      <NavBar />
-      <div className="flex flex-col mt-28 max-w-6xl md:gap-0 gap-20">
-        <Hero />
+    <div className="flex flex-col mt-28 max-w-6xl md:gap-0 gap-20">
+      <Hero />
 
-        <InfoSection
-          header="הסיפור שלי"
-          name="about"
-          text={aboutP}
-          imageSrc={aboutImg}
-        />
-        <Sale />
+      <InfoSection
+        header="הסיפור שלי"
+        name="about"
+        text={aboutP}
+        imageSrc={aboutImg}
+      />
+      <Sale />
 
-        <InfoSection
-          header="אימונים אישיים"
-          name="personal"
-          text={personalP}
-          imageSrc={personalImg}
-        />
-        <PersonalPlans />
-        <InfoSection
-          header="אימונים בקבוצות"
-          name="group"
-          text={groupP}
-          imageSrc={groupImg}
-          leftImg={true}
-        />
-        <GroupPlans />
-        <Join />
+      <InfoSection
+        header="אימונים אישיים"
+        name="personal"
+        text={personalP}
+        imageSrc={personalImg}
+      />
+      <PersonalPlans />
+      <InfoSection
+        header="אימונים בקבוצות"
+        name="group"
+        text={groupP}
+        imageSrc={groupImg}
+        leftImg={true}
+      />
+      <GroupPlans />
+      <Join />
 
-        <Footer />
-      </div>
-    </main>
+      <Footer />
+    </div>
   );
 };
 

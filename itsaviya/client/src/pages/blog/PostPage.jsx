@@ -29,8 +29,7 @@ const PostPage = () => {
   }, []);
 
   return (
-    <main className="flex flex-col items-center bg-primary text-thirdy">
-      <NavBar />
+    <>
       {post && (
         <div className="flex flex-col mt-28 max-w-6xl md:gap-4 gap-20">
           <InfoSection
@@ -55,7 +54,7 @@ const PostPage = () => {
           <Footer />
         </div>
       )}
-    </main>
+    </>
   );
 };
 

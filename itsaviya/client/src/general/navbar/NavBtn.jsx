@@ -7,7 +7,7 @@ const NavBtn = ({ text, to, size, dropdown, dropdownArr, newTab }) => {
 
   return (
     <div
-      className={`flex justify-center align-center rounded-full text-center hover:underline dropdown text-${size}`}
+      className={`flex justify-center align-center rounded-full text-center hover:underline hover:cursor-pointer dropdown text-${size}`}
       onMouseOver={() => {
         setChecked(true);
       }}
@@ -15,11 +15,15 @@ const NavBtn = ({ text, to, size, dropdown, dropdownArr, newTab }) => {
         setChecked(false);
       }}
     >
-      <a
-        href={`${to}`}
-        target={`${newTab ? "_blank" : ""}`}
-        className="text-center"
-      >{`${text}`}</a>
+      {to ? (
+        <a
+          href={`${to}`}
+          target={`${newTab ? "_blank" : ""}`}
+          className="text-center"
+        >{`${text}`}</a>
+      ) : (
+        <div className="text-center">{`${text}`}</div>
+      )}
       {dropdown && (
         <Fade in={checked}>
           <div className="dropdown-content bg-secondary rounded-md">

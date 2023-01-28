@@ -76,96 +76,93 @@ const NewPost = () => {
   };
 
   return (
-    <main className="flex flex-col items-center bg-primary text-thirdy">
-      <NavBar />
-      <div className="flex flex-col mt-28 max-w-6xl md:gap-4 gap-20">
-        <div className="flex flex-col gap-4">
-          <input
-            type="text"
-            placeholder="שם פוסט באנגלית"
-            value={name}
-            onChange={typeName}
-            dir="rtl"
-            className="rounded-xl pr-2"
-          />
-          <input
-            type="text"
-            onChange={typeTitle}
-            placeholder="שם פוסט"
-            value={title}
-            dir="rtl"
-            className="rounded-xl pr-2"
-          />
-          <textarea
-            type="text"
-            onChange={typeIntro}
-            placeholder="תיאור פוסט"
-            value={intro}
-            dir="rtl"
-            className="rounded-xl pr-2"
-          />
-        </div>
-
-        {/* adding content */}
-        <div className="flex flex-col gap-4">
-          {article.map((e, index) => {
-            return (
-              <div className="flex flex-col gap-4">
-                <h1>כותרת</h1>
-                <input
-                  type="text"
-                  name="header"
-                  id={index}
-                  onChange={editPrgrph}
-                  dir="rtl"
-                />
-                <h1>טקסט</h1>
-                <textarea
-                  type="text"
-                  name="text"
-                  id={index}
-                  onChange={editPrgrph}
-                  dir="rtl"
-                />
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="mt-4" onClick={addPrgrph}>
-          <BtnAvi text={"להוסיף פסקה"} />
-        </div>
-
-        {/* post preview */}
-        <section className="flex flex-col items-center bg-primary text-thirdy border-2 pb-10">
-          <div className="flex flex-col max-w-6xl md:gap-4 gap-20">
-            <InfoSection
-              leftImg={true}
-              name={"newPost"}
-              text={intro}
-              header={title}
-              imageSrc={samplePostImg}
-              key={"newPost"}
-            />
-
-            <div className="flex flex-col gap-7 w-5/6 self-center">
-              {article.map((e) => {
-                return (
-                  <div className="">
-                    <h1 className="text-4xl mb-5">{e.header}</h1>
-                    <p className="text-xl">{e.text}</p>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-        <div className="mt-4" onClick={sendPost}>
-          <BtnAvi text={"לשלוח"} />
-        </div>
-        <Footer />
+    <div className="flex flex-col mt-28 max-w-6xl md:gap-4 gap-20">
+      <div className="flex flex-col gap-4">
+        <input
+          type="text"
+          placeholder="שם פוסט באנגלית"
+          value={name}
+          onChange={typeName}
+          dir="rtl"
+          className="rounded-xl pr-2"
+        />
+        <input
+          type="text"
+          onChange={typeTitle}
+          placeholder="שם פוסט"
+          value={title}
+          dir="rtl"
+          className="rounded-xl pr-2"
+        />
+        <textarea
+          type="text"
+          onChange={typeIntro}
+          placeholder="תיאור פוסט"
+          value={intro}
+          dir="rtl"
+          className="rounded-xl pr-2"
+        />
       </div>
-    </main>
+
+      {/* adding content */}
+      <div className="flex flex-col gap-4">
+        {article.map((e, index) => {
+          return (
+            <div className="flex flex-col gap-4">
+              <h1>כותרת</h1>
+              <input
+                type="text"
+                name="header"
+                id={index}
+                onChange={editPrgrph}
+                dir="rtl"
+              />
+              <h1>טקסט</h1>
+              <textarea
+                type="text"
+                name="text"
+                id={index}
+                onChange={editPrgrph}
+                dir="rtl"
+              />
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="mt-4" onClick={addPrgrph}>
+        <BtnAvi text={"להוסיף פסקה"} />
+      </div>
+
+      {/* post preview */}
+      <section className="flex flex-col items-center bg-primary text-thirdy border-2 pb-10">
+        <div className="flex flex-col max-w-6xl md:gap-4 gap-20">
+          <InfoSection
+            leftImg={true}
+            name={"newPost"}
+            text={intro}
+            header={title}
+            imageSrc={samplePostImg}
+            key={"newPost"}
+          />
+
+          <div className="flex flex-col gap-7 w-5/6 self-center">
+            {article.map((e) => {
+              return (
+                <div className="">
+                  <h1 className="text-4xl mb-5">{e.header}</h1>
+                  <p className="text-xl">{e.text}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+      <div className="mt-4" onClick={sendPost}>
+        <BtnAvi text={"לשלוח"} />
+      </div>
+      <Footer />
+    </div>
   );
 };
 
