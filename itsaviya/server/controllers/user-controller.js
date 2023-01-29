@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const { User } = require("../models/userModel.js");
 
+//TODO: add conflicts
 const signUp = async (req, res) => {
   const { userName, email, password } = req.body;
   console.log(req.body);
@@ -19,7 +20,6 @@ const signUp = async (req, res) => {
   try {
     await newUser.save();
     res.status(200).json({ message: "user created!" });
-    console.log("user saved!");
   } catch (error) {
     console.log(error);
   }
@@ -51,7 +51,7 @@ const logIn = async (req, res) => {
   if (!isValidPassword) {
     return res.status(404).json({ message: "invalid username or password" });
   }
-  //TODO: add tokens maybe
+  //TODO: add tokens JWT (valid password)
   res.status(200).json({
     userName: user.userName,
     email: user.email,
