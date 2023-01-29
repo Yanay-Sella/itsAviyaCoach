@@ -32,7 +32,6 @@ const Blog = () => {
           method: "GET",
         });
         const resData = await response.json();
-        console.log(resData);
         setBlogArr(resData);
       } catch (error) {
         console.log(error);

@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom"; //to fetch the room info
 
 const PostPage = () => {
   const postName = useParams().blogName;
-  const url = `${process.env.REACT_APP_SERVER_URL}/${postName}`;
+  const url = `${process.env.REACT_APP_SERVER_URL}blog/${postName}`;
   const [post, setPost] = useState(undefined);
   const { name, title, intro, content } = post || {};
 
