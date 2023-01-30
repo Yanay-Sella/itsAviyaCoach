@@ -1,6 +1,9 @@
 const bcrypt = require("bcryptjs");
 const { User } = require("../models/userModel.js");
 
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+
 //TODO: add conflicts
 const signUp = async (req, res) => {
   const { userName, email, password } = req.body;
@@ -52,6 +55,18 @@ const logIn = async (req, res) => {
     return res.status(404).json({ message: "invalid username or password" });
   }
   //TODO: add tokens JWT (valid password)
+  const accessToken = jwt.sign(
+    { userName: user.userName },
+    process.env.ACCESS_TOKEN_SECRET,
+    { expiresIn: 300000 }
+  );
+
+  const refreshToken = jwt.sign(
+    { userName: user.userName },
+    process.env.REFRESH_TOKEN_SECRET,
+    { expiresIn: "1d" }
+  );
+  //TODO: add refresh token to the user in the DB
   res.status(200).json({
     userName: user.userName,
     email: user.email,
