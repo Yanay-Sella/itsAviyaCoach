@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 //TODO: add conflicts
-const signUp = async (req, res) => {
+const handleSignUp = async (req, res) => {
   const { userName, email, password } = req.body;
   console.log(req.body);
   let hashedPassword;
@@ -28,8 +28,10 @@ const signUp = async (req, res) => {
   }
 };
 
-const logIn = async (req, res) => {
+const handleLogIn = async (req, res) => {
   const { email, password } = req.body;
+  console.log(email);
+  console.log(password);
 
   let user;
   try {
@@ -58,7 +60,7 @@ const logIn = async (req, res) => {
   const accessToken = jwt.sign(
     { userName: user.userName },
     process.env.ACCESS_TOKEN_SECRET,
-    { expiresIn: 300000 }
+    { expiresIn: "300000ms" } // 5 minutes
   );
 
   const refreshToken = jwt.sign(
@@ -66,11 +68,18 @@ const logIn = async (req, res) => {
     process.env.REFRESH_TOKEN_SECRET,
     { expiresIn: "1d" }
   );
-  //TODO: add refresh token to the user in the DB
+
+  user.refreshToken = refreshToken; // setting the user his new refresh token
+  await user.save();
+  res.cookie("jwt", refreshToken, {
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000,
+  }); // 24 hours
   res.status(200).json({
     userName: user.userName,
     email: user.email,
+    accessToken,
   }); // user logged in
 };
 
-module.exports = { signUp, logIn };
+module.exports = { handleSignUp, handleLogIn };

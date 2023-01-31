@@ -8,7 +8,7 @@ import samplePostImg from "../../general/images/4x.jpg";
 import InfoSection from "../../general/InfoSection";
 
 const NewPost = () => {
-  const url = process.env.REACT_APP_SERVER_URL;
+  const url = process.env.REACT_APP_SERVER_URL + "blog/";
 
   //forming a blogModel. (date will be added automatically)
   const [name, setName] = useState("");
