@@ -42,6 +42,7 @@ const handleLogIn = async (req, res) => {
       .json({ message: "server error, please check your input" });
   }
   if (!user) {
+    // user does not exist
     return res.status(400).json({ message: "invalid username or password" });
   }
 
@@ -56,7 +57,9 @@ const handleLogIn = async (req, res) => {
   if (!isValidPassword) {
     return res.status(404).json({ message: "invalid username or password" });
   }
-  //TODO: add tokens JWT (valid password)
+
+  //creating tokens with authenticating correct username and password
+
   const accessToken = jwt.sign(
     { userName: user.userName },
     process.env.ACCESS_TOKEN_SECRET,

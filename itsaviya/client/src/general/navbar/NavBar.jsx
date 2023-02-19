@@ -40,10 +40,15 @@ const NavBar = () => {
         />
       </div>
 
-      <div className="transition-all hover:scale-105">
-        <a href="/home">
-          <img src={Logo} alt="" className="h-28 w-28 justify-self-start" />
-        </a>
+      <div
+        className="transition-all hover:scale-105"
+        onClick={async () => {
+          await fetch(process.env.REACT_APP_SERVER_URL + "user/refresh");
+        }}
+      >
+        {/* <a href="/home"> */}
+        <img src={Logo} alt="" className="h-28 w-28 justify-self-start" />
+        {/* </a> */}
       </div>
 
       <div className="flex flex-wrap md:gap-14 gap-5 justify-end">

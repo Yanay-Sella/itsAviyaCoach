@@ -14,6 +14,7 @@ const router = express.Router();
 router.post("/signup", handleSignUp);
 router.post("/login", handleLogIn);
 //TODO: logout route and delete the refresh token
+
 //others
 router.get("/refresh", handleRefreshToken);
 

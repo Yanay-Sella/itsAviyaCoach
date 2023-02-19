@@ -3,8 +3,10 @@ const { User } = require("../models/userModel.js");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
+//creating access token using a refresh token given in a cookie
 const handleRefreshToken = async (req, res) => {
   const cookies = req.cookies; // cookie comes along with the get request
+  console.log(cookies);
   if (!cookies?.jwt) return res.sendStatus(401); //Unauthorized
   console.log(cookies.jwt);
   const refreshToken = cookies.jwt;
@@ -21,7 +23,7 @@ const handleRefreshToken = async (req, res) => {
         userName: decoded.userName,
       },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "30s" }
+      { expiresIn: "300000ms" } //5 minutes
     );
     res.json({ accessToken });
   });
