@@ -3,6 +3,7 @@ const express = require("express");
 const {
   handleSignUp,
   handleLogIn,
+  handleLogout,
 } = require("../controllers/auth-controller.js");
 const {
   handleRefreshToken,
@@ -13,7 +14,8 @@ const router = express.Router();
 //login and signup
 router.post("/signup", handleSignUp);
 router.post("/login", handleLogIn);
-//TODO: logout route and delete the refresh token
+
+router.get("/logout", handleLogout); // deletes refresh token, no longer access to many stuff
 
 //others
 router.get("/refresh", handleRefreshToken);
