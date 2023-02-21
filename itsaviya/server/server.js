@@ -17,7 +17,6 @@ const app = express();
 
 app.use((req, res, next) => {
   const origin = req.headers.origin;
-  console.log(origin === clientURL);
 
   if (origin === clientURL) {
     res.header("Access-Control-Allow-Credentials", true); // for sending the cookie from the client
