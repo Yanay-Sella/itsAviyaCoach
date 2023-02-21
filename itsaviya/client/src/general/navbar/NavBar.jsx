@@ -43,7 +43,10 @@ const NavBar = () => {
       <div
         className="transition-all hover:scale-105"
         onClick={async () => {
-          await fetch(process.env.REACT_APP_SERVER_URL + "user/logout");
+          console.log(document.cookie);
+          await fetch(process.env.REACT_APP_SERVER_URL + "user/refresh", {
+            headers: { Cookie: document.cookie },
+          });
         }}
       >
         {/* <a href="/home"> */}

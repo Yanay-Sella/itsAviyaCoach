@@ -89,11 +89,15 @@ const handleLogout = async (req, res) => {
   //TODO: on client, delete the access token when clicking log out
 
   const cookies = req.cookies;
+  console.log("COOKIE:");
+  console.log(cookies);
   if (!cookies.jwt) return res.sendStatus(204); //Nothing to delete anyway
 
   const refreshToken = cookies.jwt;
 
-  const foundUser = await User.find({ refreshToken }); // find user by the r.t above
+  const foundUser = await User.findOne({ refreshToken }); // find user by the r.t above
+  console.log("USER:");
+  console.log(foundUser);
   if (!foundUser) {
     res.clearCookie("jwt", { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 }); // need to have the same options of the created cookie
     return res.sendStatus(204);
@@ -101,6 +105,7 @@ const handleLogout = async (req, res) => {
 
   //delete the refresh token in db
   foundUser.refreshToken = "";
+  await foundUser.save();
   res.clearCookie("jwt", { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 }); // need to have the same options of the created cookie
   res.sendStatus(204);
 };

@@ -32,10 +32,10 @@ const Auth = ({ open, handleClose }) => {
     setPassword("");
     handleClose();
   };
+
   const handleLogIn = async () => {
     const user = { email, password };
-    setEmail("");
-    setPassword("");
+
     try {
       const response = await fetch(urlLogIn, {
         method: "POST",
@@ -49,8 +49,9 @@ const Auth = ({ open, handleClose }) => {
     } catch (error) {
       console.log(error);
     }
-
     handleClose();
+    setEmail("");
+    setPassword("");
   };
 
   return (
