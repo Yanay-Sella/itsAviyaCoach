@@ -77,6 +77,8 @@ const handleLogIn = async (req, res) => {
   res.cookie("jwt", refreshToken, {
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000,
+    sameSite: "None",
+    secure: true,
   }); // 24 hours
   res.status(200).json({
     userName: user.userName,
@@ -99,14 +101,14 @@ const handleLogout = async (req, res) => {
   console.log("USER:");
   console.log(foundUser);
   if (!foundUser) {
-    res.clearCookie("jwt", { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 }); // need to have the same options of the created cookie
+    res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true }); // need to have the same options of the created cookie
     return res.sendStatus(204);
   }
 
   //delete the refresh token in db
   foundUser.refreshToken = "";
   await foundUser.save();
-  res.clearCookie("jwt", { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 }); // need to have the same options of the created cookie
+  res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true }); // need to have the same options of the created cookie
   res.sendStatus(204);
 };
 

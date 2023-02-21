@@ -42,6 +42,7 @@ const Auth = ({ open, handleClose }) => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify(user),
       });
       const resData = await response.json();

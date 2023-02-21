@@ -14,10 +14,21 @@ const atlasUri = process.env.ATLAS_URI;
 const clientURL = process.env.CLIENT_URL;
 
 const app = express();
+
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  console.log(origin === clientURL);
+
+  if (origin === clientURL) {
+    res.header("Access-Control-Allow-Credentials", true); // for sending the cookie from the client
+  }
+  next();
+});
+
+app.use(cors({ origin: clientURL }));
 app.use(cookieParser());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors({ origin: clientURL }));
 mongoose.set("strictQuery", false);
 
 //routes
