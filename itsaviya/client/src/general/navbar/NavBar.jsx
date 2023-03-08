@@ -41,7 +41,7 @@ const NavBar = () => {
       </div>
 
       <div
-        className="transition-all hover:scale-105"
+        className="transition-all hover:scale-105 hover:cursor-pointer"
         onClick={async () => {
           await fetch(process.env.REACT_APP_SERVER_URL + "test", {
             credentials: "include",

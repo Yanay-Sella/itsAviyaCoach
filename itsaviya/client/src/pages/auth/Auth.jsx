@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import AuthContext from "../../contexts/AuthProvider";
 
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -9,6 +8,8 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import CircularProgress from "@mui/material/CircularProgress";
 
+import useAuth from "../../hooks/useAuth";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleCheck,
@@ -16,7 +17,7 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 
 const Auth = ({ open, handleClose }) => {
-  const { setAuth } = useContext(AuthContext);
+  const { setAuth } = useAuth();
 
   const [signUp, setSignUp] = useState(false);
 
@@ -30,10 +31,6 @@ const Auth = ({ open, handleClose }) => {
 
   const urlLogIn = process.env.REACT_APP_SERVER_URL + "user/login";
   const urlSignUp = process.env.REACT_APP_SERVER_URL + "user/signup";
-
-  useEffect(() => {
-    console.log("succ: " + isSuccess);
-  }, [isSuccess]);
 
   const handleSignUp = async () => {
     setIsLoading(true);
@@ -68,9 +65,18 @@ const Auth = ({ open, handleClose }) => {
         body: JSON.stringify(user),
       });
 
-      const resData = await response.json();
+      const resUser = await response.json(); // the user object, contains: {id, username, email, accessToken}
 
-      console.log(resData);
+      console.log(resUser);
+
+      const { userId, accessToken } = resUser;
+
+      //dont save username, email, or roles in the auth!!!
+      // setAuth({ userId, accessToken }); // saving the userId and accessToken only for security
+
+      //TODO: delete this and save userId and access token only.
+      //this is not secure!!!!@@@@@ but only for dev.
+      setAuth(resUser);
 
       if (response.ok) {
         setIsSuccess(true);
@@ -97,11 +103,15 @@ const Auth = ({ open, handleClose }) => {
     <div>
       <Dialog open={open} onClose={handleClose}>
         {isLoading ? (
-          <div className="w-96 h-80 bg-primary p-3 text-xl flex justify-center items-center text-thirdy">
+          <div
+            className={`w-96 ${
+              signUp ? "h-96" : "h-80"
+            } bg-primary p-3 text-xl flex justify-center items-center text-thirdy`}
+          >
             {isSuccess ? (
               <div className="flex flex-col items-center">
                 <FontAwesomeIcon icon={faCircleCheck} className="text-4xl" />
-                <h1>התחברת בהצלחה!</h1>
+                {signUp ? <h1>נרשמת בהצלחה!</h1> : <h1>התחברת בהצלחה!</h1>}
               </div>
             ) : isFail ? (
               <div className="flex flex-col items-center">
@@ -113,7 +123,11 @@ const Auth = ({ open, handleClose }) => {
             )}
           </div>
         ) : (
-          <div className="w-96 h-80 bg-primary p-3 text-xl">
+          <div
+            className={`w-96 ${
+              signUp ? "h-96" : "h-80"
+            } bg-primary p-3 text-xl`}
+          >
             <h1 className="text-thirdy">{signUp ? "הרשמה" : "התחברות"}</h1>
             <DialogContent dir="rtl">
               <DialogContentText></DialogContentText>

@@ -1,5 +1,7 @@
 const express = require("express");
 
+const verifyJWT = require("../middleware/verifyJWT");
+
 const {
   handleSignUp,
   handleLogIn,
@@ -8,6 +10,7 @@ const {
 const {
   handleRefreshToken,
 } = require("../controllers/refreshToken-controller.js");
+const { getRole } = require("../controllers/user-controller");
 
 const router = express.Router();
 
@@ -17,7 +20,10 @@ router.post("/login", handleLogIn);
 
 router.get("/logout", handleLogout); // deletes refresh token, no longer access to many stuff
 
-//others
+//tokens
 router.get("/refresh", handleRefreshToken);
+
+//user api
+router.get("/role", verifyJWT, getRole);
 
 module.exports = router;

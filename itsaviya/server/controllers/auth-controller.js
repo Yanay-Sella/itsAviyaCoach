@@ -80,9 +80,13 @@ const handleLogIn = async (req, res) => {
     sameSite: "None",
     secure: true,
   }); // 24 hours
+
+  //TODO: not return all the user info if not needed.
   res.status(200).json({
+    userId: user._id,
     userName: user.userName,
     email: user.email,
+    role: user.role,
     accessToken,
   }); // user logged in
 };
