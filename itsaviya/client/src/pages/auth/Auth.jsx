@@ -69,10 +69,10 @@ const Auth = ({ open, handleClose }) => {
 
       console.log(resUser);
 
-      const { userId, accessToken } = resUser;
+      const { userId } = resUser;
 
       //dont save username, email, or roles in the auth!!!
-      // setAuth({ userId, accessToken }); // saving the userId and accessToken only for security
+      // setAuth({ userId }); // saving the userId only for security
 
       //TODO: delete this and save userId and access token only.
       //this is not secure!!!!@@@@@ but only for dev.
