@@ -6,7 +6,7 @@ const RequireAuth = () => {
   const { auth } = useAuth();
   const getRoleUrl = process.env.REACT_APP_SERVER_URL + "user/role";
 
-  //TODO: use accessToken to get the role of the user from the server
+  //TODO: use accessToken/userId to get the role of the user from the server
   useEffect(() => {
     console.log(auth);
     const getRole = async () => {

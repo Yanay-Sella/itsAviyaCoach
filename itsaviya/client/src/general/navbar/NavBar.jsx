@@ -6,7 +6,11 @@ import { useLocation } from "react-router-dom";
 import NavBtn from "./NavBtn.jsx";
 import Auth from "../../pages/auth/Auth";
 
+import UseRefreshToken from "../../hooks/UseRefreshToken";
+
 const NavBar = () => {
+  const refresh = UseRefreshToken();
+
   const url = useLocation().pathname;
   const isHome = url === "/home";
   const [open, setOpen] = React.useState(false);
@@ -42,10 +46,8 @@ const NavBar = () => {
 
       <div
         className="transition-all hover:scale-105 hover:cursor-pointer"
-        onClick={async () => {
-          await fetch(process.env.REACT_APP_SERVER_URL + "test", {
-            credentials: "include",
-          });
+        onClick={() => {
+          refresh();
         }}
       >
         {/* <a href="/home"> */}
