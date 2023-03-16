@@ -1,4 +1,5 @@
 import useAuth from "./useAuth";
+import axios from "../api/axios";
 
 const UseRefreshToken = () => {
   const { setAuth } = useAuth();
@@ -6,9 +7,13 @@ const UseRefreshToken = () => {
 
   //ask for a new access token from the server using the refresh token within the cookie
   const refresh = async () => {
-    const response = await fetch(refreshUrl, { credentials: "include" });
-    const resData = await response.json();
-    const accessToken = resData.accessToken;
+    // const response = await fetch(refreshUrl, { credentials: "include" });
+    const response = await axios.get("/user/refresh", {
+      withCredentials: true,
+    });
+    const accessToken = response.data.accessToken;
+
+    //update the user info with the new access token (and updating it in the local storage)
     setAuth((prev) => {
       console.log(JSON.stringify(prev));
       return { ...prev, accessToken };
