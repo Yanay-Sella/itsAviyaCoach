@@ -6,10 +6,10 @@ import { useLocation } from "react-router-dom";
 import NavBtn from "./NavBtn.jsx";
 import Auth from "../../pages/auth/Auth";
 
-import UseRefreshToken from "../../hooks/UseRefreshToken";
+import UseAxiosPrivate from "../../hooks/UseAxiosPrivate";
 
 const NavBar = () => {
-  const refresh = UseRefreshToken();
+  const axiosPrivate = UseAxiosPrivate();
 
   const url = useLocation().pathname;
   const isHome = url === "/home";
@@ -46,8 +46,8 @@ const NavBar = () => {
 
       <div
         className="transition-all hover:scale-105 hover:cursor-pointer"
-        onClick={() => {
-          refresh();
+        onClick={async () => {
+          await axiosPrivate("test", { signal: AbortController.signal });
         }}
       >
         {/* <a href="/home"> */}

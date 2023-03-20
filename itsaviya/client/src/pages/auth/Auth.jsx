@@ -72,12 +72,13 @@ const Auth = ({ open, handleClose }) => {
       const { userId } = resUser;
 
       //dont save username, email, or roles in the auth!!!
-      // setAuth({ userId }); // saving the userId only for security
+      // setAuth({ userId }); // saving the userId only, for security
 
-      //TODO: delete this and save userId and access token only.
+      //TODO: delete this and save userId only.
       //this is not secure!!!!@@@@@ but only for dev.
       setAuth(resUser);
 
+      //some animation and cleaning values at the end
       if (response.ok) {
         setIsSuccess(true);
         setTimeout(() => {

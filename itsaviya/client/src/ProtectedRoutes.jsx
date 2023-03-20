@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useLocation, Navigate, Outlet } from "react-router-dom";
 import useAuth from "./hooks/useAuth";
 
-const RequireAuth = () => {
+const ProtectedRoutes = () => {
   const { auth } = useAuth();
   const getRoleUrl = process.env.REACT_APP_SERVER_URL + "user/role";
 
@@ -16,15 +16,17 @@ const RequireAuth = () => {
     };
   }, []);
 
-  const isAdmin = auth.role === 2018; // if the user is an admin
+  console.log(process.env.REACT_APP_USER_ADMIN_ROLE);
+  const isAdmin = `${auth.role}` === `${process.env.REACT_APP_USER_ADMIN_ROLE}`; // if the user is an admin
+  console.log(isAdmin);
   const location = useLocation();
   console.log(auth);
 
   return isAdmin ? (
-    <Outlet /> // the children of this RequireAuth component
+    <Outlet /> // the children of this ProtectedRoutes component
   ) : (
     <Navigate to="/home" state={{ from: location }} replace />
   );
 };
 
-export default RequireAuth;
+export default ProtectedRoutes;

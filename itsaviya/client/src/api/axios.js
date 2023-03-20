@@ -6,6 +6,7 @@ export default axios.create({
   baseURL: BASE_URL,
 });
 
+//used in the useAxiosPrivate hook, private requests will only be made with the hook!
 export const axiosPrivate = axios.create({
   baseURL: BASE_URL,
   headers: { "Content-Type": "application/json" },

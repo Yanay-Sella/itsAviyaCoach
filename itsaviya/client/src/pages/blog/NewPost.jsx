@@ -7,8 +7,10 @@ import BtnAvi from "../../general/BtnAvi";
 import samplePostImg from "../../general/images/4x.jpg";
 import InfoSection from "../../general/InfoSection";
 
+import UseAxiosPrivate from "../../hooks/UseAxiosPrivate";
+
 const NewPost = () => {
-  const url = process.env.REACT_APP_SERVER_URL + "blog/";
+  const axiosPrivate = UseAxiosPrivate();
 
   //forming a blogModel. (date will be added automatically)
   const [name, setName] = useState("");
@@ -62,13 +64,7 @@ const NewPost = () => {
     if (!window.confirm("את בטוחה שאת רוצה להעלות את הפוסט?")) return;
     else {
       try {
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(post),
-        });
+        const response = await axiosPrivate.post("blog", post);
       } catch (error) {
         console.log(error);
       }
