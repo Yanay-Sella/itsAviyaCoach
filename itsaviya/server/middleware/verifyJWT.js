@@ -18,7 +18,7 @@ const verifyJWT = (req, res, next) => {
     } //invalid token, forbidden
 
     //"decoded" is the user that matches the access token
-    req.user = decoded.userInfo.userName;
+    req.userName = decoded.userInfo.userName;
     next();
   });
 };

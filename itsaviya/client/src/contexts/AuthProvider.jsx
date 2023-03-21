@@ -8,13 +8,18 @@ export const AuthProvider = ({ children }) => {
     return JSON.parse(storedUser) || {}; // if there's a user in the local storage, use it.
   });
 
+  const isLogged = auth.accessToken !== undefined; // bool
+
+  const [userInfo, setUserInfo] = useState({});
+
   useEffect(() => {
-    console.log(auth);
     localStorage.setItem("user", JSON.stringify(auth));
   }, [auth]); // whenever "auth" changes, we set the local storage value anew
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth }}>
+    <AuthContext.Provider
+      value={{ auth, setAuth, isLogged, userInfo, setUserInfo }}
+    >
       {children}
     </AuthContext.Provider>
   );

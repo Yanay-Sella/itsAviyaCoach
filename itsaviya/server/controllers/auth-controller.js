@@ -30,8 +30,7 @@ const handleSignUp = async (req, res) => {
 
 const handleLogIn = async (req, res) => {
   const { email, password } = req.body;
-  console.log(email);
-  console.log(password);
+  console.log("logIn");
 
   let user;
   try {
@@ -61,7 +60,7 @@ const handleLogIn = async (req, res) => {
   //creating tokens with authenticating correct username and password
 
   const accessToken = jwt.sign(
-    { userInfo: { userName: user.userName, role: user.role } },
+    { userInfo: { userName: user.userName } },
     process.env.ACCESS_TOKEN_SECRET,
     { expiresIn: "300000ms" } // 5 minutes
   );
@@ -69,7 +68,7 @@ const handleLogIn = async (req, res) => {
   const refreshToken = jwt.sign(
     { userName: user.userName },
     process.env.REFRESH_TOKEN_SECRET,
-    { expiresIn: "1d" }
+    { expiresIn: "1d" } // 1 day
   );
 
   user.refreshToken = refreshToken; // setting the user his new refresh token
@@ -84,26 +83,20 @@ const handleLogIn = async (req, res) => {
   //TODO: not return all the user info if not needed.
   res.status(200).json({
     userId: user._id,
-    userName: user.userName,
-    email: user.email,
-    role: user.role,
     accessToken,
   }); // user logged in
 };
 
 const handleLogout = async (req, res) => {
-  //TODO: on client, delete the access token when clicking log out
-
+  //TODO: on client, delete the access token when clicking log out (from auth state)
   const cookies = req.cookies;
-  console.log("COOKIE:");
-  console.log(cookies);
+  console.log("logOut");
   if (!cookies.jwt) return res.sendStatus(204); //Nothing to delete anyway
 
   const refreshToken = cookies.jwt;
 
-  const foundUser = await User.findOne({ refreshToken }); // find user by the r.t above
-  console.log("USER:");
-  console.log(foundUser);
+  const foundUser = await User.findOne({ refreshToken }); // find user by the RT above
+
   if (!foundUser) {
     res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true }); // need to have the same options of the created cookie
     return res.sendStatus(204);

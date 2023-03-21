@@ -67,15 +67,8 @@ const Auth = ({ open, handleClose }) => {
 
       const resUser = await response.json(); // the user object, contains: {id, username, email, accessToken}
 
-      console.log(resUser);
-
       const { userId } = resUser;
 
-      //dont save username, email, or roles in the auth!!!
-      // setAuth({ userId }); // saving the userId only, for security
-
-      //TODO: delete this and save userId only.
-      //this is not secure!!!!@@@@@ but only for dev.
       setAuth(resUser);
 
       //some animation and cleaning values at the end

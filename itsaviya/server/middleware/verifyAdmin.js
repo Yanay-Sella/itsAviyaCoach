@@ -27,10 +27,10 @@ const verifyAdmin = (req, res, next) => {
     } //invalid token, forbidden
 
     //"decoded" is the user that matches the access token
-    req.user = decoded.userInfo.userName;
+    req.userName = decoded.userInfo.userName;
     req.role = decoded.userInfo.role;
     if (`${req.role}` !== `${process.env.USER_ADMIN_ROLE}`) {
-      console.log(`illegal attempt from: ${req.user}`);
+      console.log(`illegal attempt from: ${req.userName}`);
       return res.sendStatus(401); //user not authorized, not an admin
     }
     next();
