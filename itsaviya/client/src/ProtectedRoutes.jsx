@@ -29,7 +29,8 @@ const ProtectedRoutes = () => {
 
   useEffect(() => {
     if (isAdmin !== undefined) setIsLoading(false); // loading finished
-  }, [isAdmin]);
+    if (!isLogged) setIsAdmin(false);
+  }, [isAdmin, isLogged]);
 
   const location = useLocation();
 

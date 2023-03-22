@@ -13,9 +13,8 @@ require("dotenv").config();
 //only for logged in users
 const verifyAdmin = (req, res, next) => {
   const authHeader = req.headers.authorization || req.headers.Authorization; // checking if the user is logged in
-  console.log(authHeader);
 
-  console.log("hello JWTadmin");
+  console.log("verify JWTadmin");
 
   if (!authHeader?.startsWith("Bearer ")) return res.sendStatus(401); // Unauthorized
   const token = authHeader.split(" ")[1]; //"Bearer <token>"
@@ -29,6 +28,9 @@ const verifyAdmin = (req, res, next) => {
     //"decoded" is the user that matches the access token
     req.userName = decoded.userInfo.userName;
     req.role = decoded.userInfo.role;
+    console.log(decoded.userInfo);
+    console.log(req.role);
+    console.log(`${req.role}` !== `${process.env.USER_ADMIN_ROLE}`);
     if (`${req.role}` !== `${process.env.USER_ADMIN_ROLE}`) {
       console.log(`illegal attempt from: ${req.userName}`);
       return res.sendStatus(401); //user not authorized, not an admin

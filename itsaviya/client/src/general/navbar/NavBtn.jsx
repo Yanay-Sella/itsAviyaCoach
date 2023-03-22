@@ -29,7 +29,11 @@ const NavBtn = ({ text, to, size, dropdown, dropdownArr, newTab }) => {
             <div className="flex flex-col gap-2 py-2 justify-around">
               {dropdownArr.map((e) => {
                 return (
-                  <div className="hover:bg-fourthy" onClick={e.action}>
+                  <div
+                    className="hover:bg-fourthy"
+                    onClick={e.action}
+                    key={e.hebName}
+                  >
                     {e.link ? (
                       <a className="mx-3" href={`#${e.link}`}>
                         {e.hebName}

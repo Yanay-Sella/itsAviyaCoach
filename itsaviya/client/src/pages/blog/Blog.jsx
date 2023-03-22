@@ -50,8 +50,9 @@ const Blog = () => {
         imageSrc={blogImg}
       />
       <div className="mt-16 flex flex-col gap-12">
+        {/*{id, name, title, content, date} */}
         {blogArr.map((element) => (
-          <PostPrev blogSummary={element} /> //here, the posts preview page will get a *summary* about the posts
+          <PostPrev blogSummary={element} key={element._id} /> //here, the posts preview page will get a *summary* about the posts
         ))}
       </div>
       <Footer />

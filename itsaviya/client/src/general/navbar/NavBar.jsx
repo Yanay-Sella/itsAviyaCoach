@@ -48,11 +48,11 @@ const NavBar = () => {
                 { link: "info", hebName: "מידע" },
                 { hebName: "להתנתק", action: handleLogOut },
               ]}
-              key={"משתמש"}
+              key={"user"}
             />
           ) : (
             <div onClick={handleClickOpen}>
-              <NavBtn text={"להתחבר"} size="lg" key={"להתחבר"} />
+              <NavBtn text={"להתחבר"} size="lg" key={"logIn"} />
             </div>
           )}
           <Auth open={open} handleClose={handleClose} key={open} />
@@ -67,7 +67,7 @@ const NavBar = () => {
             { link: "personal", hebName: "אישיים" },
             { link: "group", hebName: "קבוצתיים" },
           ]}
-          key={"אימונים"}
+          key={"plans"}
         />
       </div>
 
@@ -83,13 +83,13 @@ const NavBar = () => {
       </div>
 
       <div className="flex flex-wrap md:gap-14 gap-5 justify-end">
-        <NavBtn text="בלוג" to="/blog" size="lg" key={"בלוג"} />
+        <NavBtn text="בלוג" to="/blog" size="lg" key={"blog"} />
         <NavBtn
           text="צרי קשר"
           to="https://api.whatsapp.com/message/DUMPMY75L6YRC1?autoload=1&app_absent=0"
           size="lg"
           newTab={true}
-          key={"צרי קשר"}
+          key={"contact"}
         />
       </div>
     </div>

@@ -60,13 +60,13 @@ const handleLogIn = async (req, res) => {
   //creating tokens with authenticating correct username and password
 
   const accessToken = jwt.sign(
-    { userInfo: { userName: user.userName } },
+    { userInfo: { userName: user.userName, role: user.role } },
     process.env.ACCESS_TOKEN_SECRET,
     { expiresIn: "300000ms" } // 5 minutes
   );
 
   const refreshToken = jwt.sign(
-    { userName: user.userName },
+    { userInfo: { userName: user.userName, role: user.role } },
     process.env.REFRESH_TOKEN_SECRET,
     { expiresIn: "1d" } // 1 day
   );

@@ -16,6 +16,7 @@ const getRole = async (req, res) => {
   const userName = req.userName;
   let isAdmin;
   try {
+    //TODO: not sure if to use db or jwt to get the role
     const foundUser = await User.findOne({ userName });
     const role = foundUser.role;
     isAdmin = `${role}` === `${process.env.USER_ADMIN_ROLE}`;

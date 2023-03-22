@@ -15,11 +15,17 @@ const handleRefreshToken = async (req, res) => {
 
   //evaluate jwt
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
-    if (err || user.userName !== decoded.userName) return res.sendStatus(403); //forbidden
+    if (err || user.userName !== decoded.userInfo.userName)
+      return res.sendStatus(403); //forbidden
     const accessToken = jwt.sign(
-      { userInfo: { userName: decoded.userName, role: decoded.role } },
+      {
+        userInfo: {
+          userName: decoded.userInfo.userName,
+          role: decoded.userInfo.role,
+        },
+      },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "300000ms" } //5 minutes
+      { expiresIn: "100000ms" } //5 minutes = 300000ms
     );
     res.json({ accessToken });
   });

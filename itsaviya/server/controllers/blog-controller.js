@@ -22,6 +22,8 @@ const postNewBlog = async (req, res) => {
   });
   try {
     await newPost.save();
+    console.log("saved");
+    res.json(newPost);
   } catch (error) {
     console.log(error);
   }
