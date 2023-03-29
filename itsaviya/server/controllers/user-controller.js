@@ -5,7 +5,10 @@ const getUser = async (req, res) => {
   console.log("getting user");
   let foundUser;
   try {
-    foundUser = await User.findOne({ userName }, { password: 0, role: 0 }); // searching for user by userName
+    foundUser = await User.findOne(
+      { userName },
+      { password: 0, role: 0, refreshToken: 0, _id: 0 }
+    ); // searching for user by userName
   } catch (error) {
     console.log(error);
   }
