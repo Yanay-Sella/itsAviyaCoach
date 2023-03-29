@@ -6,6 +6,8 @@ import Blog from "./pages/blog/Blog.jsx";
 import PostPage from "./pages/blog/PostPage.jsx";
 import NewPost from "./pages/blog/NewPost.jsx";
 
+import ProtectedRoutes from "./ProtectedRoutes.jsx";
+
 import { createTheme, ThemeProvider } from "@mui/material";
 
 const theme = createTheme({
@@ -28,10 +30,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <Routes>
           <Route exact path="/home" element={<Page children={<Home />} />} />
-          {/* login and signup */}
-          {/* <Route exact path="/login" element={<Login />} /> */}
-          {/* <Route exact path="/signup" element={<SignUp />} /> */}
-          {/* <Route exact path="/auth" element={<Auth />} /> */}
+
           {/* blog */}
           <Route exact path="/blog" element={<Page children={<Blog />} />} />
           <Route
@@ -40,7 +39,12 @@ function App() {
           />
 
           {/* ~!~should not be accessible to anyone~!~ */}
-          <Route path="blog/new" element={<Page children={<NewPost />} />} />
+          <Route element={<ProtectedRoutes />}>
+            <Route path="blog/new" element={<Page children={<NewPost />} />} />
+          </Route>
+
+          {/*TODO: 404 page not found */}
+          {/* <Route path="*" element={<Missing />} /> */}
         </Routes>
       </ThemeProvider>
     </div>

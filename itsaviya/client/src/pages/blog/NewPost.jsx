@@ -1,14 +1,17 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import NavBar from "../../general/navbar/NavBar";
 import Footer from "../../general/footer/Footer";
 import BtnAvi from "../../general/BtnAvi";
 import samplePostImg from "../../general/images/4x.jpg";
 import InfoSection from "../../general/InfoSection";
 
+import UseAxiosPrivate from "../../hooks/UseAxiosPrivate";
+
 const NewPost = () => {
-  const url = process.env.REACT_APP_SERVER_URL;
+  const axiosPrivate = UseAxiosPrivate();
+  const navigate = useNavigate();
 
   //forming a blogModel. (date will be added automatically)
   const [name, setName] = useState("");
@@ -43,6 +46,7 @@ const NewPost = () => {
 
   const editPrgrph = (event) => {
     const { name, value, id } = event.target;
+
     setArticle((prev) => {
       return prev.map((element, index) => {
         if (index == id) {
@@ -61,14 +65,13 @@ const NewPost = () => {
 
     if (!window.confirm("את בטוחה שאת רוצה להעלות את הפוסט?")) return;
     else {
+      console.log("bruh?");
       try {
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(post),
-        });
+        console.log("BRUH");
+        const response = await axiosPrivate.post("blog", post); // sending the post
+        if (response.statusText === "OK") {
+          navigate("/blog");
+        }
       } catch (error) {
         console.log(error);
       }
@@ -108,7 +111,7 @@ const NewPost = () => {
       <div className="flex flex-col gap-4">
         {article.map((e, index) => {
           return (
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4" key={index}>
               <h1>כותרת</h1>
               <input
                 type="text"
@@ -147,9 +150,9 @@ const NewPost = () => {
           />
 
           <div className="flex flex-col gap-7 w-5/6 self-center">
-            {article.map((e) => {
+            {article.map((e, index) => {
               return (
-                <div className="">
+                <div key={index}>
                   <h1 className="text-4xl mb-5">{e.header}</h1>
                   <p className="text-xl">{e.text}</p>
                 </div>

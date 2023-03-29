@@ -1,4 +1,5 @@
 const express = require("express");
+const verifyAdmin = require("../middleware/verifyAdmin");
 
 const {
   getBlogByTitle,
@@ -11,6 +12,6 @@ const router = express.Router();
 router.get("/:title", getBlogByTitle);
 router.get("/", getAllBlogs);
 
-router.post("/", postNewBlog);
+router.post("/", verifyAdmin, postNewBlog);
 
 module.exports = router;
