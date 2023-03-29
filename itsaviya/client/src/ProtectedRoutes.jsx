@@ -18,7 +18,7 @@ const ProtectedRoutes = () => {
       try {
         const response = await axiosPrivate.get("user/role");
         const approve = response.data;
-        setIsAdmin(approve);
+        setIsAdmin(approve); //only place "isAdmin is set to true from the server"
       } catch (error) {
         console.log(error);
         setIsAdmin(false);

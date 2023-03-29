@@ -12,7 +12,6 @@ const getAllBlogs = async (req, res) => {
 };
 
 const postNewBlog = async (req, res) => {
-  console.log(req.body);
   const { name, title, intro, content } = req.body;
   const newPost = new Blog({
     name,

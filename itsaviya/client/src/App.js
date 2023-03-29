@@ -43,7 +43,7 @@ function App() {
             <Route path="blog/new" element={<Page children={<NewPost />} />} />
           </Route>
 
-          {/* 404 page not found */}
+          {/*TODO: 404 page not found */}
           {/* <Route path="*" element={<Missing />} /> */}
         </Routes>
       </ThemeProvider>

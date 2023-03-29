@@ -23,7 +23,6 @@ const getRole = async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-  console.log(isAdmin);
   res.json(isAdmin);
 };
 

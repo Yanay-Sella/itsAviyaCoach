@@ -1,6 +1,7 @@
 const express = require("express");
 
 const verifyJWT = require("../middleware/verifyJWT");
+const verifyAdmin = require("../middleware/verifyAdmin");
 
 const {
   handleSignUp,
@@ -24,6 +25,6 @@ router.get("/refresh", handleRefreshToken);
 
 //user api
 router.get("/", verifyJWT, getUser);
-router.get("/role", verifyJWT, getRole);
+router.get("/role", verifyAdmin, getRole); // double layer security
 
 module.exports = router;
