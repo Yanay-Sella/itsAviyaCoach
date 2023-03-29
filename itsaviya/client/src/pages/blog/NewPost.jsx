@@ -7,7 +7,7 @@ import BtnAvi from "../../general/BtnAvi";
 import samplePostImg from "../../general/images/4x.jpg";
 import InfoSection from "../../general/InfoSection";
 
-import UseAxiosPrivate from "../../hooks/UseAxiosPrivate";
+import UseAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 const NewPost = () => {
   const axiosPrivate = UseAxiosPrivate();

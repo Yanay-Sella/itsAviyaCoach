@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, Navigate, Outlet } from "react-router-dom";
 import useAuth from "./hooks/useAuth";
-import UseAxiosPrivate from "./hooks/UseAxiosPrivate";
+import UseAxiosPrivate from "./hooks/useAxiosPrivate";
 
 const ProtectedRoutes = () => {
   const axiosPrivate = UseAxiosPrivate();
