@@ -7,8 +7,6 @@ import NavBtn from "./NavBtn.jsx";
 import Auth from "../../pages/auth/Auth";
 import Logo from "../images/aviyaLogo2Small.png";
 import Snackbar from "@mui/material/Snackbar";
-import CloseIcon from "@mui/icons-material/Close";
-import IconButton from "@mui/material/IconButton";
 
 // custom hooks
 import useAuth from "../../hooks/useAuth";
@@ -16,12 +14,17 @@ import axios from "../../api/axios.js";
 import UseAxiosPrivate from "../../hooks/useAxiosPrivate.jsx";
 
 const NavBar = () => {
-  const { isLogged, setAuth } = useAuth();
+  const { isLogged, setAuth, auth } = useAuth();
   const axiosPrivate = UseAxiosPrivate();
   const url = useLocation().pathname;
   const isHome = url === "/home";
+
   const [open, setOpen] = useState(false);
   const [openSnack, setOpenSnack] = useState(false);
+  const [userInfo, setUserInfo] = useState({
+    email: "please log in",
+    userName: undefined,
+  });
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -52,11 +55,16 @@ const NavBar = () => {
   };
 
   const getUserInfo = async () => {
-    try {
-      const response = await axiosPrivate.get("user/");
-      console.log(response.data);
-    } catch (error) {
-      console.log(error);
+    let response;
+    if (!auth) {
+      // try {
+      //   response = await axiosPrivate.get("user/");
+      //   console.log(response);
+      // } catch (error) {
+      //   console.log(error);
+      // }
+      // if (response.statusText !== "OK") return;
+      // setUserInfo({ ...response.data });
     }
     openTheSnack();
   };
@@ -70,20 +78,22 @@ const NavBar = () => {
             open={openSnack}
             autoHideDuration={4000}
             onClose={handleCloseSnack}
-            message="Note archived"
+            message={`אימייל: ${auth.email} שם משתמש: ${auth.userName}`}
             anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
           />
           {isLogged ? (
-            <NavBtn
-              text="משתמש"
-              size="lg"
-              dropdown={true}
-              dropdownArr={[
-                { hebName: "מידע", action: getUserInfo },
-                { hebName: "להתנתק", action: handleLogOut },
-              ]}
-              key={"user"}
-            />
+            <div dir="rtl">
+              <NavBtn
+                text={`שלום ${auth.userName}!`}
+                size="lg"
+                dropdown={true}
+                dropdownArr={[
+                  { hebName: "מידע", action: getUserInfo },
+                  { hebName: "להתנתק", action: handleLogOut },
+                ]}
+                key={"user"}
+              />
+            </div>
           ) : (
             <div onClick={handleClickOpen}>
               <NavBtn text={"להתחבר"} size="lg" key={"logIn"} />

@@ -67,8 +67,6 @@ const Auth = ({ open, handleClose }) => {
 
       const resUser = await response.json(); // the user object, contains: {id, username, email, accessToken}
 
-      const { userId } = resUser;
-
       setAuth(resUser);
 
       //some animation and cleaning values at the end
