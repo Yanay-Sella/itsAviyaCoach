@@ -17,12 +17,13 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 
 const Auth = ({ open, handleClose }) => {
-  const { setAuth } = useAuth();
+  const { setAuth, auth } = useAuth();
 
   const [signUp, setSignUp] = useState(false);
 
+  //user info
   const [userName, setUserName] = useState("");
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(auth?.email ? auth.email : "");
   const [password, setPassword] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
@@ -66,8 +67,6 @@ const Auth = ({ open, handleClose }) => {
       });
 
       const resUser = await response.json(); // the user object, contains: {id, username, email, accessToken}
-
-      const { userId } = resUser;
 
       setAuth(resUser);
 
@@ -122,7 +121,15 @@ const Auth = ({ open, handleClose }) => {
               signUp ? "h-96" : "h-80"
             } bg-primary p-3 text-xl`}
           >
-            <h1 className="text-thirdy">{signUp ? "הרשמה" : "התחברות"}</h1>
+            <h1 className="text-thirdy">
+              {signUp
+                ? "הרשמה"
+                : `${
+                    auth?.userName
+                      ? `היי ${auth.userName}! אנא בצעי אימות מחדש`
+                      : "התחברות"
+                  }`}
+            </h1>
             <DialogContent dir="rtl">
               <DialogContentText></DialogContentText>
               {signUp && (

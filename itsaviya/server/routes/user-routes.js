@@ -1,3 +1,5 @@
+// path: /api/user
+
 const express = require("express");
 
 const verifyJWT = require("../middleware/verifyJWT");

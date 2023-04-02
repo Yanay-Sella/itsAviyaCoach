@@ -9,7 +9,12 @@ import {
   faFacebook,
 } from "@fortawesome/free-brands-svg-icons";
 
+//custom hooks
+import useAuth from "../../hooks/useAuth";
+
 const Footer = () => {
+  const { isLogged, setOpenAuth } = useAuth();
+
   return (
     <div className="flex justify-between items-center self-stretch py-14 md:px-0 px-5 max-w-7xl">
       <section className="flex flex-col items-center">
@@ -35,7 +40,11 @@ const Footer = () => {
 
       <section className="flex flex-col justify-between self-stretch ">
         <h1 className="text-xl">Header</h1>
-        <FootLink text="contact" to="#" size="md" />
+        {isLogged ? (
+          <FootLink text={`להתנתק`} size="md" />
+        ) : (
+          <FootLink text={`להתחבר`} size="md" action={setOpenAuth} />
+        )}
         <FootLink text="contact" to="#" size="md" />
       </section>
 

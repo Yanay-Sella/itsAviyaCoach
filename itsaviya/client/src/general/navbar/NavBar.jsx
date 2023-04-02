@@ -1,27 +1,41 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 // components
 import NavBtn from "./NavBtn.jsx";
 import Auth from "../../pages/auth/Auth";
 import Logo from "../images/aviyaLogo2Small.png";
+import Snackbar from "@mui/material/Snackbar";
 
 // custom hooks
 import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios.js";
 
 const NavBar = () => {
-  const { isLogged, setAuth, userInfo } = useAuth();
+  const { isLogged, setAuth, auth, openAuth, setOpenAuth } = useAuth();
+
   const url = useLocation().pathname;
   const isHome = url === "/home";
-  const [open, setOpen] = React.useState(false);
+
+  // const [open, setOpen] = useState(false);
+  const [openSnack, setOpenSnack] = useState(false);
 
   const handleClickOpen = () => {
-    setOpen(true);
+    setOpenAuth(true);
   };
   const handleClose = () => {
-    setOpen(false);
+    setOpenAuth(false);
   };
+
+  //user info snack bar
+  const openTheSnack = () => {
+    setOpenSnack(true);
+  };
+  const handleCloseSnack = (event, reason) => {
+    setOpenSnack(false);
+  };
+
   const handleLogOut = async () => {
     try {
       //sending a logout request to clear the cookie and delete the AT from DB
@@ -35,27 +49,42 @@ const NavBar = () => {
     setAuth({}); // clearing the auth state, also clears the local storage.
   };
 
+  const getUserInfo = async () => {
+    openTheSnack();
+  };
+
   return (
     <div className="flex items-center self-stretch bg-primary h-22 justify-around px-20 fixed top-0 left-0 right-0 z-10 gap-5">
       <div className="flex flex-wrap md:gap-14 gap-5">
-        <div>
+        <div dir="rtl">
+          {/* TODO: use different popup */}
+          <Snackbar
+            color="info"
+            open={openSnack}
+            autoHideDuration={4000}
+            onClose={handleCloseSnack}
+            message={`אימייל: ${auth.email} שם משתמש: ${auth.userName}`}
+            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          />
           {isLogged ? (
-            <NavBtn
-              text="משתמש"
-              size="lg"
-              dropdown={true}
-              dropdownArr={[
-                { link: "info", hebName: "מידע" },
-                { hebName: "להתנתק", action: handleLogOut },
-              ]}
-              key={"user"}
-            />
+            <div dir="rtl">
+              <NavBtn
+                text={`שלום ${auth.userName}!`}
+                size="lg"
+                dropdown={true}
+                dropdownArr={[
+                  { hebName: "מידע", action: getUserInfo },
+                  { hebName: "להתנתק", action: handleLogOut },
+                ]}
+                key={"user"}
+              />
+            </div>
           ) : (
             <div onClick={handleClickOpen}>
               <NavBtn text={"להתחבר"} size="lg" key={"logIn"} />
             </div>
           )}
-          <Auth open={open} handleClose={handleClose} key={open} />
+          <Auth open={openAuth} handleClose={handleClose} key={openAuth} />
         </div>
 
         <NavBtn
