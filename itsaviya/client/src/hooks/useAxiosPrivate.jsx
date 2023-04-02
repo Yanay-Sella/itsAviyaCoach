@@ -5,7 +5,7 @@ import useAuth from "./useAuth";
 
 const UseAxiosPrivate = () => {
   const refresh = UseRefreshToken();
-  const { auth, setAuth } = useAuth();
+  const { auth, setOpenAuth } = useAuth();
 
   useEffect(() => {
     const requestIntercept = axiosPrivate.interceptors.request.use(
@@ -25,29 +25,22 @@ const UseAxiosPrivate = () => {
 
         //if acceessToken exipred (403)
         if (error?.response?.status === 403 && !prevRequest?.sent) {
-          console.log("getting new refresh token");
+          console.log("getting new access token");
           prevRequest.sent = true;
           let newAccessToken;
           try {
-            newAccessToken = await refresh(); //getting a new access token
+            newAccessToken = await refresh(); //getting a new access token and setting the user
           } catch (error) {
             console.log("failed to refresh");
           }
-          //was not able to get new accessToken need to reLog
+          //was not able to get new accessToken need to log in (pop up)
           if (!newAccessToken) {
+            setOpenAuth(true);
           }
           prevRequest.headers["Authorization"] = `Bearer ${newAccessToken}`; //attaching the new access token to the old request
           return axiosPrivate(prevRequest); // making the request again
         }
 
-        // //if refreshToken expired (401)
-        // if (error?.response?.status === 401 && !prevRequest?.sent) {
-        //   prevRequest.send = true;
-        //   console.log("need to re-logIn");
-        //   setAuth((prev) => {
-        //     return { ...prev, accessToken: "" };
-        //   });
-        // }
         return Promise.reject(error);
       }
     );

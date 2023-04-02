@@ -13,19 +13,19 @@ import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios.js";
 
 const NavBar = () => {
-  const { isLogged, setAuth, auth } = useAuth();
+  const { isLogged, setAuth, auth, openAuth, setOpenAuth } = useAuth();
 
   const url = useLocation().pathname;
   const isHome = url === "/home";
 
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
   const [openSnack, setOpenSnack] = useState(false);
 
   const handleClickOpen = () => {
-    setOpen(true);
+    setOpenAuth(true);
   };
   const handleClose = () => {
-    setOpen(false);
+    setOpenAuth(false);
   };
 
   //user info snack bar
@@ -56,7 +56,8 @@ const NavBar = () => {
   return (
     <div className="flex items-center self-stretch bg-primary h-22 justify-around px-20 fixed top-0 left-0 right-0 z-10 gap-5">
       <div className="flex flex-wrap md:gap-14 gap-5">
-        <div>
+        <div dir="rtl">
+          {/* TODO: use different popup */}
           <Snackbar
             color="info"
             open={openSnack}
@@ -83,7 +84,7 @@ const NavBar = () => {
               <NavBtn text={"להתחבר"} size="lg" key={"logIn"} />
             </div>
           )}
-          <Auth open={open} handleClose={handleClose} key={open} />
+          <Auth open={openAuth} handleClose={handleClose} key={openAuth} />
         </div>
 
         <NavBtn

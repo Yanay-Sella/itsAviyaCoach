@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 //TODO: add conflicts
+//TODO: add validation (email, password, userName)
 const handleSignUp = async (req, res) => {
   const { userName, email, password } = req.body;
   console.log(req.body);
@@ -62,7 +63,7 @@ const handleLogIn = async (req, res) => {
   const accessToken = jwt.sign(
     { userInfo: { userName: user.userName, role: user.role } },
     process.env.ACCESS_TOKEN_SECRET,
-    { expiresIn: "3000ms" } // 5 minutes
+    { expiresIn: "300000ms" } // 5 minutes = 300000ms
   );
 
   const refreshToken = jwt.sign(
@@ -90,7 +91,6 @@ const handleLogIn = async (req, res) => {
 };
 
 const handleLogout = async (req, res) => {
-  //TODO: on client, delete the access token when clicking log out (from auth state)
   const cookies = req.cookies;
 
   if (!cookies.jwt) return res.sendStatus(204); //Nothing to delete anyway

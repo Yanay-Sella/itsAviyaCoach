@@ -15,7 +15,6 @@ const UseRefreshToken = () => {
     } catch (error) {
       console.log(error);
     }
-    console.log(response);
     if (response) accessToken = response.data.accessToken;
 
     //update the user info with the new access token (and updating it in the local storage)

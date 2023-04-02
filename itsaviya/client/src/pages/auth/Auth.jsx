@@ -21,8 +21,9 @@ const Auth = ({ open, handleClose }) => {
 
   const [signUp, setSignUp] = useState(false);
 
+  //user info
   const [userName, setUserName] = useState("");
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(auth?.email ? auth.email : "");
   const [password, setPassword] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);

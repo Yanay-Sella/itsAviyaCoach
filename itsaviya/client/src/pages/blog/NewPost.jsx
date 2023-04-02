@@ -65,9 +65,7 @@ const NewPost = () => {
 
     if (!window.confirm("את בטוחה שאת רוצה להעלות את הפוסט?")) return;
     else {
-      console.log("bruh?");
       try {
-        console.log("BRUH");
         const response = await axiosPrivate.post("blog", post); // sending the post
         if (response.statusText === "OK") {
           navigate("/blog");
