@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 // components
@@ -11,20 +11,15 @@ import Snackbar from "@mui/material/Snackbar";
 // custom hooks
 import useAuth from "../../hooks/useAuth";
 import axios from "../../api/axios.js";
-import UseAxiosPrivate from "../../hooks/useAxiosPrivate.jsx";
 
 const NavBar = () => {
   const { isLogged, setAuth, auth } = useAuth();
-  const axiosPrivate = UseAxiosPrivate();
+
   const url = useLocation().pathname;
   const isHome = url === "/home";
 
   const [open, setOpen] = useState(false);
   const [openSnack, setOpenSnack] = useState(false);
-  const [userInfo, setUserInfo] = useState({
-    email: "please log in",
-    userName: undefined,
-  });
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -55,17 +50,6 @@ const NavBar = () => {
   };
 
   const getUserInfo = async () => {
-    let response;
-    if (!auth) {
-      // try {
-      //   response = await axiosPrivate.get("user/");
-      //   console.log(response);
-      // } catch (error) {
-      //   console.log(error);
-      // }
-      // if (response.statusText !== "OK") return;
-      // setUserInfo({ ...response.data });
-    }
     openTheSnack();
   };
 

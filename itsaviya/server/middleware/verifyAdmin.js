@@ -16,7 +16,10 @@ const verifyAdmin = (req, res, next) => {
 
   console.log("verify JWTadmin");
 
-  if (!authHeader?.startsWith("Bearer ")) return res.sendStatus(401); // Unauthorized
+  if (!authHeader?.startsWith("Bearer ")) {
+    console.log("not loggedIn");
+    return res.sendStatus(401);
+  } // Unauthorized
   const token = authHeader.split(" ")[1]; //"Bearer <token>"
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
