@@ -13,7 +13,7 @@ import {
 import useAuth from "../../hooks/useAuth";
 
 const Footer = () => {
-  const { isLogged, setOpenAuth } = useAuth();
+  const { isLogged, setOpenAuth, handleLogOut } = useAuth();
 
   return (
     <div className="flex justify-between items-center self-stretch py-14 md:px-0 px-5 max-w-7xl">
@@ -23,12 +23,14 @@ const Footer = () => {
           <a
             href="https://www.tiktok.com/@aviyafit"
             className="transition-all hover:scale-110"
+            target="_blank"
           >
             <FontAwesomeIcon icon={faTiktok} />
           </a>
           <a
             href="https://www.instagram.com/itsaviyacoach/"
             className="transition-all hover:scale-110"
+            target="_blank"
           >
             <FontAwesomeIcon icon={faInstagram} />
           </a>
@@ -38,20 +40,25 @@ const Footer = () => {
         </div>
       </section>
 
-      <section className="flex flex-col justify-between self-stretch ">
-        <h1 className="text-xl">Header</h1>
+      <section className="flex flex-col justify-between self-stretch items-end">
+        <h1 className="text-xl font-semibold">משתמש</h1>
         {isLogged ? (
-          <FootLink text={`להתנתק`} size="md" />
+          <FootLink text={`להתנתק`} size="md" action={handleLogOut} />
         ) : (
           <FootLink text={`להתחבר`} size="md" action={setOpenAuth} />
         )}
-        <FootLink text="contact" to="#" size="md" />
+        <FootLink text="מידע אישי" to="#" size="md" />
       </section>
 
-      <section className="flex flex-col justify-between self-stretch">
-        <h1 className="text-xl">Header</h1>
-        <FootLink text="contact" to="#" size="md" />
-        <FootLink text="contact" to="#" size="md" />
+      <section className="flex flex-col justify-between self-stretch items-end">
+        <h1 className="text-xl font-semibold">כושר</h1>
+        <FootLink
+          text="צרי קשר"
+          to="https://api.whatsapp.com/message/DUMPMY75L6YRC1?autoload=1&app_absent=0"
+          size="md"
+          newTab={true}
+        />
+        <FootLink text="בלוג" to="/blog" size="md" />
       </section>
     </div>
   );

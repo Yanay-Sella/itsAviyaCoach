@@ -10,10 +10,9 @@ import Snackbar from "@mui/material/Snackbar";
 
 // custom hooks
 import useAuth from "../../hooks/useAuth";
-import axios from "../../api/axios.js";
 
 const NavBar = () => {
-  const { isLogged, setAuth, auth, openAuth, setOpenAuth } = useAuth();
+  const { isLogged, auth, openAuth, setOpenAuth, handleLogOut } = useAuth();
 
   const url = useLocation().pathname;
   const isHome = url === "/home";
@@ -34,19 +33,6 @@ const NavBar = () => {
   };
   const handleCloseSnack = (event, reason) => {
     setOpenSnack(false);
-  };
-
-  const handleLogOut = async () => {
-    try {
-      //sending a logout request to clear the cookie and delete the AT from DB
-      await axios.get("user/logout", {
-        withCredentials: true,
-      });
-    } catch (error) {
-      console.log(error);
-      return; // not clearing the auth if logout failed
-    }
-    setAuth({}); // clearing the auth state, also clears the local storage.
   };
 
   const getUserInfo = async () => {

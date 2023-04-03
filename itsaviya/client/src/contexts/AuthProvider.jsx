@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from "react";
+import axios from "../api/axios";
 
 const AuthContext = createContext({});
 
@@ -22,9 +23,23 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem("user", JSON.stringify(auth));
   }, [auth]); // whenever "auth" changes, we set the local storage value anew
 
+  //can be used in many places through out the app
+  const handleLogOut = async () => {
+    try {
+      //sending a logout request to clear the cookie and delete the AT from DB
+      await axios.get("user/logout", {
+        withCredentials: true,
+      });
+    } catch (error) {
+      console.log(error);
+      return; // not clearing the auth if logout failed
+    }
+    setAuth({}); // clearing the auth state, also clears the local storage.
+  };
+
   return (
     <AuthContext.Provider
-      value={{ auth, setAuth, isLogged, openAuth, setOpenAuth }}
+      value={{ auth, setAuth, isLogged, openAuth, setOpenAuth, handleLogOut }}
     >
       {children}
     </AuthContext.Provider>
