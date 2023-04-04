@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 // import * as dotenv from "dotenv";
 // dotenv.config();
+import "../../index.css";
 
 import Page from "../Page";
 import NavBar from "../../general/navbar/NavBar";
@@ -24,7 +25,6 @@ const Blog = () => {
     </p>
   );
 
-  //on load
   useEffect(() => {
     const getBlogsArr = async () => {
       try {
@@ -41,7 +41,7 @@ const Blog = () => {
   }, []);
 
   return (
-    <div className="flex flex-col mt-28 max-w-6xl md:gap-0 gap-20">
+    <div className="flex flex-col mt-28 max-w-6xl md:gap-0 gap-20 md:items-stretch items-center">
       <InfoSection
         leftImg={true}
         header="הבלוג שלי"
@@ -49,7 +49,7 @@ const Blog = () => {
         text={blogP}
         imageSrc={blogImg}
       />
-      <div className="mt-16 flex flex-col gap-12">
+      <div className="mt-16 flex flex-col gap-12 md:max-w-full max-w-xxs">
         {/*{id, name, title, content, date} */}
         {blogArr.reverse().map((element) => (
           <PostPrev blogSummary={element} key={element._id} /> //here, the posts preview page will get a *summary* about the posts

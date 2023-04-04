@@ -6,14 +6,11 @@ const PersonalPlans = () => {
     <section
       className="flex flex-col self-center items-center gap-14 sectiony py-8 justify-center "
       id="personal-plans"
-      // style={{ width: "100vw" }}
     >
-      <div className="flex flex-col items-center gap-4">
+      <div className="flex flex-col items-center gap-4 text-center">
         <h1 className="text-4xl">אז מה הכי מתאים לך?</h1>
-        {/* <h1 className="text-2xl">Personal attention</h1>
-        <h1 className="text-lg">Focus on your own goals</h1> */}
       </div>
-      <div className="flex gap-10 md:gap-32 items-center sm:flex-row flex-col self-stretch">
+      <div className="flex md:gap-32 gap-10 items-center md:flex-row flex-col self-stretch">
         <PlanCard
           frontText="אימון יחיד"
           header="אימון יחיד"

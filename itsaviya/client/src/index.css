@@ -135,3 +135,12 @@ code {
 .dropdown:hover .dropdown-content {
   /* display: block; */
 }
+
+@media (max-width: 768px) {
+  .md\:max-w-xxs {
+    max-width: 15rem;
+  }
+}
+.max-w-xxs {
+  max-width: 15rem;
+}
