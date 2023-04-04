@@ -1,6 +1,5 @@
 import React from "react";
 import NavBar from "../general/navbar/NavBar";
-import Footer from "../general/footer/Footer"; // no need i guess
 
 const Page = ({ children }) => {
   return (

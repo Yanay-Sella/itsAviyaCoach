@@ -7,7 +7,7 @@ const PostPrev = ({ blogSummary }) => {
   const { name, title, intro, content, date, imageSrc } = blogSummary;
   return (
     <Link to={`/blog/${name}`}>
-      <section className="transition-all flex justify-end gap-16 border-2 border-thirdy rounded-lg hover:-translate-y-1 hover:cursor-pointer shadow-md hover:shadow-xl">
+      <section className="transition-all flex justify-end gap-16 border-2 border-fourthy rounded-lg hover:-translate-y-1 hover:cursor-pointer shadow-md hover:shadow-xl">
         <div className="flex flex-col gap-4">
           <h1 className="header text-3xl">{title}</h1>
           <div>
