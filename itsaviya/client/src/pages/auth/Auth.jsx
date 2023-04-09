@@ -97,7 +97,7 @@ const Auth = ({ open, handleClose }) => {
       <Dialog open={open} onClose={handleClose}>
         {isLoading ? (
           <div
-            className={`w-96 ${
+            className={`md:w-96 w-80 ${
               signUp ? "h-96" : "h-80"
             } bg-primary p-3 text-xl flex justify-center items-center text-thirdy`}
           >
@@ -116,8 +116,9 @@ const Auth = ({ open, handleClose }) => {
             )}
           </div>
         ) : (
+          //regular sign up/in page
           <div
-            className={`w-96 ${
+            className={`md:w-96 w-80 ${
               signUp ? "h-96" : "h-80"
             } bg-primary p-3 text-xl`}
           >
