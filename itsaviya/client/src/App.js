@@ -26,7 +26,7 @@ const theme = createTheme({
 
 function App() {
   return (
-    <div className="">
+    <div>
       <ThemeProvider theme={theme}>
         <Routes>
           <Route exact path="/home" element={<Page children={<Home />} />} />

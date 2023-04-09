@@ -50,10 +50,6 @@ code {
   padding-right: 1.75rem;
 }
 
-.post-prev {
-  min-height: 400px;
-}
-
 .flip-card {
   background-color: transparent;
   width: 200px;
@@ -134,10 +130,6 @@ code {
   display: block;
 }
 
-.dropdown:hover .dropdown-content {
-  /* display: block; */
-}
-
 @media (max-width: 768px) {
   .md\:max-w-xxs {
     max-width: 15rem;
@@ -145,4 +137,12 @@ code {
 }
 .max-w-xxs {
   max-width: 15rem;
+}
+
+.post-prev-text {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 6;
+  white-space: pre-wrap; /* let the text wrap preserving spaces */
 }
