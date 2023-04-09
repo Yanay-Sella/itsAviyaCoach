@@ -6,7 +6,7 @@ const NavBtn = ({ text, to, size, dropdown, dropdownArr, newTab }) => {
 
   return (
     <div
-      className={`flex justify-center self-center align-center rounded-full text-center hover:underline hover:cursor-pointer dropdown text-${size} w-20`}
+      className={`flex justify-center self-center align-center rounded-full text-center hover:underline hover:cursor-pointer dropdown text-${size} md:w-20 w-32`}
       onMouseOver={() => {
         setChecked(true);
       }}

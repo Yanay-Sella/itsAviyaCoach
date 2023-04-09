@@ -2,7 +2,10 @@ import React from "react";
 
 const Join = () => {
   return (
-    <div className="flex flex-col justify-between items-center bg-secondary py-6 gap-6 text-white self-center w-screen">
+    <div
+      className="flex flex-col justify-between items-center bg-secondary py-6 gap-6 text-white self-center"
+      style={{ width: "99vw" }}
+    >
       <div className="flex flex-col shrink items-center gap-4">
         <p className="text-lg mb-2"></p>
         <p
