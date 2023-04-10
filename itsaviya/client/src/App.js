@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 
 import Page from "./pages/Page.jsx";
 import Home from "./pages/home/Home.jsx";
@@ -40,11 +40,13 @@ function App() {
 
           {/* ~!~should not be accessible to anyone~!~ */}
           <Route element={<ProtectedRoutes />}>
-            <Route path="blog/new" element={<Page children={<NewPost />} />} />
+            <Route
+              path="blogger/new"
+              element={<Page children={<NewPost />} />}
+            />
           </Route>
 
-          {/*TODO: 404 page not found */}
-          {/* <Route path="*" element={<Missing />} /> */}
+          <Route path="*" element={<Navigate to="/home" replace />} />
         </Routes>
       </ThemeProvider>
     </div>

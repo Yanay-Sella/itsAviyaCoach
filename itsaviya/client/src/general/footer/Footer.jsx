@@ -16,7 +16,7 @@ const Footer = () => {
   const { isLogged, setOpenAuth, handleLogOut } = useAuth();
 
   return (
-    <div className="flex justify-between items-center self-stretch py-14 md:px-0 px-5 max-w-7xl">
+    <div className="flex justify-between items-center self-stretch py-14 md:px-0 px-5 w-full max-w-7xl">
       <section className="flex flex-col items-center">
         <img src={logo} alt="logo" className="h-28 w-28" />
         <div className="flex gap-4 text-xl">

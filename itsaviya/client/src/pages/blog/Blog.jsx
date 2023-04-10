@@ -28,10 +28,6 @@ const Blog = () => {
   );
 
   useEffect(() => {
-    console.log(isLoading);
-  }, [isLoading]);
-
-  useEffect(() => {
     const getBlogsArr = async () => {
       try {
         setIsLoading(true);

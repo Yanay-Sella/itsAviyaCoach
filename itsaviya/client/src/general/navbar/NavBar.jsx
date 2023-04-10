@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 
 // components
 import NavBtn from "./NavBtn.jsx";
@@ -87,9 +87,9 @@ const NavBar = () => {
       </div>
 
       <div className="transition-all hover:scale-105 hover:cursor-pointer">
-        <a href="/home">
+        <Link to="/home">
           <img src={Logo} alt="" className="h-28 w-28 justify-self-start" />
-        </a>
+        </Link>
       </div>
 
       <div className="flex flex-wrap md:gap-14 gap-5 justify-end">
