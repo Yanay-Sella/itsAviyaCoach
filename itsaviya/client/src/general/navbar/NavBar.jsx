@@ -86,12 +86,7 @@ const NavBar = () => {
         />
       </div>
 
-      <div
-        className="transition-all hover:scale-105 hover:cursor-pointer"
-        // onClick={async () => {
-        //   await axiosPrivate("test", { signal: AbortController.signal });
-        // }}
-      >
+      <div className="transition-all hover:scale-105 hover:cursor-pointer">
         <a href="/home">
           <img src={Logo} alt="" className="h-28 w-28 justify-self-start" />
         </a>
