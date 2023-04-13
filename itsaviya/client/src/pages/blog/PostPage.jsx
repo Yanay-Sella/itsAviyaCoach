@@ -37,7 +37,6 @@ const PostPage = () => {
       {!post ? (
         <div className="flex flex-col mt-60 max-w-6xl md:gap-4 gap-20">
           {isLoading ? <CircularProgress color="info" /> : <PostNotFound />}
-          <Footer />
         </div>
       ) : (
         <div className="flex flex-col mt-28 max-w-6xl md:gap-4 gap-20">
