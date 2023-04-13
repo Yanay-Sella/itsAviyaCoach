@@ -1,5 +1,6 @@
 import React from "react";
 import Fade from "@mui/material/Fade";
+import { Link } from "react-router-dom";
 
 const NavBtn = ({ text, to, size, dropdown, dropdownArr, newTab }) => {
   const [checked, setChecked] = React.useState(false);
@@ -15,11 +16,15 @@ const NavBtn = ({ text, to, size, dropdown, dropdownArr, newTab }) => {
       }}
     >
       {to ? (
-        <a
-          href={`${to}`}
-          target={`${newTab ? "_blank" : ""}`}
-          className="text-center"
-        >{`${text}`}</a>
+        newTab ? (
+          <a
+            href={`${to}`}
+            target="_blank"
+            className="text-center"
+          >{`${text}`}</a>
+        ) : (
+          <Link to={`${to}`} className="text-center">{`${text}`}</Link>
+        )
       ) : (
         <div className="text-center">{`${text}`}</div>
       )}

@@ -8,12 +8,14 @@ import NavBar from "../../general/navbar/NavBar";
 import InfoSection from "../../general/InfoSection";
 import Footer from "../../general/footer/Footer";
 import PostPrev from "./components/PostPrev";
+import { CircularProgress } from "@mui/material";
 
 import blogImg from "../../general/images/1x.jpg";
 import samplePostImg from "../../general/images/3x.jpg";
 
 const Blog = () => {
   const [blogArr, setBlogArr] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const url = process.env.REACT_APP_SERVER_URL + "blog";
   const blogP = (
     <p>
@@ -28,11 +30,13 @@ const Blog = () => {
   useEffect(() => {
     const getBlogsArr = async () => {
       try {
+        setIsLoading(true);
         const response = await fetch(url, {
           method: "GET",
         });
         const resData = await response.json();
         setBlogArr(resData);
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -49,12 +53,18 @@ const Blog = () => {
         text={blogP}
         imageSrc={blogImg}
       />
-      <div className="mt-16 md:flex md:flex-col grid grid-cols-2 md:gap-12 gap-5 md:max-w-full px-7">
-        {/*{id, name, title, content, date} */}
-        {blogArr.reverse().map((element) => (
-          <PostPrev blogSummary={element} key={element._id} /> //here, the posts preview page will get a *summary* about the posts
-        ))}
-      </div>
+      {isLoading ? (
+        <div className="flex justify-center">
+          <CircularProgress color="info" />
+        </div>
+      ) : (
+        <div className="mt-16 md:flex md:flex-col grid grid-cols-2 md:gap-12 gap-5 md:max-w-full px-7">
+          {/*{id, name, title, content, date} */}
+          {blogArr.reverse().map((element) => (
+            <PostPrev blogSummary={element} key={element._id} /> //here, the posts preview page will get a *summary* about the posts
+          ))}
+        </div>
+      )}
       <Footer />
     </div>
   );
