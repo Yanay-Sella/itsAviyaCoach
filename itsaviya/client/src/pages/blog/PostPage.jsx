@@ -14,7 +14,7 @@ const PostPage = () => {
   const postName = useParams().blogName;
   const url = `${process.env.REACT_APP_SERVER_URL}blog/${postName}`;
   const [post, setPost] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const { name, title, intro, content } = post || {};
 
   useEffect(() => {
