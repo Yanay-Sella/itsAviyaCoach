@@ -12,7 +12,7 @@ import {
 
 const GroupCard = ({ header, youGet, youGive, time, frontText, link }) => {
   return (
-    <div className="flip-card2">
+    <div className="flip-card2 shrink">
       <div className="flip-card-inner2">
         <div className="flip-card-front2 bg-secondary rounded-lg shadow-lg">
           <p className="text-3xl mt-4">{frontText}</p>

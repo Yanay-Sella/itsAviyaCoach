@@ -5,7 +5,7 @@ import { useLocation, Link } from "react-router-dom";
 // components
 import NavBtn from "./NavBtn.jsx";
 import Auth from "../../pages/auth/Auth";
-import Logo from "../images/aviyaLogo2Small.png";
+import Logo from "../images/onlyHedge.png";
 import Snackbar from "@mui/material/Snackbar";
 
 // custom hooks
@@ -88,7 +88,7 @@ const NavBar = () => {
 
       <div className="transition-all hover:scale-105 hover:cursor-pointer">
         <Link to="/home">
-          <img src={Logo} alt="" className="h-28 w-28 justify-self-start" />
+          <img src={Logo} alt="" className=" md:w-24 w-32 justify-self-start" />
         </Link>
       </div>
 
