@@ -15,50 +15,37 @@ import FadeSection from "../../general/FadeSection";
 
 const Home = () => {
   return (
-    <div className="flex flex-col mt-28 max-w-6xl md:gap-0 gap-20">
+    <div className="flex flex-col md:mt-28 mt-32 max-w-6xl md:gap-0 gap-20">
       <FadeSection children={<Hero />} />
 
-      <FadeSection
-        children={
-          <InfoSection
-            header="הסיפור שלי"
-            name="about"
-            text={aboutP}
-            imageSrc={aboutImg}
-          />
-        }
+      <InfoSection
+        header="הסיפור שלי"
+        name="about"
+        text={aboutP}
+        imageSrc={aboutImg}
       />
 
       <Sale />
 
-      <FadeSection
-        children={
-          <InfoSection
-            header="אימונים אישיים"
-            name="personal"
-            text={personalP}
-            imageSrc={personalImg}
-          />
-        }
+      <InfoSection
+        header="אימונים אישיים"
+        name="personal"
+        text={personalP}
+        imageSrc={personalImg}
       />
 
       <PersonalPlans />
 
-      <FadeSection
-        children={
-          <InfoSection
-            header="אימונים בקבוצות"
-            name="group"
-            text={groupP}
-            imageSrc={groupImg}
-            leftImg={true}
-          />
-        }
+      <InfoSection
+        header="אימונים בקבוצות"
+        name="group"
+        text={groupP}
+        imageSrc={groupImg}
+        leftImg={true}
       />
 
       <GroupPlans />
       <Join />
-
       <Footer />
     </div>
   );

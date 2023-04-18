@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 // import * as dotenv from "dotenv";
 // dotenv.config();
 import "../../index.css";
+import FadeSection from "../../general/FadeSection";
 
 import Page from "../Page";
 import NavBar from "../../general/navbar/NavBar";
@@ -61,7 +62,10 @@ const Blog = () => {
         <div className="mt-16 md:flex md:flex-col grid grid-cols-2 md:gap-12 gap-5 md:max-w-full px-7">
           {/*{id, name, title, content, date} */}
           {blogArr.reverse().map((element) => (
-            <PostPrev blogSummary={element} key={element._id} /> //here, the posts preview page will get a *summary* about the posts
+            <FadeSection
+              children={<PostPrev blogSummary={element} key={element._id} />}
+              isShort={true}
+            /> //here, the posts preview page will get a *summary* about the posts
           ))}
         </div>
       )}
