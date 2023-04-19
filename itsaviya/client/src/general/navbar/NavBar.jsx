@@ -40,7 +40,7 @@ const NavBar = () => {
   };
 
   return (
-    <div className="flex items-center self-stretch bg-primary h-22 justify-around md:px-20 fixed top-0 left-0 right-0 z-10 gap-5">
+    <div className="flex items-center self-stretch bg-primary h-22 justify-around md:px-20 mb-2 pt-2 fixed top-0 left-0 right-0 z-10 gap-5">
       <div className="flex flex-wrap md:gap-14 gap-5">
         <div dir="rtl">
           {/* TODO: use different popup */}
@@ -88,7 +88,12 @@ const NavBar = () => {
 
       <div className="transition-all hover:scale-105 hover:cursor-pointer">
         <Link to="/home">
-          <img src={Logo} alt="" className=" md:w-24 w-32 justify-self-start" />
+          {/* maybe use an svg? */}
+          <img
+            src={Logo}
+            alt="logo"
+            className="md:w-24 w-32 justify-self-start"
+          />
         </Link>
       </div>
 

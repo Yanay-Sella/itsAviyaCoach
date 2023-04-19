@@ -45,7 +45,6 @@ const Home = () => {
       />
 
       <GroupPlans />
-
       <Join />
       <Footer />
     </div>
