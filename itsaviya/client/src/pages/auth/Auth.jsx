@@ -33,6 +33,10 @@ const Auth = ({ open, handleClose }) => {
   const urlLogIn = process.env.REACT_APP_SERVER_URL + "user/login";
   const urlSignUp = process.env.REACT_APP_SERVER_URL + "user/signup";
 
+  const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+  const passwordPattern =
+    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm; // at least 8 characters and must include a-z,A-Z,0-9
+
   const handleSignUp = async () => {
     setIsLoading(true);
     const user = { userName, email, password };
