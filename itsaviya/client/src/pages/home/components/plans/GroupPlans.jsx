@@ -7,10 +7,10 @@ const GroupPlans = () => {
       className="flex flex-col self-center items-center gap-14 sectiony py-8 justify-center"
       id="groups"
     >
-      <div className="flex flex-col items-center gap-4 text-center">
+      <div className="items-center text-center">
         <h1 className="text-4xl">תקבעו לעצמכן, עם החברות...</h1>
       </div>
-      <div className="flex md:gap-60 gap-28 items-center md:flex-row flex-col self-stretch">
+      <div className="flex md:gap-60 gap-28 md:items-stretch items-center md:flex-row flex-col self-stretch">
         <GroupCard
           frontText="אימון זוגי"
           header="אימון זוגי"

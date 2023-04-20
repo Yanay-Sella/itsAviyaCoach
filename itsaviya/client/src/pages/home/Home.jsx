@@ -11,10 +11,12 @@ import groupImg from "../../general/images/4x.jpg";
 
 import InfoSection from "../../general/InfoSection.jsx"; //a section with an image and text next to it
 import Footer from "../../general/footer/Footer";
+import FadeSection from "../../general/FadeSection";
+
 const Home = () => {
   return (
-    <div className="flex flex-col mt-28 max-w-6xl md:gap-0 gap-20">
-      <Hero />
+    <div className="flex flex-col md:mt-28 mt-32 max-w-6xl md:gap-0 gap-20">
+      <FadeSection children={<Hero />} />
 
       <InfoSection
         header="הסיפור שלי"
@@ -22,6 +24,7 @@ const Home = () => {
         text={aboutP}
         imageSrc={aboutImg}
       />
+
       <Sale />
 
       <InfoSection
@@ -30,7 +33,9 @@ const Home = () => {
         text={personalP}
         imageSrc={personalImg}
       />
+
       <PersonalPlans />
+
       <InfoSection
         header="אימונים בקבוצות"
         name="group"
@@ -38,9 +43,9 @@ const Home = () => {
         imageSrc={groupImg}
         leftImg={true}
       />
+
       <GroupPlans />
       <Join />
-
       <Footer />
     </div>
   );

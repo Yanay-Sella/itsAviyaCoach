@@ -6,7 +6,7 @@ const Sale = () => {
       className="flex flex-col justify-between items-center bg-secondary py-6 gap-6 text-white self-center"
       style={{ width: "99vw" }}
     >
-      <div className="flex flex-col items-center gap-4">
+      <div className="flex flex-col shrink items-center gap-4">
         <p className="md:text-lg text-md mb-2 text-center">
           אז למה את מחכה? הצטרפי אליי
         </p>
