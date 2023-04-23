@@ -87,14 +87,24 @@ const NavBar = () => {
       </div>
 
       <div className="transition-all hover:scale-105 hover:cursor-pointer">
-        <Link to="/home">
-          {/* maybe use an svg? */}
-          <img
-            src={Logo}
-            alt="logo"
-            className="md:w-24 w-32 justify-self-start"
-          />
-        </Link>
+        {isHome ? (
+          <a href="/home">
+            <img
+              src={Logo}
+              alt="logo"
+              className="md:w-24 w-32 justify-self-start"
+            />
+          </a>
+        ) : (
+          <Link to="/home">
+            {/* maybe use an svg? */}
+            <img
+              src={Logo}
+              alt="logo"
+              className="md:w-24 w-32 justify-self-start"
+            />
+          </Link>
+        )}
       </div>
 
       <div className="flex flex-wrap md:gap-14 gap-5 justify-end">
