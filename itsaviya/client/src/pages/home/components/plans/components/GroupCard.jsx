@@ -1,7 +1,9 @@
 import React from "react";
+import { useEffect, useState } from "react";
 import "../../../../../index.css";
 
 import BtnAvi from "../../../../../general/BtnAvi";
+import useIntersect from "../../../../../hooks/useIntersect";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -10,10 +12,30 @@ import {
   faHourglassHalf,
 } from "@fortawesome/free-solid-svg-icons";
 
-const GroupCard = ({ header, youGet, youGive, time, frontText, link }) => {
+const GroupCard = ({
+  header,
+  youGet,
+  youGive,
+  time,
+  frontText,
+  link,
+  delay,
+}) => {
+  const [isVisible, domRef] = useIntersect();
+  const [flip, setFlip] = useState(false);
+
+  useEffect(() => {
+    if (!isVisible) return;
+    setTimeout(() => {
+      setFlip(true);
+    }, delay);
+  }, [isVisible]);
   return (
-    <div className="flip-card2 shrink">
-      <div className="flip-card-inner2">
+    <div className="flip-card2 shrink" ref={domRef}>
+      <div
+        className="flip-card-inner2"
+        style={!flip ? { transform: "rotateX(180deg)" } : null}
+      >
         <div className="flip-card-front2 bg-secondary rounded-lg shadow-lg">
           <p className="text-3xl mt-4">{frontText}</p>
         </div>

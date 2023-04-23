@@ -1,4 +1,5 @@
 import React from "react";
+import FadeSection from "../../../general/FadeSection.jsx";
 
 const Sale = () => {
   return (
@@ -10,9 +11,17 @@ const Sale = () => {
         <p className="md:text-lg text-md mb-2 text-center">
           אז למה את מחכה? הצטרפי אליי
         </p>
-        <p className="md:text-5xl text-4xl text-center">
-          אימון אישי <span className="header2">חינם</span>
-        </p>
+
+        <FadeSection
+          children={
+            <p className="md:text-5xl text-4xl text-center">
+              אימון אישי <span className="header2">חינם</span>
+            </p>
+          }
+          isDelay={false}
+          isShort={true}
+        />
+
         <p className="md:text-xl text-lg text-center">
           התחילי את המסע שלך ותהפכי לגרסא הטובה ביותר{" "}
           <span className="header2">שלך</span>, איתי
