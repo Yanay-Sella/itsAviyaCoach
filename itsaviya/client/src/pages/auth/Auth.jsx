@@ -8,6 +8,8 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import CircularProgress from "@mui/material/CircularProgress";
 
+import "../../index.css";
+
 import useAuth from "../../hooks/useAuth";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,6 +21,9 @@ import {
 const Auth = ({ open, handleClose }) => {
   const { setAuth, auth } = useAuth();
 
+  const urlLogIn = process.env.REACT_APP_SERVER_URL + "user/login";
+  const urlSignUp = process.env.REACT_APP_SERVER_URL + "user/signup";
+
   const [signUp, setSignUp] = useState(false);
 
   //user info
@@ -26,18 +31,34 @@ const Auth = ({ open, handleClose }) => {
   const [email, setEmail] = useState(auth?.email ? auth.email : "");
   const [password, setPassword] = useState("");
 
+  //animation stuff
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isFail, setIsFail] = useState(false);
 
-  const urlLogIn = process.env.REACT_APP_SERVER_URL + "user/login";
-  const urlSignUp = process.env.REACT_APP_SERVER_URL + "user/signup";
+  //validation
+  const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+  const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/; // at least 8 characters and must include a-z,A-Z,0-9
 
-  const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-  const passwordPattern =
-    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm; // at least 8 characters and must include a-z,A-Z,0-9
+  const [isAttempted, setIsAttempted] = useState(false);
+  const [isValidEmail, setIsValidEmail] = useState(emailPattern.test(email));
+  const [isValidPassword, setIsValidPassword] = useState(
+    passwordPattern.test(password)
+  );
 
-  const handleSignUp = async () => {
+  useEffect(() => {
+    setIsValidEmail(emailPattern.test(email));
+  }, [email]);
+  useEffect(() => {
+    setIsValidPassword(passwordPattern.test(password));
+  }, [password]);
+
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    if (!isValidEmail || !isValidPassword) {
+      setIsAttempted(true);
+      return;
+    }
     setIsLoading(true);
     const user = { userName, email, password };
     try {
@@ -46,17 +67,37 @@ const Auth = ({ open, handleClose }) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(user),
       });
+
+      //some animation and cleaning values at the end
+      if (response.ok) {
+        setIsSuccess(true);
+        setTimeout(() => {
+          setIsLoading(false);
+          setIsSuccess(false);
+          setSignUp(false);
+          setIsAttempted(false);
+          setPassword("");
+        }, 1500);
+      } else {
+        setIsFail(true);
+        setTimeout(() => {
+          setIsLoading(false);
+          setIsFail(false);
+          setEmail("");
+          setPassword("");
+        }, 1500);
+      }
     } catch (error) {
       console.log(error);
     }
-    setUserName("");
-    setEmail("");
-    setPassword("");
-    setIsLoading(false);
-    handleClose();
   };
 
-  const handleLogIn = async () => {
+  const handleLogIn = async (e) => {
+    e.preventDefault();
+    if (!isValidEmail || !isValidPassword) {
+      setIsAttempted(true);
+      return;
+    }
     setIsLoading(true);
     const user = { email, password };
 
@@ -101,14 +142,19 @@ const Auth = ({ open, handleClose }) => {
       <Dialog open={open} onClose={handleClose}>
         {isLoading ? (
           <div
-            className={`md:w-96 w-80 ${
-              signUp ? "h-96" : "h-80"
-            } bg-primary p-3 text-xl flex justify-center items-center text-thirdy`}
+            className={`w-80 h-80 bg-primary p-3 text-xl flex justify-center items-center text-thirdy`}
           >
             {isSuccess ? (
               <div className="flex flex-col items-center">
                 <FontAwesomeIcon icon={faCircleCheck} className="text-4xl" />
-                {signUp ? <h1>נרשמת בהצלחה!</h1> : <h1>התחברת בהצלחה!</h1>}
+                {signUp ? (
+                  <div className="hebText text-center">
+                    <p className="text-2xl">נרשמת בהצלחה!</p>
+                    <p className="text-xl">יש להתחבר כעת...</p>
+                  </div>
+                ) : (
+                  <p className="text-2xl">התחברת בהצלחה!</p>
+                )}
               </div>
             ) : isFail ? (
               <div className="flex flex-col items-center">
@@ -121,10 +167,9 @@ const Auth = ({ open, handleClose }) => {
           </div>
         ) : (
           //regular sign up/in page
-          <div
-            className={`md:w-96 w-80 ${
-              signUp ? "h-96" : "h-80"
-            } bg-primary p-3 text-xl`}
+          <form
+            className={`md:w-96 w-80 bg-primary p-3 text-xl`}
+            onSubmit={signUp ? handleSignUp : handleLogIn}
           >
             <h1 className="text-thirdy">
               {signUp
@@ -154,11 +199,19 @@ const Auth = ({ open, handleClose }) => {
                 />
               )}
               <TextField
+                error={isAttempted && !isValidEmail}
                 color="info"
                 dir="ltr"
                 autoFocus
                 margin="dense"
                 label="אימייל"
+                helperText={
+                  isAttempted
+                    ? !isValidEmail
+                      ? "אימייל לא תקין!"
+                      : "אימייל תקין!"
+                    : "אנא הזיני אימייל חוקי"
+                }
                 type="email"
                 fullWidth
                 variant="standard"
@@ -168,10 +221,20 @@ const Auth = ({ open, handleClose }) => {
                 }}
               />
               <TextField
+                error={isAttempted && !isValidPassword}
                 color="info"
                 dir="ltr"
                 margin="dense"
                 label="סיסמא"
+                helperText={
+                  signUp
+                    ? !isValidPassword
+                      ? "הסיסמא צריכה לכלול לפחות אות לטינית גדולה, קטנה ומספר"
+                      : "סיסמא מהממת!! לא נספר לאף אחד 😜"
+                    : !isValidPassword
+                    ? "הסיסמא צריכה לכלול לפחות אות לטינית גדולה, קטנה ומספר"
+                    : "סיסמא תקינה!"
+                }
                 type="password"
                 fullWidth
                 variant="standard"
@@ -217,8 +280,10 @@ const Auth = ({ open, handleClose }) => {
               <Button onClick={signUp ? handleSignUp : handleLogIn}>
                 <p className="text-thirdy">{signUp ? "הרשמה" : "התחברות"}</p>
               </Button>
+              {/* to make submit on pressing enter */}
+              <input type="submit" hidden />
             </DialogActions>
-          </div>
+          </form>
         )}
       </Dialog>
     </div>
