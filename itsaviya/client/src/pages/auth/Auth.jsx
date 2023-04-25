@@ -35,6 +35,9 @@ const Auth = ({ open, handleClose }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isFail, setIsFail] = useState(false);
+  const [errorSignUpMsg, setErrorSignUpMsg] = useState(
+    "פרטי משתמש לא תקינים, נסי שוב!"
+  );
 
   //validation
   const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/; //email
@@ -73,7 +76,7 @@ const Auth = ({ open, handleClose }) => {
         body: JSON.stringify(user),
       });
 
-      //some animation and cleaning values at the end
+      //animation
       if (response.ok) {
         setIsSuccess(true);
         setTimeout(() => {
@@ -85,6 +88,22 @@ const Auth = ({ open, handleClose }) => {
         }, 1500);
       } else {
         setIsFail(true);
+
+        if (response.status === 409) {
+          const msg = await response.json();
+
+          if (msg.entry === "userName") {
+            setErrorSignUpMsg("שם משתמש תפוס 🙁 נסי אחד אחר");
+            setUserName("");
+          }
+          if (msg.entry === "email") {
+            setErrorSignUpMsg("כתובת מייל כבר בשימוש 📪");
+            setEmail("");
+          }
+        } else {
+          setErrorSignUpMsg("פרטי משתמש לא תקינים, נסי שוב!");
+        }
+        //animation
         setTimeout(() => {
           setIsLoading(false);
           setIsFail(false);
@@ -164,7 +183,11 @@ const Auth = ({ open, handleClose }) => {
             ) : isFail ? (
               <div className="flex flex-col items-center">
                 <FontAwesomeIcon icon={faCircleXmark} className="text-4xl" />
-                <h1>פרטי הזדהות שגויים, נסי שוב</h1>
+                {signUp ? (
+                  <h1>{errorSignUpMsg}</h1>
+                ) : (
+                  <h1>פרטי הזדהות שגויים, נסי שוב</h1>
+                )}
               </div>
             ) : (
               <CircularProgress color="info" />

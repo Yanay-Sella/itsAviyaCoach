@@ -5,9 +5,10 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 //TODO: add conflicts
-//TODO: add validation (email, password, userName)
 const handleSignUp = async (req, res) => {
   const { userName, email, password } = req.body;
+
+  console.log(`Sign up attempt from: ${userName}`);
 
   //validation
   const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/; //email
@@ -22,11 +23,29 @@ const handleSignUp = async (req, res) => {
       .status(400)
       .json({ message: "invalid user input, please try again" });
 
+  try {
+    let existingUser;
+    existingUser = await User.findOne({ userName });
+    if (existingUser) {
+      return res.status(409).json({ entry: "userName" });
+    }
+    existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(409).json({ entry: "email" });
+    }
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ message: "server error, please check your input" });
+  }
+
   let hashedPassword;
   try {
     hashedPassword = await bcrypt.hash(password, 14); //hashing the password
   } catch (error) {
-    console.log(error);
+    return res
+      .status(500)
+      .json({ message: "server error, please check your input" });
   }
   const newUser = new User({
     userName,
@@ -36,14 +55,19 @@ const handleSignUp = async (req, res) => {
 
   try {
     await newUser.save();
+    console.log(`${userName} signed up succefully!`);
     res.status(200).json({ message: "user created!" });
   } catch (error) {
-    console.log(error);
+    return res
+      .status(500)
+      .json({ message: "server error, please check your input" });
   }
 };
 
 const handleLogIn = async (req, res) => {
   const { email, password } = req.body;
+
+  console.log(`Log in attempt from: ${email}`);
 
   //validation
   const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/; //email
@@ -104,6 +128,7 @@ const handleLogIn = async (req, res) => {
     sameSite: "None",
     secure: true,
   }); // 24 hours
+  console.log(`${user.userName} logged in succefully!`);
 
   //TODO: not return all the user info if not needed.
   res.status(200).json({
