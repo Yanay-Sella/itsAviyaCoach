@@ -194,7 +194,7 @@ const Auth = ({ open, handleClose }) => {
                   dir="ltr"
                   autoFocus
                   margin="dense"
-                  label={`${isAttempted && !isValidEmail ? "*" : ""} שם משתמש`}
+                  label={`${isAttempted && !isValidUN ? "*" : ""} שם משתמש`}
                   helperText={`שם משתמש חייב לכלול לפחות 3 תווים`}
                   type="text"
                   fullWidth
