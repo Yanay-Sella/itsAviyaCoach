@@ -37,14 +37,16 @@ const Auth = ({ open, handleClose }) => {
   const [isFail, setIsFail] = useState(false);
 
   //validation
-  const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+  const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/; //email
   const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/; // at least 8 characters and must include a-z,A-Z,0-9
 
-  const [isAttempted, setIsAttempted] = useState(false);
   const [isValidEmail, setIsValidEmail] = useState(emailPattern.test(email));
   const [isValidPassword, setIsValidPassword] = useState(
     passwordPattern.test(password)
   );
+  const [isValidUN, setIsValidUN] = useState(userName.length >= 3);
+
+  const [isAttempted, setIsAttempted] = useState(false);
 
   useEffect(() => {
     setIsValidEmail(emailPattern.test(email));
@@ -52,10 +54,13 @@ const Auth = ({ open, handleClose }) => {
   useEffect(() => {
     setIsValidPassword(passwordPattern.test(password));
   }, [password]);
+  useEffect(() => {
+    setIsValidUN(userName.length >= 3);
+  }, [userName]);
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-    if (!isValidEmail || !isValidPassword) {
+    if (!isValidEmail || !isValidPassword || !isValidUN) {
       setIsAttempted(true);
       return;
     }
@@ -184,11 +189,13 @@ const Auth = ({ open, handleClose }) => {
               <DialogContentText></DialogContentText>
               {signUp && (
                 <TextField
+                  error={isAttempted && !isValidUN}
                   color="info"
                   dir="ltr"
                   autoFocus
                   margin="dense"
-                  label="שם משתמש"
+                  label={`${isAttempted && !isValidEmail ? "*" : ""} שם משתמש`}
+                  helperText={`שם משתמש חייב לכלול לפחות 3 תווים`}
                   type="text"
                   fullWidth
                   variant="standard"
@@ -204,7 +211,7 @@ const Auth = ({ open, handleClose }) => {
                 dir="ltr"
                 autoFocus
                 margin="dense"
-                label="אימייל"
+                label={`${isAttempted && !isValidEmail ? "*" : ""} אימייל`}
                 helperText={
                   isAttempted
                     ? !isValidEmail
@@ -225,7 +232,7 @@ const Auth = ({ open, handleClose }) => {
                 color="info"
                 dir="ltr"
                 margin="dense"
-                label="סיסמא"
+                label={`${isAttempted && !isValidPassword ? "*" : ""} סיסמא`}
                 helperText={
                   signUp
                     ? !isValidPassword

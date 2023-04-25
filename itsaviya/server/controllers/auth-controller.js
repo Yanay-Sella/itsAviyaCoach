@@ -8,7 +8,20 @@ require("dotenv").config();
 //TODO: add validation (email, password, userName)
 const handleSignUp = async (req, res) => {
   const { userName, email, password } = req.body;
-  console.log(req.body);
+
+  //validation
+  const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/; //email
+  const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/; // at least 8 characters and must include a-z,A-Z,0-9
+
+  const isValidPassword = passwordPattern.test(password);
+  const isValidEmail = emailPattern.test(email);
+  const isValidUserName = userName.length >= 3;
+
+  if (!isValidPassword || !isValidEmail || !isValidUserName)
+    return res
+      .status(400)
+      .json({ message: "invalid user input, please try again" });
+
   let hashedPassword;
   try {
     hashedPassword = await bcrypt.hash(password, 14); //hashing the password
@@ -31,7 +44,18 @@ const handleSignUp = async (req, res) => {
 
 const handleLogIn = async (req, res) => {
   const { email, password } = req.body;
-  console.log("logIn");
+
+  //validation
+  const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/; //email
+  const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/; // at least 8 characters and must include a-z,A-Z,0-9
+
+  const isLegalPassword = passwordPattern.test(password); //checking if the password is a legal string
+  const isValidEmail = emailPattern.test(email);
+
+  if (!isLegalPassword || !isValidEmail)
+    return res
+      .status(400)
+      .json({ message: "invalid user input, please try again" });
 
   let user;
   try {
