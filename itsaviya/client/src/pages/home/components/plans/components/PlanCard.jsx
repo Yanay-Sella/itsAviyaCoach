@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../../../../../index.css";
 
 import BtnAvi from "../../../../../general/BtnAvi";
+import useIntersect from "../../../../../hooks/useIntersect";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -10,10 +11,31 @@ import {
   faHourglassHalf,
 } from "@fortawesome/free-solid-svg-icons";
 
-const PlanCard = ({ header, youGet, youGive, time, frontText, link }) => {
+const PlanCard = ({
+  header,
+  youGet,
+  youGive,
+  time,
+  frontText,
+  link,
+  delay,
+}) => {
+  const [isVisible, domRef] = useIntersect();
+  const [flip, setFlip] = useState(false);
+
+  useEffect(() => {
+    if (!isVisible) return;
+    setTimeout(() => {
+      setFlip(true);
+    }, delay);
+  }, [isVisible]);
+
   return (
-    <div className="flip-card shrink">
-      <div className="flip-card-inner">
+    <div className="flip-card shrink" ref={domRef}>
+      <div
+        className={`flip-card-inner relative`}
+        style={!flip ? { transform: "rotateY(180deg)" } : null}
+      >
         <div className="flip-card-front bg-secondary rounded-lg shadow-md">
           <p className="text-3xl mt-4">{frontText}</p>
         </div>

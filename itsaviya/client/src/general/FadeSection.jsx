@@ -1,34 +1,9 @@
 import React, { useEffect } from "react";
+import useIntersect from "../hooks/useIntersect";
 import "../index.css";
 
-const FadeSection = ({ children, isDelay, isShort }) => {
-  const [isVisible, setIsVisible] = React.useState(false);
-  const domRef = React.useRef();
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      {
-        rootMargin: "0px",
-        threshold: 0.1,
-      }
-    );
-
-    if (domRef.current) {
-      observer.observe(domRef.current);
-    }
-
-    return () => {
-      if (domRef.current) {
-        observer.unobserve(domRef.current);
-      }
-    };
-  }, []);
+const FadeSection = ({ children, isDelay = false, isShort = false }) => {
+  let [isVisible, domRef] = useIntersect();
 
   return (
     <div
