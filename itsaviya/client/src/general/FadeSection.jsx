@@ -8,7 +8,7 @@ const FadeSection = ({ children, isDelay = false, isShort = false }) => {
   return (
     <div
       className={`${
-        isVisible ? "opacity-100 visible" : "opacity-0 invisible"
+        isVisible ? "opacity-100" : "opacity-0"
       } transition-opacity ${
         isShort ? "duration-500" : "duration-1000"
       } ease-in ${isDelay && "delay-500"}`}

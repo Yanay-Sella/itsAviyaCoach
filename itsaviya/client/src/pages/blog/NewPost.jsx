@@ -7,9 +7,14 @@ import BtnAvi from "../../general/BtnAvi";
 import samplePostImg from "../../general/images/4x.jpg";
 import InfoSection from "../../general/InfoSection";
 
+import axios from "axios";
+
 import UseAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 const NewPost = () => {
+  const cloudinaryUrl = process.env.REACT_APP_CLOUDINARY_URL;
+  const uploadPreset = process.env.REACT_APP_UPLOAD_PRESET;
+
   const axiosPrivate = UseAxiosPrivate();
   const navigate = useNavigate();
 
@@ -18,6 +23,7 @@ const NewPost = () => {
   const [title, setTitle] = useState("");
   const [intro, setIntro] = useState("");
   const [article, setArticle] = useState([]); //content
+  const [files, setFiles] = useState(null);
 
   const typeName = (event) => {
     setName(event.target.value);
@@ -29,6 +35,27 @@ const NewPost = () => {
 
   const typeIntro = (event) => {
     setIntro(event.target.value);
+  };
+
+  const chooseFile = async (event) => {
+    const temp = event.target.files;
+    console.log(temp);
+    if (!temp) return;
+    setFiles(temp);
+    try {
+      const formData = new FormData();
+      formData.append("file", temp[0]);
+      formData.append("upload_preset", uploadPreset);
+
+      const { data } = await axios.post(
+        `${cloudinaryUrl}/image/upload`,
+        formData
+      );
+
+      return data.secure_url;
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   //adding empty paragraph
@@ -78,6 +105,8 @@ const NewPost = () => {
 
   return (
     <div className="flex flex-col mt-28 max-w-6xl md:gap-4 gap-20">
+      <input type="file" onChange={chooseFile} />
+
       <div className="flex flex-col gap-4">
         <input
           type="text"
