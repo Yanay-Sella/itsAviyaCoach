@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import * as dotenv from "dotenv";
-// dotenv.config();
+
 import "../../index.css";
 import FadeSection from "../../general/FadeSection";
 

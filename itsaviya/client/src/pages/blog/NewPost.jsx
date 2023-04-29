@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -23,7 +23,9 @@ const NewPost = () => {
   const [title, setTitle] = useState("");
   const [intro, setIntro] = useState("");
   const [article, setArticle] = useState([]); //content
-  const [files, setFiles] = useState(null);
+
+  const [file, setFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(undefined);
 
   const typeName = (event) => {
     setName(event.target.value);
@@ -37,25 +39,19 @@ const NewPost = () => {
     setIntro(event.target.value);
   };
 
+  useEffect(() => {
+    if (!file) return;
+    const fileReader = new FileReader();
+    fileReader.onload = () => {
+      setPreviewUrl(fileReader.result);
+    };
+    fileReader.readAsDataURL(file);
+  }, [file]);
+
   const chooseFile = async (event) => {
-    const temp = event.target.files;
-    console.log(temp);
-    if (!temp) return;
-    setFiles(temp);
-    try {
-      const formData = new FormData();
-      formData.append("file", temp[0]);
-      formData.append("upload_preset", uploadPreset);
-
-      const { data } = await axios.post(
-        `${cloudinaryUrl}/image/upload`,
-        formData
-      );
-
-      return data.secure_url;
-    } catch (err) {
-      console.log(err);
-    }
+    const pickedFile = event.target.files[0];
+    if (!pickedFile) return;
+    setFile(pickedFile);
   };
 
   //adding empty paragraph
@@ -88,11 +84,27 @@ const NewPost = () => {
   };
 
   const sendPost = async () => {
-    const post = { name, title, intro, content: article };
-
+    let post;
     if (!window.confirm("את בטוחה שאת רוצה להעלות את הפוסט?")) return;
     else {
       try {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", uploadPreset);
+
+        const { data } = await axios.post(
+          `${cloudinaryUrl}/image/upload`,
+          formData
+        );
+
+        post = {
+          name,
+          title,
+          intro,
+          content: article,
+          imageUrl: data.secure_url,
+        };
+
         const response = await axiosPrivate.post("blog", post); // sending the post
         if (response.statusText === "OK") {
           navigate("/blog");
@@ -164,7 +176,8 @@ const NewPost = () => {
         <BtnAvi text={"להוסיף פסקה"} />
       </div>
 
-      {/* post preview */}
+      {/*@@@@@ post preview @@@@@*/}
+
       <section className="flex flex-col items-center bg-primary text-thirdy border-2 pb-10">
         <div className="flex flex-col max-w-6xl md:gap-4 gap-20">
           <InfoSection
@@ -172,8 +185,9 @@ const NewPost = () => {
             name={"newPost"}
             text={intro}
             header={title}
-            imageSrc={samplePostImg}
+            imageSrc={previewUrl}
             key={"newPost"}
+            alt="preview"
           />
 
           <div className="flex flex-col gap-7 w-5/6 self-center">
