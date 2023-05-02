@@ -25,7 +25,7 @@ const NewPost = () => {
   const [article, setArticle] = useState([]); //content
 
   const [file, setFile] = useState(null);
-  const [previewUrl, setPreviewUrl] = useState(undefined);
+  const [previewUrl, setPreviewUrl] = useState(samplePostImg);
 
   const typeName = (event) => {
     setName(event.target.value);
@@ -117,7 +117,17 @@ const NewPost = () => {
 
   return (
     <div className="flex flex-col mt-28 max-w-6xl md:gap-4 gap-20">
-      <input type="file" onChange={chooseFile} />
+      <div dir="rtl" className="flex flex-col">
+        <label htmlFor="post-image">
+          בחרי תמונה ריבועית עם אורך ורוחב שווים!
+        </label>
+        <input
+          id="post-image"
+          type="file"
+          onChange={chooseFile}
+          text="כדאי מאוד לבחור תמונת ריבוע!"
+        />
+      </div>
 
       <div className="flex flex-col gap-4">
         <input
@@ -179,6 +189,23 @@ const NewPost = () => {
       {/*@@@@@ post preview @@@@@*/}
 
       <section className="flex flex-col items-center bg-primary text-thirdy border-2 pb-10">
+        <div className="md:pl-10 transition-all flex md:flex-row flex-col md:justify-end md:gap-16 gap-4 border-2 border-fourthy rounded-lg hover:-translate-y-1 hover:cursor-pointer shadow-md hover:shadow-xl md:h-64">
+          <div className="flex flex-col gap-4 md:items-stretch items-center order-1 md:order-2 py-4">
+            <h1 className="header md:text-3xl text-xl md:text-right text-center">
+              {title}
+            </h1>
+            <div className="hidden md:inline">
+              <p className="text-xl post-prev-text">{intro}</p>
+            </div>
+          </div>
+
+          <img
+            src={previewUrl}
+            alt="post-image"
+            className="md:w-64 h-auto w-full md:rounded-r-lg rounded-b-lg order-2"
+          />
+        </div>
+
         <div className="flex flex-col max-w-6xl md:gap-4 gap-20">
           <InfoSection
             leftImg={true}
