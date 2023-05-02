@@ -9,6 +9,7 @@ const {
   handleSignUp,
   handleLogIn,
   handleLogout,
+  sendVeriCode,
 } = require("../controllers/auth-controller.js");
 const {
   handleRefreshToken,
@@ -19,7 +20,7 @@ const router = express.Router();
 
 //login and signup
 router.post("/signup", handleSignUp);
-router.post("/login", handleLogIn);
+router.post("/login", handleLogIn, sendVeriCode);
 router.get("/logout", handleLogout); // deletes refresh token, no longer access to many stuff
 
 //tokens

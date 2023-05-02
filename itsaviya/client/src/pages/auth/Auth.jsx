@@ -39,6 +39,8 @@ const Auth = ({ open, handleClose }) => {
     "פרטי משתמש לא תקינים, נסי שוב!"
   );
 
+  const [verified, setVerified] = useState(undefined);
+
   //validation
   const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/; //email
   const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/; // at least 8 characters and must include a-z,A-Z,0-9
@@ -84,6 +86,7 @@ const Auth = ({ open, handleClose }) => {
           setIsSuccess(false);
           setSignUp(false);
           setIsAttempted(false);
+          setVerified(false);
           setPassword("");
         }, 1500);
       } else {

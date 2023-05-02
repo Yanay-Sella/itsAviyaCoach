@@ -1,14 +1,71 @@
 const bcrypt = require("bcryptjs");
+const nodemailer = require("nodemailer");
 const { User } = require("../models/userModel.js");
 
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-//TODO: add conflicts
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "testkipi233@gmail.com",
+    pass: "gbbipumuvknsnljw",
+  },
+});
+
+const handleVefiry = async (req, res, next) => {
+  const { userName, code } = req.body;
+  //TODO: check if code is valid
+  try {
+    const foundUser = await User.findOne({ userName });
+    if (foundUser.code === code) {
+      foundUser.verified = true;
+      foundUser.code = null;
+    }
+    await foundUser.save();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const sendVeriCode = async (req, res) => {
+  const { email } = req.body;
+
+  const code = Math.floor(Math.random() * (9999 - 1000) + 1000);
+
+  const mailOptions = {
+    from: "testkipi233@gmail.com",
+    to: `${email}`,
+    subject: "קוד זיהוי חשבון קיפי!",
+    text: `${code}`,
+  };
+
+  try {
+    const foundUser = await User.findOne({ email });
+    if (foundUser.verified === true)
+      return res.status(404).json({ message: "user already verified" });
+    foundUser.code = code; // setting the user's code to the generated code
+  } catch (error) {
+    console.log(error);
+  }
+
+  //sending this code to the user if there were no errors
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email sent: " + info.response);
+      return res
+        .status(428)
+        .json({ message: "need to verify with email code" });
+    }
+  });
+};
+
 const handleSignUp = async (req, res) => {
   const { userName, email, password } = req.body;
 
-  console.log(`Sign up attempt from: ${userName}`);
+  console.log(`Sign up attempt from: ${email}`);
 
   //validation
   const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/; //email
@@ -64,7 +121,7 @@ const handleSignUp = async (req, res) => {
   }
 };
 
-const handleLogIn = async (req, res) => {
+const handleLogIn = async (req, res, next) => {
   const { email, password } = req.body;
 
   console.log(`Log in attempt from: ${email}`);
@@ -80,6 +137,7 @@ const handleLogIn = async (req, res) => {
     return res
       .status(400)
       .json({ message: "invalid user input, please try again" });
+  //~end validation
 
   let user;
   try {
@@ -104,6 +162,10 @@ const handleLogIn = async (req, res) => {
   }
   if (!isValidPassword) {
     return res.status(404).json({ message: "invalid username or password" });
+  }
+
+  if (user.verified === false) {
+    return next(); // sendVeriCode
   }
 
   //creating tokens with authenticating correct username and password
@@ -160,4 +222,4 @@ const handleLogout = async (req, res) => {
   res.sendStatus(204);
 };
 
-module.exports = { handleSignUp, handleLogIn, handleLogout };
+module.exports = { handleSignUp, handleLogIn, handleLogout, sendVeriCode };
