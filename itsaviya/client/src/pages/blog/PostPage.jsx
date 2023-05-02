@@ -15,7 +15,7 @@ const PostPage = () => {
   const url = `${process.env.REACT_APP_SERVER_URL}blog/${postName}`;
   const [post, setPost] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
-  const { name, title, intro, content } = post || {};
+  const { name, title, intro, content, imageUrl } = post || {};
 
   useEffect(() => {
     const getPost = async () => {
@@ -45,7 +45,7 @@ const PostPage = () => {
             name={name}
             text={intro}
             header={title}
-            imageSrc={samplePostImg}
+            imageSrc={imageUrl}
             key={name}
           />
 

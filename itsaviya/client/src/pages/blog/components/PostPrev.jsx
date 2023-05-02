@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import blogImg from "../../../general/images/1x.jpg";
 
 const PostPrev = ({ blogSummary }) => {
-  const { name, title, intro, content, date, imageSrc } = blogSummary;
+  const { name, title, intro, content, date, imageUrl } = blogSummary;
   return (
     <Link to={`/blog/${name}`}>
       <section className="md:pl-10 transition-all flex md:flex-row flex-col md:justify-end md:gap-16 gap-4 border-2 border-fourthy rounded-lg hover:-translate-y-1 hover:cursor-pointer shadow-md hover:shadow-xl md:h-64">
@@ -18,7 +18,7 @@ const PostPrev = ({ blogSummary }) => {
         </div>
 
         <img
-          src={blogImg} // need to change to "imageSrc from the backend"
+          src={imageUrl}
           alt="post-image"
           className=" md:w-64 h-auto w-full md:rounded-r-lg rounded-b-lg order-2"
         />

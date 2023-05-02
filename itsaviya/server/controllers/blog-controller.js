@@ -12,12 +12,13 @@ const getAllBlogs = async (req, res) => {
 };
 
 const postNewBlog = async (req, res) => {
-  const { name, title, intro, content } = req.body;
+  const { name, title, intro, content, imageUrl } = req.body;
   const newPost = new Blog({
     name,
     title,
     intro,
     content,
+    imageUrl,
   });
   try {
     await newPost.save();
