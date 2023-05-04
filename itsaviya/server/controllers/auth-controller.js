@@ -13,16 +13,24 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const handleVefiry = async (req, res, next) => {
-  const { userName, code } = req.body;
-  //TODO: check if code is valid
+const handleVefiry = async (req, res) => {
+  const { email, code } = req.body;
+
+  //checking code validity
+  if (!code || code <= 999 || code > 9999)
+    return res.status(404).json({ message: "code not valid" });
+
   try {
-    const foundUser = await User.findOne({ userName });
-    if (foundUser.code === code) {
-      foundUser.verified = true;
-      foundUser.code = null;
+    const foundUser = await User.findOne({ email });
+    if (foundUser.code.toString() !== code) {
+      console.log(`wrong code by ${email}`);
+      return res.status(404).json({ message: "wrong code" });
     }
+    foundUser.verified = true; // now user is verified
+    foundUser.code = null;
     await foundUser.save();
+    console.log(`user ${foundUser.userName} is now verified`);
+    return res.status(200).json({ message: "user now verified :)" });
   } catch (error) {
     console.log(error);
   }
@@ -45,6 +53,7 @@ const sendVeriCode = async (req, res) => {
     if (foundUser.verified === true)
       return res.status(404).json({ message: "user already verified" });
     foundUser.code = code; // setting the user's code to the generated code
+    await foundUser.save();
   } catch (error) {
     console.log(error);
   }
@@ -222,4 +231,10 @@ const handleLogout = async (req, res) => {
   res.sendStatus(204);
 };
 
-module.exports = { handleSignUp, handleLogIn, handleLogout, sendVeriCode };
+module.exports = {
+  handleSignUp,
+  handleLogIn,
+  handleLogout,
+  sendVeriCode,
+  handleVefiry,
+};
