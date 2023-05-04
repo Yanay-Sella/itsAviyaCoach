@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -7,11 +7,11 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import CircularProgress from "@mui/material/CircularProgress";
-import BtnAvi from "../../general/BtnAvi";
 
 import "../../index.css";
 
 import useAuth from "../../hooks/useAuth";
+import axios from "../../api/axios";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -19,7 +19,7 @@ import {
   faCircleXmark,
 } from "@fortawesome/free-regular-svg-icons";
 
-import axios from "../../api/axios";
+import Verification from "./Verification";
 
 const Auth = ({ open, handleClose }) => {
   const { setAuth, auth } = useAuth();
@@ -33,7 +33,6 @@ const Auth = ({ open, handleClose }) => {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState(auth?.email ? auth.email : "");
   const [password, setPassword] = useState("");
-  const [code, setCode] = useState("");
 
   //animation stuff
   const [isLoading, setIsLoading] = useState(false);
@@ -44,6 +43,8 @@ const Auth = ({ open, handleClose }) => {
   );
 
   const [verified, setVerified] = useState(true);
+  const [code, setCode] = useState("");
+  const [wrongCode, setWrongCode] = useState(false);
 
   //validation
   const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/; //email
@@ -141,12 +142,10 @@ const Auth = ({ open, handleClose }) => {
         body: JSON.stringify(user),
       });
 
-      const resUser = await response.json(); // the user object, contains: {id, username, email, accessToken}
-
-      setAuth(resUser);
-
       //some animation and cleaning values at the end
       if (response.ok) {
+        const resUser = await response.json(); // the user object, contains: {id, username, email, accessToken}
+        setAuth(resUser);
         setIsSuccess(true);
         setTimeout(() => {
           setIsLoading(false);
@@ -172,11 +171,17 @@ const Auth = ({ open, handleClose }) => {
     }
   };
 
-  const sendVeriCode = async () => {
+  const sendVeriCode = async (e) => {
+    if (e) e.preventDefault();
     try {
       const response = await axios.post("user/verify", { email, code });
+      console.log(response);
       if (response.statusText === "OK") {
         handleLogIn();
+      }
+
+      if (response.status === 404) {
+        setWrongCode(true);
       }
     } catch (error) {
       console.log(error);
@@ -221,7 +226,9 @@ const Auth = ({ open, handleClose }) => {
           //regular sign up/in page
           <form
             className={`md:w-96 w-80 bg-primary p-3 text-xl`}
-            onSubmit={signUp ? handleSignUp : handleLogIn}
+            onSubmit={
+              verified ? (signUp ? handleSignUp : handleLogIn) : sendVeriCode
+            }
           >
             <h1 className="text-thirdy">
               {signUp
@@ -236,8 +243,8 @@ const Auth = ({ open, handleClose }) => {
               <div>
                 <DialogContent dir="rtl">
                   <DialogContentText></DialogContentText>
+                  {/* userName input, only on sign up */}
                   {signUp && (
-                    //userName
                     <TextField
                       error={isAttempted && !isValidUN}
                       color="info"
@@ -344,35 +351,18 @@ const Auth = ({ open, handleClose }) => {
                     </p>
                   </Button>
                   {/* to make submit on pressing enter */}
-                  <input type="submit" hidden />
                 </DialogActions>
               </div>
             ) : (
-              <DialogContent>
-                <div className="flex flex-col items-center gap-3 text-thirdy">
-                  <p className="text-2xl text-center">משתמש לא אומת!</p>
-                  <p className="text-lg text-center">
-                    דרוש אימות חד פעמי, יש להזין קוד בעל 4 ספרות שהתקבל בכתובת
-                    מייל {email}
-                  </p>
-
-                  <input
-                    type="text"
-                    className="text-center border border-thirdy rounded-full py-2"
-                    value={code}
-                    onChange={(e) => {
-                      setCode(e.target.value);
-                    }}
-                  />
-                  <div
-                    className="flex items-center bg-secondary p-3 border-2 border-secondary text-white rounded-full w-30 h-10 hover:cursor-pointer transition-all  hover:drop-shadow-md"
-                    onClick={sendVeriCode}
-                  >
-                    <p>שלחי קוד</p>
-                  </div>
-                </div>
-              </DialogContent>
+              <Verification
+                email={email}
+                code={code}
+                setCode={setCode}
+                wrongCode={wrongCode}
+                sendVeriCode={sendVeriCode}
+              />
             )}
+            <input type="submit" hidden />
           </form>
         )}
       </Dialog>

@@ -20,7 +20,7 @@ const PostPrev = ({ blogSummary }) => {
         <img
           src={imageUrl}
           alt="post-image"
-          className=" md:w-64 h-auto w-full md:rounded-r-lg rounded-b-lg order-2"
+          className=" md:w-64 h-auto w-full md:rounded-r-lg order-2"
         />
       </section>
     </Link>

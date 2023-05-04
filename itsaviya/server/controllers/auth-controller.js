@@ -17,7 +17,7 @@ const handleVefiry = async (req, res) => {
   const { email, code } = req.body;
 
   //checking code validity
-  if (!code || code <= 999 || code > 9999)
+  if (!code || code === null || code <= 999 || code > 9999)
     return res.status(404).json({ message: "code not valid" });
 
   try {
@@ -45,7 +45,13 @@ const sendVeriCode = async (req, res) => {
     from: "testkipi233@gmail.com",
     to: `${email}`,
     subject: "קוד זיהוי חשבון קיפי!",
-    text: `${code}`,
+    html: `<div dir="rtl">
+      <h1>תודה שנרשמת לאתר שלי 🥰</h1>
+      <p>באופן חד פעמי על מנת לאמת את כתובת המייל שלך נדרש לבצע אימות.</p>
+      </br>
+      <p>יש להזין את הקוד הנ"ל בשדה המתאים לו בחלון ההתחברות לאתר</p>
+      <h2>${code}</h2>
+    </div>`,
   };
 
   try {
@@ -115,7 +121,7 @@ const handleSignUp = async (req, res) => {
   }
   const newUser = new User({
     userName,
-    email,
+    email: email.toLowerCase(),
     password: hashedPassword,
   });
 
@@ -150,7 +156,7 @@ const handleLogIn = async (req, res, next) => {
 
   let user;
   try {
-    user = await User.findOne({ email }); // finding a user with a matching email
+    user = await User.findOne({ email: email.toLowerCase() }); // finding a user with a matching email
   } catch (error) {
     return res
       .status(500)
