@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -11,12 +11,15 @@ import CircularProgress from "@mui/material/CircularProgress";
 import "../../index.css";
 
 import useAuth from "../../hooks/useAuth";
+import axios from "../../api/axios";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleCheck,
   faCircleXmark,
 } from "@fortawesome/free-regular-svg-icons";
+
+import Verification from "./Verification";
 
 const Auth = ({ open, handleClose }) => {
   const { setAuth, auth } = useAuth();
@@ -38,6 +41,10 @@ const Auth = ({ open, handleClose }) => {
   const [errorSignUpMsg, setErrorSignUpMsg] = useState(
     "פרטי משתמש לא תקינים, נסי שוב!"
   );
+
+  const [verified, setVerified] = useState(true);
+  const [code, setCode] = useState("");
+  const [wrongCode, setWrongCode] = useState(false);
 
   //validation
   const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/; //email
@@ -117,7 +124,7 @@ const Auth = ({ open, handleClose }) => {
   };
 
   const handleLogIn = async (e) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
     if (!isValidEmail || !isValidPassword) {
       setIsAttempted(true);
       return;
@@ -135,12 +142,10 @@ const Auth = ({ open, handleClose }) => {
         body: JSON.stringify(user),
       });
 
-      const resUser = await response.json(); // the user object, contains: {id, username, email, accessToken}
-
-      setAuth(resUser);
-
       //some animation and cleaning values at the end
       if (response.ok) {
+        const resUser = await response.json(); // the user object, contains: {id, username, email, accessToken}
+        setAuth(resUser);
         setIsSuccess(true);
         setTimeout(() => {
           setIsLoading(false);
@@ -148,6 +153,11 @@ const Auth = ({ open, handleClose }) => {
           handleClose();
         }, 1500);
       } else {
+        if (response.status === 428) {
+          setVerified(false);
+          setIsLoading(false);
+          return;
+        }
         setIsFail(true);
         setTimeout(() => {
           setIsLoading(false);
@@ -155,6 +165,23 @@ const Auth = ({ open, handleClose }) => {
           setEmail("");
           setPassword("");
         }, 1500);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const sendVeriCode = async (e) => {
+    if (e) e.preventDefault();
+    try {
+      const response = await axios.post("user/verify", { email, code });
+      console.log(response);
+      if (response.statusText === "OK") {
+        handleLogIn();
+      }
+
+      if (response.status === 404) {
+        setWrongCode(true);
       }
     } catch (error) {
       console.log(error);
@@ -177,6 +204,7 @@ const Auth = ({ open, handleClose }) => {
                     <p className="text-xl">יש להתחבר כעת...</p>
                   </div>
                 ) : (
+                  //log in
                   <p className="text-2xl">התחברת בהצלחה!</p>
                 )}
               </div>
@@ -186,6 +214,7 @@ const Auth = ({ open, handleClose }) => {
                 {signUp ? (
                   <h1>{errorSignUpMsg}</h1>
                 ) : (
+                  //log in
                   <h1>פרטי הזדהות שגויים, נסי שוב</h1>
                 )}
               </div>
@@ -197,7 +226,9 @@ const Auth = ({ open, handleClose }) => {
           //regular sign up/in page
           <form
             className={`md:w-96 w-80 bg-primary p-3 text-xl`}
-            onSubmit={signUp ? handleSignUp : handleLogIn}
+            onSubmit={
+              verified ? (signUp ? handleSignUp : handleLogIn) : sendVeriCode
+            }
           >
             <h1 className="text-thirdy">
               {signUp
@@ -208,111 +239,130 @@ const Auth = ({ open, handleClose }) => {
                       : "התחברות"
                   }`}
             </h1>
-            <DialogContent dir="rtl">
-              <DialogContentText></DialogContentText>
-              {signUp && (
-                <TextField
-                  error={isAttempted && !isValidUN}
-                  color="info"
-                  dir="ltr"
-                  autoFocus
-                  margin="dense"
-                  label={`${isAttempted && !isValidUN ? "*" : ""} שם משתמש`}
-                  helperText={`שם משתמש חייב לכלול לפחות 3 תווים`}
-                  type="text"
-                  fullWidth
-                  variant="standard"
-                  value={userName}
-                  onChange={(e) => {
-                    setUserName(e.target.value);
-                  }}
-                />
-              )}
-              <TextField
-                error={isAttempted && !isValidEmail}
-                color="info"
-                dir="ltr"
-                autoFocus
-                margin="dense"
-                label={`${isAttempted && !isValidEmail ? "*" : ""} אימייל`}
-                helperText={
-                  isAttempted
-                    ? !isValidEmail
-                      ? "אימייל לא תקין!"
-                      : "אימייל תקין!"
-                    : "אנא הזיני אימייל חוקי"
-                }
-                type="email"
-                fullWidth
-                variant="standard"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-              />
-              <TextField
-                error={isAttempted && !isValidPassword}
-                color="info"
-                dir="ltr"
-                margin="dense"
-                label={`${isAttempted && !isValidPassword ? "*" : ""} סיסמא`}
-                helperText={
-                  signUp
-                    ? !isValidPassword
-                      ? "הסיסמא צריכה לכלול לפחות אות לטינית גדולה, קטנה ומספר"
-                      : "סיסמא מהממת!! לא נספר לאף אחד 😜"
-                    : !isValidPassword
-                    ? "הסיסמא צריכה לכלול לפחות אות לטינית גדולה, קטנה ומספר"
-                    : "סיסמא תקינה!"
-                }
-                type="password"
-                fullWidth
-                variant="standard"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-              />
+            {verified ? (
+              <div>
+                <DialogContent dir="rtl">
+                  <DialogContentText></DialogContentText>
+                  {/* userName input, only on sign up */}
+                  {signUp && (
+                    <TextField
+                      error={isAttempted && !isValidUN}
+                      color="info"
+                      dir="ltr"
+                      autoFocus
+                      margin="dense"
+                      label={`${isAttempted && !isValidUN ? "*" : ""} שם משתמש`}
+                      helperText={`שם משתמש חייב לכלול לפחות 3 תווים`}
+                      type="text"
+                      fullWidth
+                      variant="standard"
+                      value={userName}
+                      onChange={(e) => {
+                        setUserName(e.target.value);
+                      }}
+                    />
+                  )}
+                  {/* email input */}
+                  <TextField
+                    error={isAttempted && !isValidEmail}
+                    color="info"
+                    dir="ltr"
+                    autoFocus
+                    margin="dense"
+                    label={`${isAttempted && !isValidEmail ? "*" : ""} אימייל`}
+                    helperText={
+                      isAttempted
+                        ? !isValidEmail
+                          ? "אימייל לא תקין!"
+                          : "אימייל תקין!"
+                        : "אנא הזיני אימייל חוקי"
+                    }
+                    type="email"
+                    fullWidth
+                    variant="standard"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                    }}
+                  />
+                  {/* password input */}
+                  <TextField
+                    error={isAttempted && !isValidPassword}
+                    color="info"
+                    dir="ltr"
+                    margin="dense"
+                    label={`${
+                      isAttempted && !isValidPassword ? "*" : ""
+                    } סיסמא`}
+                    helperText={
+                      signUp
+                        ? !isValidPassword
+                          ? "הסיסמא צריכה לכלול לפחות אות לטינית גדולה, קטנה ומספר"
+                          : "סיסמא מהממת!! לא נספר לאף אחד 😜"
+                        : !isValidPassword
+                        ? "הסיסמא צריכה לכלול לפחות אות לטינית גדולה, קטנה ומספר"
+                        : "סיסמא תקינה!"
+                    }
+                    type="password"
+                    fullWidth
+                    variant="standard"
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
+                  />
 
-              <div className="mt-4 text-lg text-thirdy">
-                {signUp ? (
-                  <div>
-                    רשומה כבר לאתר? התחברי{" "}
-                    <span
-                      onClick={() => {
-                        setSignUp(false);
-                      }}
-                      className="hover:underline text-secondary hover:cursor-pointer"
-                    >
-                      כאן
-                    </span>
+                  <div className="mt-4 text-lg text-thirdy">
+                    {signUp ? (
+                      <div>
+                        רשומה כבר לאתר? התחברי{" "}
+                        <span
+                          onClick={() => {
+                            setSignUp(false);
+                          }}
+                          className="hover:underline text-secondary hover:cursor-pointer"
+                        >
+                          כאן
+                        </span>
+                      </div>
+                    ) : (
+                      <div>
+                        אין לך משתמש? הירשמי{" "}
+                        <span
+                          onClick={() => {
+                            setSignUp(true);
+                          }}
+                          className="hover:underline text-secondary hover:cursor-pointer"
+                        >
+                          כאן
+                        </span>
+                      </div>
+                    )}
                   </div>
-                ) : (
-                  <div>
-                    אין לך משתמש? הירשמי{" "}
-                    <span
-                      onClick={() => {
-                        setSignUp(true);
-                      }}
-                      className="hover:underline text-secondary hover:cursor-pointer"
-                    >
-                      כאן
-                    </span>
-                  </div>
-                )}
+                </DialogContent>
+
+                <DialogActions>
+                  <Button onClick={handleClose}>
+                    <p className="text-thirdy">ביטול</p>
+                  </Button>
+                  <Button onClick={signUp ? handleSignUp : handleLogIn}>
+                    <p className="text-thirdy">
+                      {signUp ? "הרשמה" : "התחברות"}
+                    </p>
+                  </Button>
+                  {/* to make submit on pressing enter */}
+                </DialogActions>
               </div>
-            </DialogContent>
-
-            <DialogActions>
-              <Button onClick={handleClose}>
-                <p className="text-thirdy">ביטול</p>
-              </Button>
-              <Button onClick={signUp ? handleSignUp : handleLogIn}>
-                <p className="text-thirdy">{signUp ? "הרשמה" : "התחברות"}</p>
-              </Button>
-              {/* to make submit on pressing enter */}
-              <input type="submit" hidden />
-            </DialogActions>
+            ) : (
+              <Verification
+                email={email}
+                code={code}
+                setCode={setCode}
+                wrongCode={wrongCode}
+                sendVeriCode={sendVeriCode}
+              />
+            )}
+            <input type="submit" hidden />
           </form>
         )}
       </Dialog>

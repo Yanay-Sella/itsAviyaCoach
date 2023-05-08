@@ -9,6 +9,8 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   role: { type: String, default: defaultRole },
   refreshToken: String,
+  verified: { type: Boolean, default: false },
+  code: { type: Number, default: null },
 });
 
 const User = mongoose.model("User", userSchema);
