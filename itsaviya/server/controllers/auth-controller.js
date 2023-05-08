@@ -14,7 +14,8 @@ const transporter = nodemailer.createTransport({
 });
 
 const handleVefiry = async (req, res) => {
-  const { email, code } = req.body;
+  let { email, code } = req.body;
+  email = email.toLowerCase();
 
   //checking code validity
   if (!code || code === null)
@@ -22,6 +23,7 @@ const handleVefiry = async (req, res) => {
 
   try {
     const foundUser = await User.findOne({ email });
+    console.log(foundUser);
     if (foundUser.code.toString() !== code) {
       console.log(`wrong code by ${email}`);
       return res.status(404).json({ message: "wrong code" });
@@ -37,7 +39,8 @@ const handleVefiry = async (req, res) => {
 };
 
 const sendVeriCode = async (req, res) => {
-  const { email } = req.body;
+  let { email } = req.body;
+  email = email.toLowerCase();
 
   const code = Math.floor(Math.random() * (9999 - 1000) + 1000);
 
@@ -78,7 +81,8 @@ const sendVeriCode = async (req, res) => {
 };
 
 const handleSignUp = async (req, res) => {
-  const { userName, email, password } = req.body;
+  let { userName, email, password } = req.body;
+  email = email.toLowerCase();
 
   console.log(`Sign up attempt from: ${email}`);
 
@@ -121,7 +125,7 @@ const handleSignUp = async (req, res) => {
   }
   const newUser = new User({
     userName,
-    email: email.toLowerCase(),
+    email,
     password: hashedPassword,
   });
 
@@ -137,7 +141,8 @@ const handleSignUp = async (req, res) => {
 };
 
 const handleLogIn = async (req, res, next) => {
-  const { email, password } = req.body;
+  let { email, password } = req.body;
+  email = email.toLowerCase();
 
   console.log(`Log in attempt from: ${email}`);
 
@@ -156,7 +161,7 @@ const handleLogIn = async (req, res, next) => {
 
   let user;
   try {
-    user = await User.findOne({ email: email.toLowerCase() }); // finding a user with a matching email
+    user = await User.findOne({ email }); // finding a user with a matching email
   } catch (error) {
     return res
       .status(500)
