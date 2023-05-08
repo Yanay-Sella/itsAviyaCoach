@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
       });
     } catch (error) {
       console.log(error);
-      return; // not clearing the auth if logout failed
+      // return; // not clearing the auth if logout failed
     }
     setAuth({}); // clearing the auth state, also clears the local storage.
   };

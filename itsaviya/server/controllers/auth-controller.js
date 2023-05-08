@@ -17,7 +17,7 @@ const handleVefiry = async (req, res) => {
   const { email, code } = req.body;
 
   //checking code validity
-  if (!code || code === null || code <= 999 || code > 9999)
+  if (!code || code === null)
     return res.status(404).json({ message: "code not valid" });
 
   try {
