@@ -23,6 +23,7 @@ const NewPost = () => {
   const [title, setTitle] = useState("");
   const [intro, setIntro] = useState("");
   const [article, setArticle] = useState([]); //content
+  const [categories, setCategories] = useState(["", ""]);
 
   const [file, setFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(samplePostImg);
@@ -41,6 +42,7 @@ const NewPost = () => {
 
   useEffect(() => {
     if (!file) return;
+    console.log(file);
     const fileReader = new FileReader();
     fileReader.onload = () => {
       setPreviewUrl(fileReader.result);
@@ -83,11 +85,32 @@ const NewPost = () => {
     });
   };
 
+  const editCategories = (event) => {
+    const { value, id } = event.target;
+    // console.log(id);
+
+    setCategories((prev) => {
+      return prev.map((element, index) => {
+        if (index == id) {
+          return value;
+        }
+        return element;
+      });
+    });
+  };
+  useEffect(() => {
+    console.log(categories);
+  }, [categories]);
+
   const sendPost = async () => {
     let post;
     if (!window.confirm("את בטוחה שאת רוצה להעלות את הפוסט?")) return;
     else {
       try {
+        if (!file) {
+          alert("אנא בחרי תמונה...");
+          return;
+        }
         const formData = new FormData();
         formData.append("file", file);
         formData.append("upload_preset", uploadPreset);
@@ -95,14 +118,16 @@ const NewPost = () => {
         const { data } = await axios.post(
           `${cloudinaryUrl}/image/upload`,
           formData
-        );
+        ); //sending the image to couldinary
+
+        const imageUrl = data.secure_url; // getting the image url from couldinary
 
         post = {
           name,
           title,
           intro,
           content: article,
-          imageUrl: data.secure_url,
+          imageUrl,
         };
 
         const response = await axiosPrivate.post("blog", post); // sending the post
@@ -110,6 +135,17 @@ const NewPost = () => {
           navigate("/blog");
         }
       } catch (error) {
+        const { response } = error;
+        const { status, data } = response;
+        const { message } = data;
+
+        if (status === 409) {
+          console.log("hello");
+          if (message === "title")
+            alert("כותרת פוסט כבר קיימת, בחרי כותרת אחרת");
+          if (message === "name")
+            alert("שם פוסט באנגלית כבר קיים, בחרי שם אחר");
+        }
         console.log(error);
       }
     }
@@ -126,6 +162,7 @@ const NewPost = () => {
           type="file"
           onChange={chooseFile}
           text="כדאי מאוד לבחור תמונת ריבוע!"
+          accept="image/png, image/jpeg, image/jpg"
         />
       </div>
 
@@ -138,6 +175,26 @@ const NewPost = () => {
           dir="rtl"
           className="rounded-xl pr-2"
         />
+        <div dir="rtl" className="flex justify-between">
+          <input
+            type="text"
+            onChange={editCategories}
+            placeholder="קטגוריה 1"
+            id={0}
+            value={categories[0]}
+            dir="rtl"
+            className="rounded-xl pr-2"
+          />
+          <input
+            type="text"
+            onChange={editCategories}
+            placeholder="קטגוריה 2"
+            id={1}
+            value={categories[1]}
+            dir="rtl"
+            className="rounded-xl pr-2"
+          />
+        </div>
         <input
           type="text"
           onChange={typeTitle}
@@ -168,6 +225,7 @@ const NewPost = () => {
                 id={index}
                 onChange={editPrgrph}
                 dir="rtl"
+                value={article[index].header}
               />
               <h1>טקסט</h1>
               <textarea
@@ -176,6 +234,7 @@ const NewPost = () => {
                 id={index}
                 onChange={editPrgrph}
                 dir="rtl"
+                value={article[index].text}
               />
             </div>
           );

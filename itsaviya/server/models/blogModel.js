@@ -11,6 +11,7 @@ const blogSchema = new mongoose.Schema({
   intro: { type: String, required: true },
   content: { type: [sectionSchema], required: true },
   date: { type: Date, default: Date.now },
+  categories: { type: [String], required: true },
   imageUrl: { type: String },
 });
 

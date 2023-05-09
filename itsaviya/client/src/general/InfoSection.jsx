@@ -1,7 +1,16 @@
 import React from "react";
 import FadeSection from "./FadeSection";
 
-const InfoSection = ({ name, text, imageSrc, header, leftImg }) => {
+const InfoSection = ({ name, text, imageSrc, header, leftImg, date }) => {
+  const dateObj = new Date(date);
+  const dateText = `${dateObj.getDate()}/${dateObj.getMonth() + 1}/${
+    dateObj.getYear() + 1900
+  }`;
+
+  const day = dateObj.getDay();
+
+  const hebrewDays = ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שבת"];
+
   return (
     <section
       className="flex md:flex-row flex-col md:gap-20 gap-10 self-stretch content-center items-center justify-between bg-primary sectiony"
@@ -15,14 +24,20 @@ const InfoSection = ({ name, text, imageSrc, header, leftImg }) => {
                 leftImg && "md:items-end"
               }`}
             >
-              <h1
-                className={`md:text-5xl text-3xl md:text-left hebText text-bold header ${
-                  leftImg && ` md:text-right`
-                } text-center`}
-              >
-                {header}
-              </h1>
-
+              <div dir="rtl" className="flex flex-col gap-2">
+                <h1
+                  className={`md:text-5xl text-3xl md:text-left hebText text-bold header ${
+                    leftImg && ` md:text-right`
+                  } text-center`}
+                >
+                  {header}
+                </h1>
+                {date && (
+                  <p className="hover:underline w-fit hover:cursor-pointer">
+                    {`יום ${hebrewDays[day]} - `} {dateText}
+                  </p>
+                )}
+              </div>
               <div
                 className={`md:text-2xl text-lg md:text-left md:leading-8 hebText  ${
                   leftImg && `md:text-right`

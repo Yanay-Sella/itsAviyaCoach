@@ -61,10 +61,12 @@ const Blog = () => {
         <div className="mt-16 md:flex md:flex-col grid grid-cols-2 md:gap-12 gap-5 md:max-w-full px-7">
           {/*{id, name, title, content, date} */}
           {blogArr.reverse().map((element) => (
-            <FadeSection
-              children={<PostPrev blogSummary={element} key={element._id} />}
-              isShort={true}
-            /> //here, the posts preview page will get a *summary* about the posts
+            <div key={element._id}>
+              <FadeSection
+                children={<PostPrev blogSummary={element} />}
+                isShort={true}
+              />
+            </div> // post page summary
           ))}
         </div>
       )}

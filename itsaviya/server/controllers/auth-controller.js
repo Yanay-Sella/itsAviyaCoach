@@ -229,7 +229,7 @@ const handleLogout = async (req, res) => {
   const refreshToken = cookies.jwt;
 
   const foundUser = await User.findOne({ refreshToken }); // find user by the RT above
-  console.log("logOut: " + foundUser.userName);
+  console.log("logOut: " + foundUser?.userName);
   if (!foundUser) {
     res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true }); // need to have the same options of the created cookie
     return res.sendStatus(204);

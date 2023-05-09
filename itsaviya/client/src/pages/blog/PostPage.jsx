@@ -15,7 +15,7 @@ const PostPage = () => {
   const url = `${process.env.REACT_APP_SERVER_URL}blog/${postName}`;
   const [post, setPost] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
-  const { name, title, intro, content, imageUrl } = post || {};
+  const { name, title, intro, content, imageUrl, date } = post || {};
 
   useEffect(() => {
     const getPost = async () => {
@@ -47,6 +47,7 @@ const PostPage = () => {
             header={title}
             imageSrc={imageUrl}
             key={name}
+            date={date}
           />
 
           <div className="flex flex-col gap-7 w-5/6 self-center">

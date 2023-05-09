@@ -20,6 +20,18 @@ const postNewBlog = async (req, res) => {
     content,
     imageUrl,
   });
+  let foundPost;
+  foundPost = await Blog.findOne({ name });
+  if (foundPost) {
+    console.log("name conflict when posting");
+    return res.status(409).json({ message: "name" });
+  }
+  foundPost = await Blog.findOne({ title });
+  if (foundPost) {
+    console.log("title conflict when posting");
+    return res.status(409).json({ message: "title" });
+  }
+
   try {
     await newPost.save();
     console.log("saved");
