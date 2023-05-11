@@ -15,7 +15,7 @@ const Hero = () => {
         alt="aviyaImage"
         className="md:h-auto md:w-2/5 h-auto w-4/6 shrink"
       />
-      <div className="flex flex-col gap-10 shrink md:items-end items-center">
+      <div className="flex flex-col md:gap-10 gap-7 shrink md:items-end items-center">
         <h1 className="md:text-7xl text-5xl md:text-right text-center header">
           {header}
         </h1>

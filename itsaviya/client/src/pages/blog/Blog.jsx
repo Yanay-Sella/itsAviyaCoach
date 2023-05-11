@@ -45,7 +45,7 @@ const Blog = () => {
   }, []);
 
   return (
-    <div className="flex flex-col mt-28 max-w-6xl md:gap-0 gap-20 md:items-stretch items-center">
+    <div className="flex flex-col mt-28 max-w-6xl md:gap-0 gap-8 md:items-stretch items-center">
       <InfoSection
         leftImg={true}
         header="הבלוג שלי"

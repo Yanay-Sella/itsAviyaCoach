@@ -15,7 +15,8 @@ const PostPage = () => {
   const url = `${process.env.REACT_APP_SERVER_URL}blog/${postName}`;
   const [post, setPost] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
-  const { name, title, intro, content, imageUrl, date } = post || {};
+  const { name, title, intro, content, imageUrl, date, categories } =
+    post || {};
 
   let dateText = "";
 
@@ -68,6 +69,7 @@ const PostPage = () => {
             imageSrc={imageUrl}
             key={name}
             date={dateText}
+            categories={categories}
           />
 
           <div className="flex flex-col gap-7 w-5/6 self-center">
@@ -94,7 +96,7 @@ const PostNotFound = () => {
       <p className="hebText text-4xl">פוסט לא נמצא...</p>
 
       <Link to="/home">
-        <div className="flex flex-col items-center hover:underline transition-all hover:scale-105">
+        <div className="flex flex-col items-center md:hover:underline transition-all hover:scale-105">
           <img src={Logo} alt="logo" />
           <p className="hebText text-xl">חזרה לדף הבית</p>
         </div>

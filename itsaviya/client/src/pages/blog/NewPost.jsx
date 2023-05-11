@@ -87,7 +87,6 @@ const NewPost = () => {
 
   const editCategories = (event) => {
     const { value, id } = event.target;
-    // console.log(id);
 
     setCategories((prev) => {
       return prev.map((element, index) => {
@@ -128,6 +127,7 @@ const NewPost = () => {
           intro,
           content: article,
           imageUrl,
+          categories,
         };
 
         const response = await axiosPrivate.post("blog", post); // sending the post
