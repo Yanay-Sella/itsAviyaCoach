@@ -12,13 +12,14 @@ const getAllBlogs = async (req, res) => {
 };
 
 const postNewBlog = async (req, res) => {
-  const { name, title, intro, content, imageUrl } = req.body;
+  const { name, title, intro, content, imageUrl, categories } = req.body;
   const newPost = new Blog({
     name,
     title,
     intro,
     content,
     imageUrl,
+    categories,
   });
   let foundPost;
   foundPost = await Blog.findOne({ name });
