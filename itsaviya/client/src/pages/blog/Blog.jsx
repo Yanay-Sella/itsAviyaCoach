@@ -57,6 +57,15 @@ const Blog = () => {
         <div className="flex justify-center">
           <CircularProgress color="info" />
         </div>
+      ) : !blogArr || blogArr.length === 0 ? (
+        <div
+          className="flex flex-col justify-between items-center bg-secondary py-10 gap-6 text-white self-center"
+          style={{ width: "99vw" }}
+          dir="rtl"
+        >
+          <h1 className="text-4xl">{"אין פוסטים עדיין..."}</h1>
+          <h2 className="text-3xl">{`פוסטים חדשים יעלו בקרוב!`}</h2>
+        </div>
       ) : (
         <div className="mt-16 md:flex md:flex-col grid grid-cols-2 md:gap-12 gap-5 md:max-w-full px-7">
           {/*{id, name, title, content, date} */}

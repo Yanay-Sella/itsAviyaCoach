@@ -172,6 +172,6 @@ code {
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 6;
+  -webkit-line-clamp: 4;
   white-space: pre-wrap; /* let the text wrap preserving spaces */
 }

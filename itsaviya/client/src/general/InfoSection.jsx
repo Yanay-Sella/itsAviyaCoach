@@ -2,15 +2,6 @@ import React from "react";
 import FadeSection from "./FadeSection";
 
 const InfoSection = ({ name, text, imageSrc, header, leftImg, date }) => {
-  const dateObj = new Date(date);
-  const dateText = `${dateObj.getDate()}/${dateObj.getMonth() + 1}/${
-    dateObj.getYear() + 1900
-  }`;
-
-  const day = dateObj.getDay();
-
-  const hebrewDays = ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שבת"];
-
   return (
     <section
       className="flex md:flex-row flex-col md:gap-20 gap-10 self-stretch content-center items-center justify-between bg-primary sectiony"
@@ -34,7 +25,7 @@ const InfoSection = ({ name, text, imageSrc, header, leftImg, date }) => {
                 </h1>
                 {date && (
                   <p className="hover:underline w-fit hover:cursor-pointer">
-                    {`יום ${hebrewDays[day]} - `} {dateText}
+                    {date}
                   </p>
                 )}
               </div>
