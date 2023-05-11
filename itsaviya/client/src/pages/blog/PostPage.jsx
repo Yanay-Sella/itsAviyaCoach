@@ -96,7 +96,7 @@ const PostNotFound = () => {
       <p className="hebText text-4xl">פוסט לא נמצא...</p>
 
       <Link to="/home">
-        <div className="flex flex-col items-center md:hover:underline transition-all hover:scale-105">
+        <div className="flex flex-col items-center hover:underline transition-all hover:scale-105">
           <img src={Logo} alt="logo" />
           <p className="hebText text-xl">חזרה לדף הבית</p>
         </div>
