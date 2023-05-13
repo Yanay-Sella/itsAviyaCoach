@@ -12,7 +12,8 @@ import "../../index.css";
 
 import useAuth from "../../hooks/useAuth";
 
-import myAxios from "../../api/axios.js";
+// import axios from "../../api/axios.js";
+import axios from "axios";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -175,7 +176,7 @@ const Auth = ({ open, handleClose }) => {
   const sendVeriCode = async (e) => {
     if (e) e.preventDefault();
     try {
-      const response = await myAxios.post("user/verify", { email, code });
+      const response = await axios.post("user/verify", { email, code });
       console.log(response);
       if (response.statusText === "OK") {
         handleLogIn();
