@@ -12,8 +12,7 @@ import "../../index.css";
 
 import useAuth from "../../hooks/useAuth";
 
-// import axios from "../../api/axios.js";
-import axios from "axios";
+import axios from "../../api/axios.js";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
