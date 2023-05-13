@@ -23,6 +23,7 @@ const NewPost = () => {
   const [title, setTitle] = useState("");
   const [intro, setIntro] = useState("");
   const [article, setArticle] = useState([]); //content
+  const [categories, setCategories] = useState(["", ""]);
 
   const [file, setFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(samplePostImg);
@@ -41,6 +42,7 @@ const NewPost = () => {
 
   useEffect(() => {
     if (!file) return;
+    console.log(file);
     const fileReader = new FileReader();
     fileReader.onload = () => {
       setPreviewUrl(fileReader.result);
@@ -83,11 +85,31 @@ const NewPost = () => {
     });
   };
 
+  const editCategories = (event) => {
+    const { value, id } = event.target;
+
+    setCategories((prev) => {
+      return prev.map((element, index) => {
+        if (index == id) {
+          return value;
+        }
+        return element;
+      });
+    });
+  };
+  useEffect(() => {
+    console.log(categories);
+  }, [categories]);
+
   const sendPost = async () => {
     let post;
     if (!window.confirm("את בטוחה שאת רוצה להעלות את הפוסט?")) return;
     else {
       try {
+        if (!file) {
+          alert("אנא בחרי תמונה...");
+          return;
+        }
         const formData = new FormData();
         formData.append("file", file);
         formData.append("upload_preset", uploadPreset);
@@ -95,14 +117,17 @@ const NewPost = () => {
         const { data } = await axios.post(
           `${cloudinaryUrl}/image/upload`,
           formData
-        );
+        ); //sending the image to couldinary
+
+        const imageUrl = data.secure_url; // getting the image url from couldinary
 
         post = {
           name,
           title,
           intro,
           content: article,
-          imageUrl: data.secure_url,
+          imageUrl,
+          categories,
         };
 
         const response = await axiosPrivate.post("blog", post); // sending the post
@@ -110,13 +135,27 @@ const NewPost = () => {
           navigate("/blog");
         }
       } catch (error) {
+        const { response } = error;
+        const { status, data } = response;
+        const { message } = data;
+
+        if (status === 400) {
+          alert("חסר ערך, אנא ודאי שמילאת את כל השדות!");
+        }
+
+        if (status === 409) {
+          if (message === "title")
+            alert("כותרת פוסט כבר קיימת, בחרי כותרת אחרת");
+          if (message === "name")
+            alert("שם פוסט באנגלית כבר קיים, בחרי שם אחר");
+        }
         console.log(error);
       }
     }
   };
 
   return (
-    <div className="flex flex-col mt-28 max-w-6xl md:gap-4 gap-20">
+    <div className="flex flex-col mt-28 max-w-6xl w-full md:gap-4 gap-20">
       <div dir="rtl" className="flex flex-col">
         <label htmlFor="post-image">
           בחרי תמונה ריבועית עם אורך ורוחב שווים!
@@ -126,6 +165,7 @@ const NewPost = () => {
           type="file"
           onChange={chooseFile}
           text="כדאי מאוד לבחור תמונת ריבוע!"
+          accept="image/png, image/jpeg, image/jpg"
         />
       </div>
 
@@ -138,6 +178,26 @@ const NewPost = () => {
           dir="rtl"
           className="rounded-xl pr-2"
         />
+        <div dir="rtl" className="flex justify-between">
+          <input
+            type="text"
+            onChange={editCategories}
+            placeholder="קטגוריה 1"
+            id={0}
+            value={categories[0]}
+            dir="rtl"
+            className="rounded-xl pr-2"
+          />
+          <input
+            type="text"
+            onChange={editCategories}
+            placeholder="קטגוריה 2"
+            id={1}
+            value={categories[1]}
+            dir="rtl"
+            className="rounded-xl pr-2"
+          />
+        </div>
         <input
           type="text"
           onChange={typeTitle}
@@ -168,6 +228,7 @@ const NewPost = () => {
                 id={index}
                 onChange={editPrgrph}
                 dir="rtl"
+                value={article[index].header}
               />
               <h1>טקסט</h1>
               <textarea
@@ -176,6 +237,7 @@ const NewPost = () => {
                 id={index}
                 onChange={editPrgrph}
                 dir="rtl"
+                value={article[index].text}
               />
             </div>
           );
@@ -189,13 +251,21 @@ const NewPost = () => {
       {/*@@@@@ post preview @@@@@*/}
 
       <section className="flex flex-col items-center bg-primary text-thirdy border-2 pb-10">
-        <div className="md:pl-10 transition-all flex md:flex-row flex-col md:justify-end md:gap-16 gap-4 border-2 border-fourthy rounded-lg hover:-translate-y-1 hover:cursor-pointer shadow-md hover:shadow-xl md:h-64">
+        {/* the post preview */}
+        <div className="md:pl-10 transition-all flex w-full md:flex-row flex-col md:justify-end md:gap-16 gap-4 border-2 border-fourthy rounded-lg hover:-translate-y-1 hover:cursor-pointer shadow-md hover:shadow-xl md:h-64">
           <div className="flex flex-col gap-4 md:items-stretch items-center order-1 md:order-2 py-4">
-            <h1 className="header md:text-3xl text-xl md:text-right text-center">
-              {title}
-            </h1>
+            <div className="">
+              <h1 className="header md:text-3xl text-xl md:text-right text-center">
+                {title ? title : "<<כותרת>>"}
+              </h1>
+              <p>{`05/11/2001`}</p>
+            </div>
             <div className="hidden md:inline">
-              <p className="text-xl post-prev-text">{intro}</p>
+              <p className="text-xl post-prev-text">
+                {intro
+                  ? intro
+                  : "<<טקסט פתיחה טקסט פתיחה טקסט פתיחה טקסט פתיחה טקסט פתיחה טקסט פתיחה טקסט פתיחה טקסט פתיחה>>"}
+              </p>
             </div>
           </div>
 
@@ -206,12 +276,17 @@ const NewPost = () => {
           />
         </div>
 
-        <div className="flex flex-col max-w-6xl md:gap-4 gap-20">
+        {/* the post itself */}
+        <div className="flex flex-col max-w-6xl w-full md:gap-4 gap-20">
           <InfoSection
             leftImg={true}
             name={"newPost"}
-            text={intro}
-            header={title}
+            text={
+              intro
+                ? intro
+                : "<<טקסט פתיחה טקסט פתיחה טקסט פתיחה טקסט פתיחה טקסט פתיחה טקסט פתיחה טקסט פתיחה טקסט פתיחה>>"
+            }
+            header={title ? title : "<<כותרת>>"}
             imageSrc={previewUrl}
             key={"newPost"}
             alt="preview"

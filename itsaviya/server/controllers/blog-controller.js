@@ -12,14 +12,36 @@ const getAllBlogs = async (req, res) => {
 };
 
 const postNewBlog = async (req, res) => {
-  const { name, title, intro, content, imageUrl } = req.body;
+  const { name, title, intro, content, imageUrl, categories } = req.body;
+
+  if (!name || !title || !intro || !content || !imageUrl || !categories) {
+    console.log("missing values");
+    return res
+      .status(400)
+      .json({ message: "missing values check your attributes" });
+  }
+
   const newPost = new Blog({
     name,
     title,
     intro,
     content,
     imageUrl,
+    categories,
   });
+
+  let foundPost;
+  foundPost = await Blog.findOne({ name });
+  if (foundPost) {
+    console.log("name conflict when posting");
+    return res.status(409).json({ message: "name" });
+  }
+  foundPost = await Blog.findOne({ title });
+  if (foundPost) {
+    console.log("title conflict when posting");
+    return res.status(409).json({ message: "title" });
+  }
+
   try {
     await newPost.save();
     console.log("saved");

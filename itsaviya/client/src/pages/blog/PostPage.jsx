@@ -15,7 +15,10 @@ const PostPage = () => {
   const url = `${process.env.REACT_APP_SERVER_URL}blog/${postName}`;
   const [post, setPost] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
-  const { name, title, intro, content, imageUrl } = post || {};
+  const { name, title, intro, content, imageUrl, date, categories } =
+    post || {};
+
+  let dateText = "";
 
   useEffect(() => {
     const getPost = async () => {
@@ -32,6 +35,24 @@ const PostPage = () => {
     getPost();
   }, []);
 
+  if (date) {
+    const dateObj = new Date(date);
+    const day = dateObj.getDay();
+    const hebrewDays = [
+      "ראשון",
+      "שני",
+      "שלישי",
+      "רביעי",
+      "חמישי",
+      "שישי",
+      "שבת",
+    ];
+
+    dateText = `יום ${hebrewDays[day]} - ${dateObj.getDate()}/${
+      dateObj.getMonth() + 1
+    }/${dateObj.getYear() + 1900}`;
+  }
+
   return (
     <>
       {!post ? (
@@ -47,6 +68,8 @@ const PostPage = () => {
             header={title}
             imageSrc={imageUrl}
             key={name}
+            date={dateText}
+            categories={categories}
           />
 
           <div className="flex flex-col gap-7 w-5/6 self-center">
