@@ -139,8 +139,11 @@ const NewPost = () => {
         const { status, data } = response;
         const { message } = data;
 
+        if (status === 400) {
+          alert("חסר ערך, אנא ודאי שמילאת את כל השדות!");
+        }
+
         if (status === 409) {
-          console.log("hello");
           if (message === "title")
             alert("כותרת פוסט כבר קיימת, בחרי כותרת אחרת");
           if (message === "name")
@@ -152,7 +155,7 @@ const NewPost = () => {
   };
 
   return (
-    <div className="flex flex-col mt-28 max-w-6xl md:gap-4 gap-20">
+    <div className="flex flex-col mt-28 max-w-6xl w-full md:gap-4 gap-20">
       <div dir="rtl" className="flex flex-col">
         <label htmlFor="post-image">
           בחרי תמונה ריבועית עם אורך ורוחב שווים!
@@ -249,16 +252,20 @@ const NewPost = () => {
 
       <section className="flex flex-col items-center bg-primary text-thirdy border-2 pb-10">
         {/* the post preview */}
-        <div className="md:pl-10 transition-all flex md:flex-row flex-col md:justify-end md:gap-16 gap-4 border-2 border-fourthy rounded-lg hover:-translate-y-1 hover:cursor-pointer shadow-md hover:shadow-xl md:h-64">
+        <div className="md:pl-10 transition-all flex w-full md:flex-row flex-col md:justify-end md:gap-16 gap-4 border-2 border-fourthy rounded-lg hover:-translate-y-1 hover:cursor-pointer shadow-md hover:shadow-xl md:h-64">
           <div className="flex flex-col gap-4 md:items-stretch items-center order-1 md:order-2 py-4">
             <div className="">
               <h1 className="header md:text-3xl text-xl md:text-right text-center">
-                {title}
+                {title ? title : "<<כותרת>>"}
               </h1>
               <p>{`05/11/2001`}</p>
             </div>
             <div className="hidden md:inline">
-              <p className="text-xl post-prev-text">{intro}</p>
+              <p className="text-xl post-prev-text">
+                {intro
+                  ? intro
+                  : "<<טקסט פתיחה טקסט פתיחה טקסט פתיחה טקסט פתיחה טקסט פתיחה טקסט פתיחה טקסט פתיחה טקסט פתיחה>>"}
+              </p>
             </div>
           </div>
 
@@ -270,12 +277,16 @@ const NewPost = () => {
         </div>
 
         {/* the post itself */}
-        <div className="flex flex-col max-w-6xl md:gap-4 gap-20">
+        <div className="flex flex-col max-w-6xl w-full md:gap-4 gap-20">
           <InfoSection
             leftImg={true}
             name={"newPost"}
-            text={intro}
-            header={title}
+            text={
+              intro
+                ? intro
+                : "<<טקסט פתיחה טקסט פתיחה טקסט פתיחה טקסט פתיחה טקסט פתיחה טקסט פתיחה טקסט פתיחה טקסט פתיחה>>"
+            }
+            header={title ? title : "<<כותרת>>"}
             imageSrc={previewUrl}
             key={"newPost"}
             alt="preview"

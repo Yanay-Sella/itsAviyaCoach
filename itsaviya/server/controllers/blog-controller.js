@@ -13,6 +13,14 @@ const getAllBlogs = async (req, res) => {
 
 const postNewBlog = async (req, res) => {
   const { name, title, intro, content, imageUrl, categories } = req.body;
+
+  if (!name || !title || !intro || !content || !imageUrl || !categories) {
+    console.log("missing values");
+    return res
+      .status(400)
+      .json({ message: "missing values check your attributes" });
+  }
+
   const newPost = new Blog({
     name,
     title,
@@ -21,6 +29,7 @@ const postNewBlog = async (req, res) => {
     imageUrl,
     categories,
   });
+
   let foundPost;
   foundPost = await Blog.findOne({ name });
   if (foundPost) {
