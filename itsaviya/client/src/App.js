@@ -29,19 +29,19 @@ function App() {
     <div>
       <ThemeProvider theme={theme}>
         <Routes>
-          <Route exact path="/#home" element={<Page children={<Home />} />} />
+          <Route exact path="/home" element={<Page children={<Home />} />} />
 
           {/* blog */}
-          <Route exact path="/#blog" element={<Page children={<Blog />} />} />
+          <Route exact path="/blog" element={<Page children={<Blog />} />} />
           <Route
-            path="#blog/:blogName"
+            path="blog/:blogName"
             element={<Page children={<PostPage />} />}
           />
 
           {/* ~!~should not be accessible to anyone~!~ */}
           <Route element={<ProtectedRoutes />}>
             <Route
-              path="/#blogger/new"
+              path="blogger/new"
               element={<Page children={<NewPost />} />}
             />
           </Route>
