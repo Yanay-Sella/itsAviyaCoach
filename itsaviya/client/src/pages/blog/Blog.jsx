@@ -13,9 +13,8 @@ import blogImg from "../../general/images/1x.jpg";
 import axios from "../../api/axios.js";
 
 const Blog = () => {
-  const [blogArr, setBlogArr] = useState([]);
+  const [blogArr, setBlogArr] = useState([""]);
   const [isLoading, setIsLoading] = useState(false);
-  const url = process.env.REACT_APP_SERVER_URL + "blog";
   const blogP = (
     <p>
       היי לכן! שמי אביה, מתעמלת קרקע לשעבר, מאמנת כושר מוסמכת בהווה. מומחית
@@ -31,7 +30,9 @@ const Blog = () => {
       try {
         setIsLoading(true);
         const response = await axios.get("blog");
+        //TODO: error handle
         const resData = await response.data;
+        console.log(resData);
         setBlogArr(resData);
         setIsLoading(false);
       } catch (error) {
