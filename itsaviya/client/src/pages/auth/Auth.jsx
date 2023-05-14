@@ -25,8 +25,8 @@ import Verification from "./Verification";
 const Auth = ({ open, handleClose }) => {
   const { setAuth, auth } = useAuth();
 
-  const urlLogIn = process.env.REACT_APP_SERVER_URL + "/user/login";
-  const urlSignUp = process.env.REACT_APP_SERVER_URL + "/user/signup";
+  const urlLogIn = process.env.REACT_APP_SERVER_URL + "user/login";
+  const urlSignUp = process.env.REACT_APP_SERVER_URL + "user/signup";
 
   const [signUp, setSignUp] = useState(false);
 
