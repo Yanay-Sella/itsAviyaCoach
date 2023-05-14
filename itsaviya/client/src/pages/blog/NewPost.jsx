@@ -131,9 +131,7 @@ const NewPost = () => {
         };
 
         const response = await axiosPrivate.post("blog", post); // sending the post
-        if (response.statusText === "OK") {
-          navigate("/blog");
-        }
+        navigate("/blog");
       } catch (error) {
         const { response } = error;
         const { status, data } = response;
