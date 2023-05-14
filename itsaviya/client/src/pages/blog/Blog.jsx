@@ -31,7 +31,6 @@ const Blog = () => {
         setIsLoading(true);
         const response = await axios.get("blog");
         const resData = await response.data;
-        console.log(resData);
         setBlogArr(resData);
         setIsLoading(false);
       } catch (error) {
