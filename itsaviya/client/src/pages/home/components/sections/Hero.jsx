@@ -2,7 +2,7 @@ import React from "react";
 import heroImage from "../../../../general/images/3.jpg";
 import "../../../../index.css";
 const Hero = () => {
-  const header = "גלי את העוצמה שבתוכך";
+  const header = "!!!גלי את העוצמה שבתוכך";
   const content = "ברוכה הבאה לאני החדש שלך";
 
   return (
