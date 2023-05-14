@@ -30,7 +30,6 @@ const Blog = () => {
       try {
         setIsLoading(true);
         const response = await axios.get("blog");
-        //TODO: error handle
         const resData = await response.data;
         console.log(resData);
         setBlogArr(resData);
