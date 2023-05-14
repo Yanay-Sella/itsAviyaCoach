@@ -3,15 +3,14 @@ import React, { useEffect, useState } from "react";
 import "../../index.css";
 import FadeSection from "../../general/FadeSection";
 
-import Page from "../Page";
-import NavBar from "../../general/navbar/NavBar";
 import InfoSection from "../../general/InfoSection";
 import Footer from "../../general/footer/Footer";
 import PostPrev from "./components/PostPrev";
 import { CircularProgress } from "@mui/material";
 
 import blogImg from "../../general/images/1x.jpg";
-import samplePostImg from "../../general/images/3x.jpg";
+
+import axios from "../../api/axios.js";
 
 const Blog = () => {
   const [blogArr, setBlogArr] = useState([]);
@@ -31,10 +30,8 @@ const Blog = () => {
     const getBlogsArr = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch(url, {
-          method: "GET",
-        });
-        const resData = await response.json();
+        const response = await axios.get("blog");
+        const resData = await response.data;
         setBlogArr(resData);
         setIsLoading(false);
       } catch (error) {
