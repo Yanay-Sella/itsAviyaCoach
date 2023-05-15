@@ -34,13 +34,6 @@ mongoose.set("strictQuery", false);
 app.use("/api/blog", blogRoutes);
 app.use("/api/user", userRoutes);
 
-//a user gets an access token when logging in then uses it to bypass the verifyJWT middleware
-app.use(verifyJWT);
-//TODO: comment route, should not be access without verifyJWT
-app.get("/api/test", async (req, res, next) => {
-  console.log("yay!");
-});
-
 mongoose.connect(atlasUri).then(() => {
   app.listen(port, () => {
     console.log(`listening on port ${port}`);

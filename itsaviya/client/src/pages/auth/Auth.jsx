@@ -11,7 +11,8 @@ import CircularProgress from "@mui/material/CircularProgress";
 import "../../index.css";
 
 import useAuth from "../../hooks/useAuth";
-import axios from "../../api/axios";
+
+import axios from "../../api/axios.js";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -173,12 +174,16 @@ const Auth = ({ open, handleClose }) => {
 
   const sendVeriCode = async (e) => {
     if (e) e.preventDefault();
+    setWrongCode(false);
     try {
       const response = await axios.post("user/verify", { email, code });
       if (response.status === 200) handleLogIn();
     } catch (error) {
       if (error.response.status === 404) setWrongCode(true);
       console.log(error);
+      if (error.response.status === 404) {
+        setWrongCode(true);
+      }
     }
   };
 
