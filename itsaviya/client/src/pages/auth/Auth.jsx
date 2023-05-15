@@ -175,15 +175,9 @@ const Auth = ({ open, handleClose }) => {
     if (e) e.preventDefault();
     try {
       const response = await axios.post("user/verify", { email, code });
-      console.log(response);
-      if (response.statusText === "OK") {
-        handleLogIn();
-      }
-
-      if (response.status === 404) {
-        setWrongCode(true);
-      }
+      if (response.status === 200) handleLogIn();
     } catch (error) {
+      if (error.response.status === 404) setWrongCode(true);
       console.log(error);
     }
   };
