@@ -34,7 +34,7 @@ const InfoSection = ({
                   <h1
                     className={`${
                       date ? "md:text-6xl" : "md:text-5xl"
-                    } text-3xl md:text-left hebText text-bold header ${
+                    } text-4xl md:text-left hebText text-bold header ${
                       leftImg && ` md:text-right`
                     } text-center`}
                     style={{ maxWidth: "37rem" }}

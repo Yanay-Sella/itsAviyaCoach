@@ -23,7 +23,6 @@ const handleVefiry = async (req, res) => {
 
   try {
     const foundUser = await User.findOne({ email });
-    console.log(foundUser);
     if (foundUser.code.toString() !== code) {
       console.log(`wrong code by ${email}`);
       return res.status(404).json({ message: "wrong code" });
@@ -168,7 +167,7 @@ const handleLogIn = async (req, res, next) => {
       .json({ message: "server error, please check your input" });
   }
   if (!user) {
-    // user does not exist
+    console.log("log in failed");
     return res.status(404).json({ message: "invalid username or password" });
   }
 
@@ -181,6 +180,7 @@ const handleLogIn = async (req, res, next) => {
       .json({ message: "server error, please check your input" });
   }
   if (!isValidPassword) {
+    console.log("log in failed");
     return res.status(404).json({ message: "invalid username or password" });
   }
 
