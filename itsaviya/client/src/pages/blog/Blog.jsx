@@ -24,7 +24,6 @@ const Blog = () => {
       אותי בסיפוק ואושר ואני יותר מאשמח שתהיי חלק מהמשפחה!
     </p>
   );
-
   useEffect(() => {
     const getBlogsArr = async () => {
       try {
@@ -64,7 +63,6 @@ const Blog = () => {
         </div>
       ) : (
         <div className="mt-16 md:flex md:flex-col grid grid-cols-2 md:gap-12 gap-5 md:max-w-full px-7">
-          {/*{id, name, title, content, date} */}
           {blogArr.reverse().map((element) => (
             <div key={element._id}>
               <FadeSection

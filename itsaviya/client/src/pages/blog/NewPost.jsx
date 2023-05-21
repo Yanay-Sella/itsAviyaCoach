@@ -11,6 +11,8 @@ import axios from "axios";
 
 import UseAxiosPrivate from "../../hooks/useAxiosPrivate";
 
+import CircularProgress from "@mui/material/CircularProgress";
+
 const NewPost = () => {
   const cloudinaryUrl = process.env.REACT_APP_CLOUDINARY_URL;
   const uploadPreset = process.env.REACT_APP_UPLOAD_PRESET;
@@ -27,6 +29,8 @@ const NewPost = () => {
 
   const [file, setFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(samplePostImg);
+
+  const [isLoading, setIsloading] = useState(false);
 
   const typeName = (event) => {
     setName(event.target.value);
@@ -97,11 +101,9 @@ const NewPost = () => {
       });
     });
   };
-  useEffect(() => {
-    console.log(categories);
-  }, [categories]);
 
   const sendPost = async () => {
+    setIsloading(true);
     let post;
     if (!window.confirm("את בטוחה שאת רוצה להעלות את הפוסט?")) return;
     else {
@@ -129,8 +131,8 @@ const NewPost = () => {
           imageUrl,
           categories,
         };
-
-        const response = await axiosPrivate.post("blog", post); // sending the post
+        await axiosPrivate.post("blog", post); // sending the post
+        setIsloading(false);
         navigate("/blog");
       } catch (error) {
         const { response } = error;
@@ -242,13 +244,13 @@ const NewPost = () => {
         })}
       </div>
 
-      <div className="mt-4" onClick={addPrgrph}>
-        <BtnAvi text={"להוסיף פסקה"} />
+      <div className="flex justify-center my-4" onClick={addPrgrph}>
+        <BtnAvi text={"להוסיף פסקה"} size="2xl" />
       </div>
 
       {/*@@@@@ post preview @@@@@*/}
 
-      <section className="flex flex-col items-center bg-primary text-thirdy border-2 pb-10">
+      <section className="flex flex-col items-center bg-primary text-thirdy gap-5 pb-10">
         {/* the post preview */}
         <div className="md:pl-10 transition-all flex w-full md:flex-row flex-col md:justify-end md:gap-16 gap-4 border-2 border-fourthy rounded-lg hover:-translate-y-1 hover:cursor-pointer shadow-md hover:shadow-xl md:h-64">
           <div className="flex flex-col gap-4 md:items-stretch items-center order-1 md:order-2 py-4">
@@ -275,7 +277,7 @@ const NewPost = () => {
         </div>
 
         {/* the post itself */}
-        <div className="flex flex-col max-w-6xl w-full md:gap-4 gap-20">
+        <div className="flex flex-col max-w-6xl w-full md:gap-4 gap-20 border-2 border-fourthy rounded-lg p-1">
           <InfoSection
             leftImg={true}
             name={"newPost"}
@@ -302,8 +304,12 @@ const NewPost = () => {
           </div>
         </div>
       </section>
-      <div className="mt-4" onClick={sendPost}>
-        <BtnAvi text={"לשלוח"} />
+      <div className="mt-4 flex justify-center" onClick={sendPost}>
+        {isLoading ? (
+          <CircularProgress color="info" size={50} />
+        ) : (
+          <BtnAvi text={"לשלוח"} size={"3xl"} />
+        )}
       </div>
       <Footer />
     </div>

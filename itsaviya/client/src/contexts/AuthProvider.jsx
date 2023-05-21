@@ -23,13 +23,17 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem("user", JSON.stringify(auth));
   }, [auth]); // whenever "auth" changes, we set the local storage value anew
 
+  const [isLoadingLogOut, setLoadingLogOut] = useState(false);
+
   //can be used in many places through out the app
   const handleLogOut = async () => {
+    setLoadingLogOut(true);
     try {
       //sending a logout request to clear the cookie and delete the AT from DB
       await axios.get("user/logout", {
         withCredentials: true,
       });
+      setLoadingLogOut(false);
     } catch (error) {
       console.log(error);
       // return; // not clearing the auth if logout failed
@@ -39,7 +43,15 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ auth, setAuth, isLogged, openAuth, setOpenAuth, handleLogOut }}
+      value={{
+        auth,
+        setAuth,
+        isLogged,
+        openAuth,
+        setOpenAuth,
+        handleLogOut,
+        isLoadingLogOut,
+      }}
     >
       {children}
     </AuthContext.Provider>
