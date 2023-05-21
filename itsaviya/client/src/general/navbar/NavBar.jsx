@@ -7,12 +7,20 @@ import NavBtn from "./NavBtn.jsx";
 import Auth from "../../pages/auth/Auth";
 import Logo from "../images/onlyHedge.png";
 import Snackbar from "@mui/material/Snackbar";
+import CircularProgress from "@mui/material/CircularProgress";
 
 // custom hooks
 import useAuth from "../../hooks/useAuth";
 
 const NavBar = () => {
-  const { isLogged, auth, openAuth, setOpenAuth, handleLogOut } = useAuth();
+  const {
+    isLogged,
+    auth,
+    openAuth,
+    setOpenAuth,
+    handleLogOut,
+    isLoadingLogOut,
+  } = useAuth();
 
   const url = useLocation().pathname;
   const isHome = url === "/home";
@@ -53,18 +61,22 @@ const NavBar = () => {
             anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
           />
           {isLogged ? (
-            <div dir="rtl">
-              <NavBtn
-                text={`שלום ${auth.userName}!`}
-                size="lg"
-                dropdown={true}
-                dropdownArr={[
-                  { hebName: "מידע", action: getUserInfo },
-                  { hebName: "להתנתק", action: handleLogOut },
-                ]}
-                key={"user"}
-              />
-            </div>
+            !isLoadingLogOut ? (
+              <div dir="rtl">
+                <NavBtn
+                  text={`שלום ${auth.userName}!`}
+                  size="lg"
+                  dropdown={true}
+                  dropdownArr={[
+                    { hebName: "מידע", action: getUserInfo },
+                    { hebName: "להתנתק", action: handleLogOut },
+                  ]}
+                  key={"user"}
+                />
+              </div>
+            ) : (
+              <CircularProgress color="info" size={32} />
+            )
           ) : (
             <div onClick={handleClickOpen}>
               <NavBtn text={"להתחבר"} size="lg" key={"logIn"} />

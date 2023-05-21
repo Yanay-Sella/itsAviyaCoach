@@ -8,12 +8,13 @@ import {
   faInstagram,
   faFacebook,
 } from "@fortawesome/free-brands-svg-icons";
+import CircularProgress from "@mui/material/CircularProgress";
 
 //custom hooks
 import useAuth from "../../hooks/useAuth";
 
 const Footer = () => {
-  const { isLogged, setOpenAuth, handleLogOut } = useAuth();
+  const { isLogged, setOpenAuth, handleLogOut, isLoadingLogOut } = useAuth();
 
   return (
     <div className="flex justify-between items-center self-stretch py-14 md:px-0 px-5 max-w-7xl">
@@ -43,7 +44,11 @@ const Footer = () => {
       <section className="flex flex-col justify-between self-stretch items-end">
         <h1 className="text-xl font-semibold">משתמש</h1>
         {isLogged ? (
-          <FootLink text={`להתנתק`} size="md" action={handleLogOut} />
+          !isLoadingLogOut ? (
+            <FootLink text={`להתנתק`} size="md" action={handleLogOut} />
+          ) : (
+            <CircularProgress color="info" size={25} />
+          )
         ) : (
           <FootLink text={`להתחבר`} size="md" action={setOpenAuth} />
         )}
