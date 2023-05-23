@@ -12,7 +12,8 @@ import axios from "axios";
 import UseAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 import CircularProgress from "@mui/material/CircularProgress";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 const NewPost = () => {
   const cloudinaryUrl = process.env.REACT_APP_CLOUDINARY_URL;
   const uploadPreset = process.env.REACT_APP_UPLOAD_PRESET;
@@ -46,7 +47,6 @@ const NewPost = () => {
 
   useEffect(() => {
     if (!file) return;
-    console.log(file);
     const fileReader = new FileReader();
     fileReader.onload = () => {
       setPreviewUrl(fileReader.result);
@@ -73,9 +73,17 @@ const NewPost = () => {
     });
   };
 
+  const deletePrgrph = (event) => {
+    const id = event.currentTarget.id;
+    setArticle((prev) => {
+      return prev.filter((e, index) => {
+        return index != id;
+      });
+    });
+  };
+
   const editPrgrph = (event) => {
     const { name, value, id } = event.target;
-
     setArticle((prev) => {
       return prev.map((element, index) => {
         if (index == id) {
@@ -220,25 +228,40 @@ const NewPost = () => {
       <div className="flex flex-col gap-4">
         {article.map((e, index) => {
           return (
-            <div className="flex flex-col gap-4" key={index}>
-              <h1>כותרת</h1>
-              <input
-                type="text"
-                name="header"
+            <div
+              dir="rtl"
+              className="flex border-fourthy border-2 rounded-lg p-2 gap-4"
+              key={index}
+            >
+              <div className="flex flex-col gap-4 w-full" key={index}>
+                <h1>כותרת</h1>
+                <input
+                  type="text"
+                  name="header"
+                  id={index}
+                  onChange={editPrgrph}
+                  dir="rtl"
+                  value={article[index].header}
+                />
+                <h1>טקסט</h1>
+                <textarea
+                  type="text"
+                  name="text"
+                  id={index}
+                  onChange={editPrgrph}
+                  dir="rtl"
+                  value={article[index].text}
+                />
+              </div>
+              <div
+                className="self-end hover:cursor-pointer"
                 id={index}
-                onChange={editPrgrph}
-                dir="rtl"
-                value={article[index].header}
-              />
-              <h1>טקסט</h1>
-              <textarea
-                type="text"
-                name="text"
-                id={index}
-                onChange={editPrgrph}
-                dir="rtl"
-                value={article[index].text}
-              />
+                onClick={deletePrgrph}
+              >
+                <div>
+                  <FontAwesomeIcon icon={faTrashCan} id={4} />
+                </div>
+              </div>
             </div>
           );
         })}
