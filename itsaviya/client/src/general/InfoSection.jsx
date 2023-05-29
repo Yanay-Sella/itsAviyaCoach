@@ -15,6 +15,7 @@ const InfoSection = ({
       className="flex md:flex-row flex-col md:gap-20 gap-10 self-stretch content-center items-center justify-between bg-primary sectiony"
       id={name}
     >
+      {/* the text */}
       <div className={`${leftImg && `md:order-2 order-1`}`}>
         <FadeSection
           children={
@@ -62,13 +63,14 @@ const InfoSection = ({
         />
       </div>
 
+      {/* the image */}
       <div className={`${leftImg && `md:order-1 order-2`}`}>
         <FadeSection
           children={
             <img
               src={imageSrc}
               alt="aviyaImage"
-              className={`max-w-full h-auto md:w-96 w-80 shrink `}
+              className={`max-w-full h-auto md:w-96 w-80 shrink`}
             />
           }
         />

@@ -4,7 +4,7 @@ import PlanCard from "./components/PlanCard";
 const PersonalPlans = () => {
   return (
     <section
-      className="flex flex-col self-center items-center gap-14 sectiony py-8 justify-center "
+      className="flex flex-col self-center items-center gap-14 sectiony justify-center "
       id="personal-plans"
     >
       <div className="flex flex-col items-center gap-4 text-center">
