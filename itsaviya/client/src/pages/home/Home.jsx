@@ -6,8 +6,8 @@ import PersonalPlans from "./components/plans/PersonalPlans";
 import GroupPlans from "./components/plans/GroupPlans";
 import Join from "./components/Join";
 import aboutImg from "../../general/images/1x.jpg";
-import personalImg from "../../general/images/4x.jpg";
-import groupImg from "../../general/images/4x.jpg";
+import personalImg from "../../general/images/5.jpg";
+import groupImg from "../../general/images/4.jpg";
 
 import InfoSection from "../../general/InfoSection.jsx"; //a section with an image and text next to it
 import Footer from "../../general/footer/Footer";
@@ -15,7 +15,10 @@ import FadeSection from "../../general/FadeSection";
 
 const Home = () => {
   return (
-    <div className="flex flex-col md:mt-28 mt-32 max-w-6xl md:gap-0 gap-20">
+    <div
+      className="flex flex-col md:mt-28 mt-32 md:gap-20 gap-20"
+      style={{ maxWidth: "75rem" }}
+    >
       <FadeSection children={<Hero />} />
 
       <InfoSection

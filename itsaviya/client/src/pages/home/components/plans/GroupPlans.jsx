@@ -4,7 +4,7 @@ import GroupCard from "./components/GroupCard";
 const GroupPlans = () => {
   return (
     <section
-      className="flex flex-col self-center items-center gap-14 sectiony py-8 justify-center"
+      className="flex flex-col self-center items-center gap-14 sectiony justify-center"
       id="groups"
     >
       <div className="items-center text-center">
