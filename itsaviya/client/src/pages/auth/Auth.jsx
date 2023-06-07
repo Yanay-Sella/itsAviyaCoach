@@ -21,6 +21,7 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 
 import Verification from "./Verification";
+import ForgotPassword from "./ForgotPassword";
 
 const Auth = ({ open, handleClose }) => {
   const { setAuth, auth } = useAuth();
@@ -43,9 +44,11 @@ const Auth = ({ open, handleClose }) => {
     "פרטי משתמש לא תקינים, נסי שוב!"
   );
 
+  //settings
   const [verified, setVerified] = useState(true);
   const [code, setCode] = useState("");
   const [wrongCode, setWrongCode] = useState(false);
+  const [forgot, setForgot] = useState(false);
 
   //validation
   const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/; //email
@@ -241,119 +244,143 @@ const Auth = ({ open, handleClose }) => {
                   }`}
             </h1>
             {verified ? (
-              <div>
-                <DialogContent dir="rtl">
-                  <DialogContentText></DialogContentText>
-                  {/* userName input, only on sign up */}
-                  {signUp && (
+              !forgot ? (
+                <div>
+                  <DialogContent dir="rtl">
+                    {/* userName input, only on sign up */}
+                    {signUp && (
+                      <TextField
+                        error={isAttempted && !isValidUN}
+                        color="info"
+                        dir="ltr"
+                        autoFocus
+                        margin="dense"
+                        label={`${
+                          isAttempted && !isValidUN ? "*" : ""
+                        } שם משתמש`}
+                        helperText={`שם משתמש חייב לכלול לפחות 3 תווים`}
+                        type="text"
+                        fullWidth
+                        variant="standard"
+                        value={userName}
+                        onChange={(e) => {
+                          setUserName(e.target.value);
+                        }}
+                      />
+                    )}
+                    {/* email input */}
                     <TextField
-                      error={isAttempted && !isValidUN}
+                      error={isAttempted && !isValidEmail}
                       color="info"
                       dir="ltr"
                       autoFocus
                       margin="dense"
-                      label={`${isAttempted && !isValidUN ? "*" : ""} שם משתמש`}
-                      helperText={`שם משתמש חייב לכלול לפחות 3 תווים`}
-                      type="text"
+                      label={`${
+                        isAttempted && !isValidEmail ? "*" : ""
+                      } אימייל`}
+                      helperText={
+                        isAttempted
+                          ? !isValidEmail
+                            ? "אימייל לא תקין!"
+                            : "אימייל תקין!"
+                          : "אנא הזיני אימייל חוקי"
+                      }
+                      type="email"
                       fullWidth
                       variant="standard"
-                      value={userName}
+                      value={email}
                       onChange={(e) => {
-                        setUserName(e.target.value);
+                        setEmail(e.target.value);
                       }}
                     />
-                  )}
-                  {/* email input */}
-                  <TextField
-                    error={isAttempted && !isValidEmail}
-                    color="info"
-                    dir="ltr"
-                    autoFocus
-                    margin="dense"
-                    label={`${isAttempted && !isValidEmail ? "*" : ""} אימייל`}
-                    helperText={
-                      isAttempted
-                        ? !isValidEmail
-                          ? "אימייל לא תקין!"
-                          : "אימייל תקין!"
-                        : "אנא הזיני אימייל חוקי"
-                    }
-                    type="email"
-                    fullWidth
-                    variant="standard"
-                    value={email}
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                    }}
-                  />
-                  {/* password input */}
-                  <TextField
-                    error={isAttempted && !isValidPassword}
-                    color="info"
-                    dir="ltr"
-                    margin="dense"
-                    label={`${
-                      isAttempted && !isValidPassword ? "*" : ""
-                    } סיסמא`}
-                    helperText={
-                      signUp
-                        ? !isValidPassword
+                    {/* password input */}
+                    <TextField
+                      error={isAttempted && !isValidPassword}
+                      color="info"
+                      dir="ltr"
+                      margin="dense"
+                      label={`${
+                        isAttempted && !isValidPassword ? "*" : ""
+                      } סיסמא`}
+                      helperText={
+                        signUp
+                          ? !isValidPassword
+                            ? "הסיסמא צריכה לכלול לפחות אות לטינית גדולה, קטנה ומספר"
+                            : "סיסמא מהממת!! לא נספר לאף אחד 😜"
+                          : !isValidPassword
                           ? "הסיסמא צריכה לכלול לפחות אות לטינית גדולה, קטנה ומספר"
-                          : "סיסמא מהממת!! לא נספר לאף אחד 😜"
-                        : !isValidPassword
-                        ? "הסיסמא צריכה לכלול לפחות אות לטינית גדולה, קטנה ומספר"
-                        : "סיסמא תקינה!"
-                    }
-                    type="password"
-                    fullWidth
-                    variant="standard"
-                    value={password}
-                    onChange={(e) => {
-                      setPassword(e.target.value);
-                    }}
-                  />
+                          : "סיסמא תקינה!"
+                      }
+                      type="password"
+                      fullWidth
+                      variant="standard"
+                      value={password}
+                      onChange={(e) => {
+                        setPassword(e.target.value);
+                      }}
+                    />
 
-                  <div className="mt-4 text-lg text-thirdy">
-                    {signUp ? (
-                      <div>
-                        רשומה כבר לאתר? התחברי{" "}
-                        <span
-                          onClick={() => {
-                            setSignUp(false);
-                          }}
-                          className="hover:underline text-secondary hover:cursor-pointer"
-                        >
-                          כאן
-                        </span>
-                      </div>
-                    ) : (
-                      <div>
-                        אין לך משתמש? הירשמי{" "}
-                        <span
-                          onClick={() => {
-                            setSignUp(true);
-                          }}
-                          className="hover:underline text-secondary hover:cursor-pointer"
-                        >
-                          כאן
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                </DialogContent>
+                    <div className="mt-4 text-lg text-thirdy">
+                      {signUp ? (
+                        <div>
+                          רשומה כבר לאתר? התחברי{" "}
+                          <span
+                            onClick={() => {
+                              setSignUp(false);
+                            }}
+                            className="hover:underline text-secondary hover:cursor-pointer"
+                          >
+                            כאן
+                          </span>
+                        </div>
+                      ) : (
+                        <div className="flex flex-col gap-2">
+                          <div>
+                            אין לך משתמש? הירשמי{" "}
+                            <span
+                              onClick={() => {
+                                setSignUp(true);
+                              }}
+                              className="hover:underline text-secondary hover:cursor-pointer"
+                            >
+                              כאן
+                            </span>
+                          </div>
+                          <div className="text-sm">
+                            שכחת סיסמא? לחצי{" "}
+                            <span
+                              onClick={() => {
+                                setForgot(true);
+                              }}
+                              className="hover:underline text-secondary hover:cursor-pointer"
+                            >
+                              כאן
+                            </span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </DialogContent>
 
-                <DialogActions>
-                  <Button onClick={handleClose}>
-                    <p className="text-thirdy">ביטול</p>
-                  </Button>
-                  <Button onClick={signUp ? handleSignUp : handleLogIn}>
-                    <p className="text-thirdy">
-                      {signUp ? "הרשמה" : "התחברות"}
-                    </p>
-                  </Button>
-                  {/* to make submit on pressing enter */}
-                </DialogActions>
-              </div>
+                  <DialogActions>
+                    <Button onClick={handleClose}>
+                      <p className="text-thirdy">ביטול</p>
+                    </Button>
+                    <Button onClick={signUp ? handleSignUp : handleLogIn}>
+                      <p className="text-thirdy">
+                        {signUp ? "הרשמה" : "התחברות"}
+                      </p>
+                    </Button>
+                  </DialogActions>
+                </div>
+              ) : (
+                <ForgotPassword
+                  email={email}
+                  setEmail={setEmail}
+                  isValidEmail={isValidEmail}
+                  handleClose={handleClose}
+                />
+              )
             ) : (
               <Verification
                 email={email}
