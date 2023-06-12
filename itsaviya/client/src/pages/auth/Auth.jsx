@@ -22,6 +22,7 @@ import {
 
 import Verification from "./Verification";
 import ForgotPassword from "./ForgotPassword";
+import ChangePassword from "./ChangePassword";
 
 const Auth = ({ open, handleClose }) => {
   const { setAuth, auth } = useAuth();
@@ -49,6 +50,7 @@ const Auth = ({ open, handleClose }) => {
   const [code, setCode] = useState("");
   const [wrongCode, setWrongCode] = useState(false);
   const [forgot, setForgot] = useState(false);
+  const [changePass, setChangePass] = useState(false);
 
   //validation
   const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/; //email
@@ -373,12 +375,15 @@ const Auth = ({ open, handleClose }) => {
                     </Button>
                   </DialogActions>
                 </div>
+              ) : changePass ? (
+                <ChangePassword email={email} handleClose={handleClose} />
               ) : (
                 <ForgotPassword
                   email={email}
                   setEmail={setEmail}
-                  isValidEmail={isValidEmail}
                   handleClose={handleClose}
+                  setForgot={setForgot}
+                  setChangePass={setChangePass}
                 />
               )
             ) : (

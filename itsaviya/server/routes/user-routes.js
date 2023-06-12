@@ -11,6 +11,8 @@ const {
   handleLogout,
   sendVeriCode,
   handleVefiry,
+  sendVerifyForgot,
+  changePassword,
 } = require("../controllers/auth-controller.js");
 const {
   handleRefreshToken,
@@ -24,6 +26,9 @@ router.post("/verify", handleVefiry);
 router.post("/signup", handleSignUp);
 router.post("/login", handleLogIn, sendVeriCode);
 router.get("/logout", handleLogout); // deletes refresh token, no longer access to many stuff
+
+//user modification
+router.post("/forgot", changePassword, sendVerifyForgot);
 
 //tokens
 router.get("/refresh", handleRefreshToken);
