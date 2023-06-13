@@ -12,21 +12,32 @@ const ForgotPassword = ({
   setEmail,
   handleClose,
   setForgot,
+  setSignUp,
   setChangePass,
+  setIsLoading,
+  setIsFail,
+  setErrorLogInMsg,
 }) => {
   const getMail = async (e) => {
     if (e) e.preventDefault();
+    setIsLoading(true);
     try {
       const response = await axios.post("user/forgot", { email });
+      if (response.status === 200) {
+        setChangePass(true); // going to ChangePassword screen
+      }
     } catch (error) {
       console.log(error);
+      setIsFail(true);
+      setErrorLogInMsg("משתמש לא קיים, אנא הירשמי");
       const res = error.response;
       if (res.status === 404) {
-        //user does not exist, go to sign up
-      }
-      if (res.status === 428) {
-        console.log("change pass!!");
-        setChangePass(true);
+        setTimeout(() => {
+          setSignUp(true); // go to sign up page
+          setForgot(false);
+          setIsFail(false);
+          setIsLoading(false);
+        }, 1500);
       }
     }
   };

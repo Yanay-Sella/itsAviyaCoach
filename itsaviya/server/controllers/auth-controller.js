@@ -52,25 +52,26 @@ const sendVerifyForgot = async (req, res) => {
     } else {
       console.log("Email sent: " + info.response);
       return res
-        .status(428)
+        .status(200) //Ok, need to pick password (not error)
         .json({ message: "need to verify with email code" });
     }
   });
 };
 
 const changePassword = async (req, res, next) => {
-  console.log("change pass");
   let { email, password, password2 } = req.body;
   email = email.toLowerCase();
+  console.log(`changing password to ${email}`);
 
   //might not get passwords
   if (password && password2 && password !== password2)
     return res.status(400).json({ message: "passwords does not match" });
-
   try {
     const foundUser = await User.findOne({ email });
-    console.log(foundUser);
-    if (!foundUser) return res.status(404).json({ message: "user not found" });
+    if (!foundUser) {
+      console.log(`user with email ${email} not found!`);
+      return res.status(404).json({ message: "user not found" });
+    }
     if (foundUser.forgot === false) {
       foundUser.forgot = true;
       req.body.foundUser = foundUser; // attaching the user to the request
@@ -78,11 +79,10 @@ const changePassword = async (req, res, next) => {
     }
 
     //creating new password
-
     let hashedPassword;
-
     hashedPassword = await bcrypt.hash(password, 14); //hashing the password
 
+    //changing password to the user and saving
     foundUser.password = hashedPassword;
     await foundUser.save();
   } catch (error) {

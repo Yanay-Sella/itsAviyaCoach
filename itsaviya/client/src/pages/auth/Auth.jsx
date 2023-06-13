@@ -5,7 +5,6 @@ import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import "../../index.css";
@@ -43,6 +42,9 @@ const Auth = ({ open, handleClose }) => {
   const [isFail, setIsFail] = useState(false);
   const [errorSignUpMsg, setErrorSignUpMsg] = useState(
     "פרטי משתמש לא תקינים, נסי שוב!"
+  );
+  const [errorLogInMsg, setErrorLogInMsg] = useState(
+    `פרטי הזדהות שגויים, נסי שוב`
   );
 
   //settings
@@ -164,6 +166,9 @@ const Auth = ({ open, handleClose }) => {
           setIsLoading(false);
           return;
         }
+        if (response.status === 404) {
+          setErrorLogInMsg(`פרטי הזדהות שגויים, נסי שוב`);
+        }
         setIsFail(true);
         setTimeout(() => {
           setIsLoading(false);
@@ -221,7 +226,7 @@ const Auth = ({ open, handleClose }) => {
                   <h1>{errorSignUpMsg}</h1>
                 ) : (
                   //log in
-                  <h1>פרטי הזדהות שגויים, נסי שוב</h1>
+                  <h1>{errorLogInMsg}</h1>
                 )}
               </div>
             ) : (
@@ -376,14 +381,25 @@ const Auth = ({ open, handleClose }) => {
                   </DialogActions>
                 </div>
               ) : changePass ? (
-                <ChangePassword email={email} handleClose={handleClose} />
+                <ChangePassword
+                  email={email}
+                  handleClose={handleClose}
+                  setSignUp={setSignUp}
+                  setForgot={setForgot}
+                />
               ) : (
                 <ForgotPassword
                   email={email}
                   setEmail={setEmail}
                   handleClose={handleClose}
                   setForgot={setForgot}
+                  setSignUp={setSignUp}
                   setChangePass={setChangePass}
+                  isLoading={isLoading}
+                  setIsLoading={setIsLoading}
+                  isFail={isFail}
+                  setIsFail={setIsFail}
+                  setErrorLogInMsg={setErrorLogInMsg}
                 />
               )
             ) : (

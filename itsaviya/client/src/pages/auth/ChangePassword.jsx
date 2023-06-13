@@ -7,7 +7,7 @@ import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import axios from "../../api/axios.js";
 
-const ChangePassword = ({ email, handleClose }) => {
+const ChangePassword = ({ email, handleClose, setSignUp, setForgot }) => {
   const [password, setPassword] = useState();
   const [password2, setPassword2] = useState();
   const [code, setCode] = useState();
@@ -19,13 +19,15 @@ const ChangePassword = ({ email, handleClose }) => {
     }
     const response = axios.post("/user/forgot", { email, password, password2 });
     if (response.status === 404) {
-      //user does not exist, go to sign up
+      setForgot(false);
+      setSignUp(true);
     }
     if (response.status === 500) {
       //server error
     }
     if (response.ok) {
-      console.log("password changed :)");
+      //TODO: add animation
+      handleClose();
     }
   };
 
