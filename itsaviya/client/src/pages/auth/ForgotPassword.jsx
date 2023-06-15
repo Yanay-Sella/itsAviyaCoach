@@ -12,36 +12,8 @@ const ForgotPassword = ({
   setEmail,
   handleClose,
   setForgot,
-  setSignUp,
-  setChangePass,
-  setIsLoading,
-  setIsFail,
-  setErrorLogInMsg,
+  sendForgotCode,
 }) => {
-  const getMail = async (e) => {
-    if (e) e.preventDefault();
-    setIsLoading(true);
-    try {
-      const response = await axios.post("user/forgot", { email });
-      if (response.status === 200) {
-        setChangePass(true); // going to ChangePassword screen
-      }
-    } catch (error) {
-      console.log(error);
-      setIsFail(true);
-      setErrorLogInMsg("משתמש לא קיים, אנא הירשמי");
-      const res = error.response;
-      if (res.status === 404) {
-        setTimeout(() => {
-          setSignUp(true); // go to sign up page
-          setForgot(false);
-          setIsFail(false);
-          setIsLoading(false);
-        }, 1500);
-      }
-    }
-  };
-
   return (
     <div>
       <DialogContent dir="rtl">
@@ -81,7 +53,7 @@ const ForgotPassword = ({
         <Button onClick={handleClose}>
           <p className="text-thirdy">ביטול</p>
         </Button>
-        <Button onClick={getMail}>
+        <Button onClick={sendForgotCode}>
           <p className="text-thirdy">{"אפסי סיסמא"}</p>
         </Button>
       </DialogActions>

@@ -78,6 +78,8 @@ const changePassword = async (req, res, next) => {
       return next(); // sendVerifyForgot
     }
 
+    if (!password)
+      return res.status(400).json({ message: "no input provided" });
     //creating new password
     let hashedPassword;
     hashedPassword = await bcrypt.hash(password, 14); //hashing the password

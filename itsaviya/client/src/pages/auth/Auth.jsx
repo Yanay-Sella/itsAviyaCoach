@@ -199,6 +199,39 @@ const Auth = ({ open, handleClose }) => {
     }
   };
 
+  const sendForgotCode = async (e) => {
+    if (e) e.preventDefault();
+    setIsLoading(true);
+    try {
+      const response = await axios.post("user/forgot", { email });
+      if (response.status === 200) {
+        setChangePass(true); // going to ChangePassword screen
+      }
+    } catch (error) {
+      console.log(error);
+      setIsFail(true);
+      const res = error.response;
+
+      if (res.status === 404) {
+        setErrorLogInMsg("משתמש לא קיים, אנא הירשמי");
+        setTimeout(() => {
+          setSignUp(true); // go to sign up page
+          setForgot(false);
+          setIsFail(false);
+          setIsLoading(false);
+        }, 1500);
+      }
+      if (res.status === 500) {
+        setErrorLogInMsg(`אופס, קרתה שגיאה, נסי שנית!`);
+        setTimeout(() => {
+          setForgot(false);
+          setIsFail(false);
+          setIsLoading(false);
+        }, 1500);
+      }
+    }
+  };
+
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
@@ -238,7 +271,13 @@ const Auth = ({ open, handleClose }) => {
           <form
             className={`md:w-96 w-80 bg-primary p-3 text-xl`}
             onSubmit={
-              verified ? (signUp ? handleSignUp : handleLogIn) : sendVeriCode
+              forgot
+                ? sendForgotCode
+                : verified
+                ? signUp
+                  ? handleSignUp
+                  : handleLogIn
+                : sendVeriCode
             }
           >
             <h1 className="text-thirdy">
@@ -393,13 +432,7 @@ const Auth = ({ open, handleClose }) => {
                   setEmail={setEmail}
                   handleClose={handleClose}
                   setForgot={setForgot}
-                  setSignUp={setSignUp}
-                  setChangePass={setChangePass}
-                  isLoading={isLoading}
-                  setIsLoading={setIsLoading}
-                  isFail={isFail}
-                  setIsFail={setIsFail}
-                  setErrorLogInMsg={setErrorLogInMsg}
+                  sendForgotCode={sendForgotCode}
                 />
               )
             ) : (
