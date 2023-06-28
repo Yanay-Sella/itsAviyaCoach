@@ -5,7 +5,7 @@
 ## General Info
 
 ItsAviyaCoach is a personal website for my partner Aviya, she is a fitness coach who wants to get more exposure online.
-Exsiting and potential customers can sign up and use the website to get impression of Aviya, view prices, and read informative fitness and motivation articles.
+Existing and potential customers can sign up and use the website to get impression of Aviya, view prices, and read informative fitness and motivation articles.
 Aviya has her own private post upload page, which she can write her own article by choosing header, intro and paragraphs and post it on the website.
 
 ## Upcoming features
