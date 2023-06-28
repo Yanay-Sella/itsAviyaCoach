@@ -39,12 +39,13 @@ const Auth = ({ open, handleClose }) => {
   //animation stuff
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [successMsg, setSuccessMsg] = useState("");
   const [isFail, setIsFail] = useState(false);
   const [errorSignUpMsg, setErrorSignUpMsg] = useState(
     "פרטי משתמש לא תקינים, נסי שוב!"
   );
   const [errorLogInMsg, setErrorLogInMsg] = useState(
-    `פרטי הזדהות שגויים, נסי שוב`
+    `אופס, קרתה שגיאה, נסי שנית!`
   );
 
   //settings
@@ -53,6 +54,7 @@ const Auth = ({ open, handleClose }) => {
   const [wrongCode, setWrongCode] = useState(false);
   const [forgot, setForgot] = useState(false);
   const [changePass, setChangePass] = useState(false);
+  const [password2, setPassword2] = useState();
 
   //validation
   const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/; //email
@@ -94,6 +96,7 @@ const Auth = ({ open, handleClose }) => {
       //animation
       if (response.ok) {
         setIsSuccess(true);
+        setSuccessMsg("נרשמת בהצלחה!");
         setTimeout(() => {
           setIsLoading(false);
           setIsSuccess(false);
@@ -155,6 +158,7 @@ const Auth = ({ open, handleClose }) => {
         const resUser = await response.json(); // the user object, contains: {id, username, email, accessToken}
         setAuth(resUser);
         setIsSuccess(true);
+        setSuccessMsg("התחברת בהצלחה!");
         setTimeout(() => {
           setIsLoading(false);
           setIsSuccess(false);
@@ -203,9 +207,10 @@ const Auth = ({ open, handleClose }) => {
     if (e) e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await axios.post("user/forgot", { email });
+      const response = await axios.post("user/forgot", { email }); // attaching code to {email}
       if (response.status === 200) {
         setChangePass(true); // going to ChangePassword screen
+        setIsLoading(false);
       }
     } catch (error) {
       console.log(error);
@@ -221,13 +226,52 @@ const Auth = ({ open, handleClose }) => {
           setIsLoading(false);
         }, 1500);
       }
-      if (res.status === 500) {
-        setErrorLogInMsg(`אופס, קרתה שגיאה, נסי שנית!`);
+      if (res.status === 500 || res.status === 400) {
+        setErrorLogInMsg(`אופס! קרתה שגיאה, אנא נסי שנית...`);
         setTimeout(() => {
           setForgot(false);
           setIsFail(false);
           setIsLoading(false);
         }, 1500);
+      }
+    }
+  };
+
+  const resetPassword = async () => {
+    setIsLoading(true);
+    if (password !== password2) {
+      //passwords should match
+      return;
+    }
+    try {
+      const response = await axios.post("/user/password", {
+        email,
+        password,
+        password2,
+        code,
+      });
+
+      if (response.status === 200) {
+        setIsSuccess(true);
+        setSuccessMsg("סיסמא שונתה בהצלחה");
+        setTimeout(() => {
+          setIsLoading(false);
+          setIsSuccess(false);
+          //back to log in
+          setForgot(false);
+          setChangePass(false);
+          setPassword("");
+        }, 1500);
+      }
+    } catch (error) {
+      //TODO: add animation and message
+      const response = { error };
+      if (response.status === 404) {
+        setForgot(false);
+        setSignUp(true);
+      }
+      if (response.status === 500) {
+        //server error
       }
     }
   };
@@ -244,12 +288,12 @@ const Auth = ({ open, handleClose }) => {
                 <FontAwesomeIcon icon={faCircleCheck} className="text-4xl" />
                 {signUp ? (
                   <div className="hebText text-center">
-                    <p className="text-2xl">נרשמת בהצלחה!</p>
+                    <p className="text-2xl">{successMsg}</p>
                     <p className="text-xl">יש להתחבר כעת...</p>
                   </div>
                 ) : (
                   //log in
-                  <p className="text-2xl">התחברת בהצלחה!</p>
+                  <p className="text-2xl">{successMsg}</p>
                 )}
               </div>
             ) : isFail ? (
@@ -423,8 +467,13 @@ const Auth = ({ open, handleClose }) => {
                 <ChangePassword
                   email={email}
                   handleClose={handleClose}
-                  setSignUp={setSignUp}
-                  setForgot={setForgot}
+                  password={password}
+                  setPassword={setPassword}
+                  password2={password2}
+                  setPassword2={setPassword2}
+                  code={code}
+                  setCode={setCode}
+                  resetPassword={resetPassword}
                 />
               ) : (
                 <ForgotPassword

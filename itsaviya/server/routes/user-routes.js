@@ -28,7 +28,8 @@ router.post("/login", handleLogIn, sendVeriCode);
 router.get("/logout", handleLogout); // deletes refresh token, no longer access to many stuff
 
 //user modification
-router.post("/forgot", changePassword, sendVerifyForgot);
+router.post("/forgot", sendVerifyForgot);
+router.post("/password", changePassword);
 
 //tokens
 router.get("/refresh", handleRefreshToken);

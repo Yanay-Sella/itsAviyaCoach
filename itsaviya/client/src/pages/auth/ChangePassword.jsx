@@ -5,32 +5,17 @@ import DialogContent from "@mui/material/DialogContent";
 import { TextField } from "@mui/material";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
-import axios from "../../api/axios.js";
 
-const ChangePassword = ({ email, handleClose, setSignUp, setForgot }) => {
-  const [password, setPassword] = useState();
-  const [password2, setPassword2] = useState();
-  const [code, setCode] = useState();
-
-  const resetPassword = async () => {
-    if (password !== password2) {
-      //passwords should match
-      return;
-    }
-    const response = axios.post("/user/forgot", { email, password, password2 });
-    if (response.status === 404) {
-      setForgot(false);
-      setSignUp(true);
-    }
-    if (response.status === 500) {
-      //server error
-    }
-    if (response.ok) {
-      //TODO: add animation
-      handleClose();
-    }
-  };
-
+const ChangePassword = ({
+  password,
+  setPassword,
+  password2,
+  setPassword2,
+  handleClose,
+  resetPassword,
+  code,
+  setCode,
+}) => {
   return (
     <div>
       <DialogContent dir="rtl">
