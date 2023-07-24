@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import useValidate from "../../hooks/useValidate";
 
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -55,28 +56,13 @@ const Auth = ({ open, handleClose }) => {
   const [forgot, setForgot] = useState(false);
   const [changePass, setChangePass] = useState(false);
   const [password2, setPassword2] = useState();
-
-  //validation
-  const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/; //email
-  const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/; // at least 8 characters and must include a-z,A-Z,0-9
-
-  const [isValidEmail, setIsValidEmail] = useState(emailPattern.test(email));
-  const [isValidPassword, setIsValidPassword] = useState(
-    passwordPattern.test(password)
-  );
-  const [isValidUN, setIsValidUN] = useState(userName.length >= 3);
-
   const [isAttempted, setIsAttempted] = useState(false);
 
-  useEffect(() => {
-    setIsValidEmail(emailPattern.test(email));
-  }, [email]);
-  useEffect(() => {
-    setIsValidPassword(passwordPattern.test(password));
-  }, [password]);
-  useEffect(() => {
-    setIsValidUN(userName.length >= 3);
-  }, [userName]);
+  const { isValidEmail, isValidPassword, isValidUN } = useValidate(
+    email,
+    password,
+    userName
+  );
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -225,8 +211,7 @@ const Auth = ({ open, handleClose }) => {
           setIsFail(false);
           setIsLoading(false);
         }, 1500);
-      }
-      if (res.status === 500 || res.status === 400) {
+      } else {
         setErrorLogInMsg(`אופס! קרתה שגיאה, אנא נסי שנית...`);
         setTimeout(() => {
           setForgot(false);

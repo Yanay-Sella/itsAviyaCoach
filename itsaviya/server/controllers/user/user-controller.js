@@ -1,4 +1,4 @@
-const { User } = require("../models/userModel");
+const { User } = require("../../models/userModel");
 
 const getUser = async (req, res) => {
   const userName = req.userName; // user has been attached to the req.user in the verifyJWT middleware

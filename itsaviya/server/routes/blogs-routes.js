@@ -5,7 +5,7 @@ const {
   getBlogByTitle,
   getAllBlogs,
   postNewBlog,
-} = require("../controllers/blog-controller.js");
+} = require("../controllers/blog/blog-controller.js");
 
 const router = express.Router();
 

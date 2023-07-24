@@ -9,15 +9,22 @@ const {
   handleSignUp,
   handleLogIn,
   handleLogout,
+} = require("../controllers/user/auth-controller.js");
+
+const {
   sendVeriCode,
   handleVefiry,
+} = require("../controllers/user/verification");
+
+const {
   sendVerifyForgot,
   changePassword,
-} = require("../controllers/auth-controller.js");
+} = require("../controllers/user/forgot-controller");
+
 const {
   handleRefreshToken,
-} = require("../controllers/refreshToken-controller.js");
-const { getUser, getRole } = require("../controllers/user-controller");
+} = require("../controllers/user/refreshToken-controller.js");
+const { getUser, getRole } = require("../controllers/user/user-controller");
 
 const router = express.Router();
 
