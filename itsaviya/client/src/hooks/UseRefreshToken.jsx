@@ -2,7 +2,8 @@ import useAuth from "./useAuth";
 import axios from "../api/axios";
 
 const UseRefreshToken = () => {
-  const { setAuth } = useAuth();
+  const { context } = useAuth();
+  const { setAuth } = context;
 
   //ask for a new access token from the server using the refresh token within the cookie
   const refresh = async () => {

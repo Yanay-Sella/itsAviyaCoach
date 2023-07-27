@@ -14,8 +14,8 @@ import CircularProgress from "@mui/material/CircularProgress";
 import useAuth from "../../hooks/useAuth";
 
 const Footer = () => {
-  const { isLogged, setOpenAuth, handleLogOut, isLoadingLogOut } = useAuth();
-
+  const { context } = useAuth();
+  const { isLogged, setOpenAuth, handleLogOut, isLoadingLogOut } = context;
   return (
     <div className="flex justify-between items-center self-stretch py-14 md:px-0 px-5 max-w-7xl">
       <section className="flex flex-col items-center">

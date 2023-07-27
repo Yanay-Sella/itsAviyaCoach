@@ -10,13 +10,13 @@ const sendVerifyForgot = async (req, res) => {
   const code = Math.floor(Math.random() * (9999 - 1000) + 1000);
 
   try {
-    try {
-      const foundUser = await User.findOne({ email });
-      foundUser.code = code; // attaching the code to the user
-      await foundUser.save();
-    } catch (error) {
-      console.log(error);
-    }
+    const foundUser = await User.findOne({ email });
+    if (!foundUser)
+      return res
+        .status(404)
+        .json({ message: "user does not exist, please log in" });
+    foundUser.code = code; // attaching the code to the user
+    await foundUser.save();
   } catch (error) {
     console.log(error);
     return res

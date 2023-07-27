@@ -10,7 +10,7 @@ const useValidate = (email, password, userName) => {
   const [isValidPassword, setIsValidPassword] = useState(
     passwordPattern.test(password)
   );
-  const [isValidUN, setIsValidUN] = useState(userName.length >= 3);
+  const [isValidUN, setIsValidUN] = useState(userName?.length >= 3);
 
   useEffect(() => {
     setIsValidEmail(emailPattern.test(email));
@@ -19,7 +19,7 @@ const useValidate = (email, password, userName) => {
     setIsValidPassword(passwordPattern.test(password));
   }, [password]);
   useEffect(() => {
-    setIsValidUN(userName.length >= 3);
+    setIsValidUN(userName?.length >= 3);
   }, [userName]);
 
   return { isValidEmail, isValidPassword, isValidUN };

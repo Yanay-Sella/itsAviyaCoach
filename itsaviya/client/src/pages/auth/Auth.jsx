@@ -12,8 +12,6 @@ import "../../index.css";
 
 import useAuth from "../../hooks/useAuth";
 
-import axios from "../../api/axios.js";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleCheck,
@@ -23,18 +21,14 @@ import {
 import Verification from "./Verification";
 import ForgotPassword from "./ForgotPassword";
 import ChangePassword from "./ChangePassword";
+import useSendCode from "../../hooks/useSendCode";
 
 const Auth = ({ open, handleClose }) => {
-  const { setAuth, auth } = useAuth();
-
-  const urlLogIn = process.env.REACT_APP_SERVER_URL + "user/login";
-  const urlSignUp = process.env.REACT_APP_SERVER_URL + "user/signup";
-
   const [signUp, setSignUp] = useState(false);
 
   //user info
   const [userName, setUserName] = useState("");
-  const [email, setEmail] = useState(auth?.email ? auth.email : "");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   //animation stuff
@@ -42,6 +36,8 @@ const Auth = ({ open, handleClose }) => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
   const [isFail, setIsFail] = useState(false);
+
+  //settings
   const [errorSignUpMsg, setErrorSignUpMsg] = useState(
     "פרטי משתמש לא תקינים, נסי שוב!"
   );
@@ -49,217 +45,55 @@ const Auth = ({ open, handleClose }) => {
     `אופס, קרתה שגיאה, נסי שנית!`
   );
 
-  //settings
-  const [verified, setVerified] = useState(true);
-  const [code, setCode] = useState("");
-  const [wrongCode, setWrongCode] = useState(false);
   const [forgot, setForgot] = useState(false);
   const [changePass, setChangePass] = useState(false);
   const [password2, setPassword2] = useState();
-  const [isAttempted, setIsAttempted] = useState(false);
 
   const { isValidEmail, isValidPassword, isValidUN } = useValidate(
     email,
     password,
     userName
   );
+  const { handleLogIn, handleSignUp, context, isAttempted, verified } = useAuth(
+    userName,
+    email,
+    password,
+    setIsLoading,
+    setIsSuccess,
+    setSignUp,
+    setPassword,
+    setIsFail,
+    setUserName,
+    setEmail,
+    handleClose,
+    setSuccessMsg,
+    setErrorSignUpMsg,
+    setErrorLogInMsg
+  );
+  const { auth } = context;
 
-  const handleSignUp = async (e) => {
-    e.preventDefault();
-    if (!isValidEmail || !isValidPassword || !isValidUN) {
-      setIsAttempted(true);
-      return;
-    }
-    setIsLoading(true);
-    const user = { userName, email, password };
-    try {
-      const response = await fetch(urlSignUp, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(user),
-      });
-
-      //animation
-      if (response.ok) {
-        setIsSuccess(true);
-        setSuccessMsg("נרשמת בהצלחה!");
-        setTimeout(() => {
-          setIsLoading(false);
-          setIsSuccess(false);
-          setSignUp(false);
-          setIsAttempted(false);
-          setPassword("");
-        }, 1500);
-      } else {
-        setIsFail(true);
-
-        if (response.status === 409) {
-          const msg = await response.json();
-
-          if (msg.entry === "userName") {
-            setErrorSignUpMsg("שם משתמש תפוס 🙁 נסי אחד אחר");
-            setUserName("");
-          }
-          if (msg.entry === "email") {
-            setErrorSignUpMsg("כתובת מייל כבר בשימוש 📪");
-            setEmail("");
-          }
-        } else {
-          setErrorSignUpMsg("פרטי משתמש לא תקינים, נסי שוב!");
-        }
-        //animation
-        setTimeout(() => {
-          setIsLoading(false);
-          setIsFail(false);
-          setEmail("");
-          setPassword("");
-        }, 1500);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleLogIn = async (e) => {
-    if (e) e.preventDefault();
-    if (!isValidEmail || !isValidPassword) {
-      setIsAttempted(true);
-      return;
-    }
-    setIsLoading(true);
-    const user = { email, password };
-
-    try {
-      const response = await fetch(urlLogIn, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(user),
-      });
-
-      //some animation and cleaning values at the end
-      if (response.ok) {
-        const resUser = await response.json(); // the user object, contains: {id, username, email, accessToken}
-        setAuth(resUser);
-        setIsSuccess(true);
-        setSuccessMsg("התחברת בהצלחה!");
-        setTimeout(() => {
-          setIsLoading(false);
-          setIsSuccess(false);
-          handleClose();
-        }, 1500);
-      } else {
-        if (response.status === 428) {
-          setVerified(false);
-          setIsLoading(false);
-          return;
-        }
-        if (response.status === 404) {
-          setErrorLogInMsg(`פרטי הזדהות שגויים, נסי שוב`);
-        }
-        setIsFail(true);
-        setTimeout(() => {
-          setIsLoading(false);
-          setIsFail(false);
-          setEmail("");
-          setPassword("");
-        }, 1500);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const sendVeriCode = async (e) => {
-    if (e) e.preventDefault();
-    setWrongCode(false);
-    setIsLoading(true);
-    try {
-      const response = await axios.post("user/verify", { email, code });
-      if (response.status === 200) await handleLogIn();
-    } catch (error) {
-      if (error.response.status === 404) setWrongCode(true);
-      console.log(error);
-      if (error.response.status === 404) {
-        setWrongCode(true);
-      }
-      setIsLoading(false);
-    }
-  };
-
-  const sendForgotCode = async (e) => {
-    if (e) e.preventDefault();
-    setIsLoading(true);
-    try {
-      const response = await axios.post("user/forgot", { email }); // attaching code to {email}
-      if (response.status === 200) {
-        setChangePass(true); // going to ChangePassword screen
-        setIsLoading(false);
-      }
-    } catch (error) {
-      console.log(error);
-      setIsFail(true);
-      const res = error.response;
-
-      if (res.status === 404) {
-        setErrorLogInMsg("משתמש לא קיים, אנא הירשמי");
-        setTimeout(() => {
-          setSignUp(true); // go to sign up page
-          setForgot(false);
-          setIsFail(false);
-          setIsLoading(false);
-        }, 1500);
-      } else {
-        setErrorLogInMsg(`אופס! קרתה שגיאה, אנא נסי שנית...`);
-        setTimeout(() => {
-          setForgot(false);
-          setIsFail(false);
-          setIsLoading(false);
-        }, 1500);
-      }
-    }
-  };
-
-  const resetPassword = async () => {
-    setIsLoading(true);
-    if (password !== password2) {
-      //passwords should match
-      return;
-    }
-    try {
-      const response = await axios.post("/user/password", {
-        email,
-        password,
-        password2,
-        code,
-      });
-
-      if (response.status === 200) {
-        setIsSuccess(true);
-        setSuccessMsg("סיסמא שונתה בהצלחה");
-        setTimeout(() => {
-          setIsLoading(false);
-          setIsSuccess(false);
-          //back to log in
-          setForgot(false);
-          setChangePass(false);
-          setPassword("");
-        }, 1500);
-      }
-    } catch (error) {
-      //TODO: add animation and message
-      const response = { error };
-      if (response.status === 404) {
-        setForgot(false);
-        setSignUp(true);
-      }
-      if (response.status === 500) {
-        //server error
-      }
-    }
-  };
+  const {
+    sendVeriCode,
+    getForgotCode,
+    resetPassword,
+    code,
+    setCode,
+    wrongCode,
+  } = useSendCode(
+    email,
+    password,
+    password2,
+    setIsLoading,
+    handleLogIn,
+    setChangePass,
+    setIsFail,
+    setErrorLogInMsg,
+    setSignUp,
+    setForgot,
+    setIsSuccess,
+    setSuccessMsg,
+    setPassword
+  );
 
   return (
     <div>
@@ -301,7 +135,7 @@ const Auth = ({ open, handleClose }) => {
             className={`md:w-96 w-80 bg-primary p-3 text-xl`}
             onSubmit={
               forgot
-                ? sendForgotCode
+                ? getForgotCode
                 : verified
                 ? signUp
                   ? handleSignUp
@@ -466,7 +300,7 @@ const Auth = ({ open, handleClose }) => {
                   setEmail={setEmail}
                   handleClose={handleClose}
                   setForgot={setForgot}
-                  sendForgotCode={sendForgotCode}
+                  getForgotCode={getForgotCode}
                 />
               )
             ) : (
@@ -485,5 +319,4 @@ const Auth = ({ open, handleClose }) => {
     </div>
   );
 };
-
 export default Auth;
