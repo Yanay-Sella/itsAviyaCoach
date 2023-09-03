@@ -9,8 +9,6 @@ import Button from "@mui/material/Button";
 const ChangePassword = ({
   password,
   setPassword,
-  password2,
-  setPassword2,
   handleClose,
   resetPassword,
   code,
@@ -39,7 +37,6 @@ const ChangePassword = ({
         <TextField
           color="info"
           dir="ltr"
-          autoFocus
           margin="dense"
           label={`סיסמא חדשה`}
           helperText={"הזיני סיסמא חדשה"}
@@ -52,11 +49,11 @@ const ChangePassword = ({
           }}
         />
 
-        {/* password validation */}
+        {/* password validation
         <TextField
           color="info"
           dir="ltr"
-          autoFocus
+          error={errorField}
           margin="dense"
           label={`אימות סיסמא חדשה`}
           helperText={"הזיני את הסיסמא שנית לצורך אימות"}
@@ -67,7 +64,7 @@ const ChangePassword = ({
           onChange={(e) => {
             setPassword2(e.target.value);
           }}
-        />
+        /> */}
       </DialogContent>
 
       <DialogActions>

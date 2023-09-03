@@ -53,22 +53,22 @@ const sendVerifyForgot = async (req, res) => {
 };
 
 const changePassword = async (req, res) => {
-  let { email, password, password2, code } = req.body;
-  if (!email || !password || !password2 || !code)
+  let { email, password, code } = req.body;
+  if (!email || !password || !code)
     return res.status(400).json({ message: "no input provided" });
   email = email.toLowerCase();
   console.log(`changing password to ${email}`);
 
-  if (password !== password2)
-    return res.status(400).json({ message: "passwords does not match" });
   try {
     const foundUser = await User.findOne({ email });
     if (!foundUser) {
       console.log(`user with email ${email} not found!`);
       return res.status(404).json({ message: "user not found" });
     }
-    if (!foundUser.code || code.toString() !== foundUser.code.toString())
+    if (!foundUser.code || code.toString() !== foundUser.code.toString()) {
+      console.log("wrong code!!");
       return res.status(400).json({ message: "wrong verification code" });
+    }
 
     //code valid, creating new password
     let hashedPassword;

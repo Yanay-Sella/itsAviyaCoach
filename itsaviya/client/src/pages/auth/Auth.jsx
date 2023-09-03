@@ -47,7 +47,6 @@ const Auth = ({ open, handleClose }) => {
 
   const [forgot, setForgot] = useState(false);
   const [changePass, setChangePass] = useState(false);
-  const [password2, setPassword2] = useState();
 
   const { isValidEmail, isValidPassword, isValidUN } = useValidate(
     email,
@@ -82,7 +81,6 @@ const Auth = ({ open, handleClose }) => {
   } = useSendCode(
     email,
     password,
-    password2,
     setIsLoading,
     handleLogIn,
     setChangePass,
@@ -135,7 +133,9 @@ const Auth = ({ open, handleClose }) => {
             className={`md:w-96 w-80 bg-primary p-3 text-xl`}
             onSubmit={
               forgot
-                ? getForgotCode
+                ? changePass
+                  ? resetPassword
+                  : getForgotCode
                 : verified
                 ? signUp
                   ? handleSignUp
@@ -288,8 +288,6 @@ const Auth = ({ open, handleClose }) => {
                   handleClose={handleClose}
                   password={password}
                   setPassword={setPassword}
-                  password2={password2}
-                  setPassword2={setPassword2}
                   code={code}
                   setCode={setCode}
                   resetPassword={resetPassword}

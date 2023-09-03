@@ -12,7 +12,7 @@ const ForgotPassword = ({
   setEmail,
   handleClose,
   setForgot,
-  sendForgotCode,
+  getForgotCode,
 }) => {
   return (
     <div>
@@ -53,7 +53,7 @@ const ForgotPassword = ({
         <Button onClick={handleClose}>
           <p className="text-thirdy">ביטול</p>
         </Button>
-        <Button onClick={sendForgotCode}>
+        <Button onClick={getForgotCode}>
           <p className="text-thirdy">{"אפסי סיסמא"}</p>
         </Button>
       </DialogActions>
