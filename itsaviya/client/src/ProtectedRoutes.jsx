@@ -5,7 +5,8 @@ import UseAxiosPrivate from "./hooks/useAxiosPrivate";
 
 const ProtectedRoutes = () => {
   const axiosPrivate = UseAxiosPrivate();
-  const { isLogged } = useAuth();
+  const { context } = useAuth();
+  const { isLogged } = context;
   const [isAdmin, setIsAdmin] = useState();
   const [isLoading, setIsLoading] = useState(true); // initialy loading
 
