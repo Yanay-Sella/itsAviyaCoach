@@ -5,6 +5,12 @@ import DialogContent from "@mui/material/DialogContent";
 import { TextField } from "@mui/material";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
+import useValidate from "../../hooks/useValidate";
+
+import InputAdornment from "@mui/material/InputAdornment";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import IconButton from "@mui/material/IconButton";
 
 const ChangePassword = ({
   password,
@@ -13,7 +19,17 @@ const ChangePassword = ({
   resetPassword,
   code,
   setCode,
+  isAttempted,
 }) => {
+  const { isValidPassword } = useValidate(undefined, password, undefined);
+
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <div>
       <DialogContent dir="rtl">
@@ -36,11 +52,29 @@ const ChangePassword = ({
         {/* password input */}
         <TextField
           color="info"
+          error={isAttempted && !isValidPassword}
           dir="ltr"
           margin="dense"
-          label={`סיסמא חדשה`}
-          helperText={"הזיני סיסמא חדשה"}
-          type="password"
+          label={`${isAttempted && !isValidPassword ? "*" : ""} סיסמא חדשה`}
+          helperText={`${
+            !isValidPassword
+              ? "הסיסמא צריכה לכלול לפחות אות לטינית גדולה, קטנה ומספר"
+              : "סיסמא מהממת! לא לשכוח אותה הפעם 😉 "
+          }`}
+          type={showPassword ? "text" : "password"}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="הצג סיסמא"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                >
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
           fullWidth
           variant="standard"
           value={password}
@@ -48,23 +82,6 @@ const ChangePassword = ({
             setPassword(e.target.value);
           }}
         />
-
-        {/* password validation
-        <TextField
-          color="info"
-          dir="ltr"
-          error={errorField}
-          margin="dense"
-          label={`אימות סיסמא חדשה`}
-          helperText={"הזיני את הסיסמא שנית לצורך אימות"}
-          type="password"
-          fullWidth
-          value={password2}
-          variant="standard"
-          onChange={(e) => {
-            setPassword2(e.target.value);
-          }}
-        /> */}
       </DialogContent>
 
       <DialogActions>

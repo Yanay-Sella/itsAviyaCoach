@@ -8,6 +8,11 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import CircularProgress from "@mui/material/CircularProgress";
 
+import InputAdornment from "@mui/material/InputAdornment";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import IconButton from "@mui/material/IconButton";
+
 import "../../index.css";
 
 import useAuth from "../../hooks/useAuth";
@@ -36,6 +41,13 @@ const Auth = ({ open, handleClose }) => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
   const [isFail, setIsFail] = useState(false);
+
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   //settings
   const [errorSignUpMsg, setErrorSignUpMsg] = useState(
@@ -78,6 +90,7 @@ const Auth = ({ open, handleClose }) => {
     code,
     setCode,
     wrongCode,
+    isAttempted: isAttemptedReset,
   } = useSendCode(
     email,
     password,
@@ -220,7 +233,24 @@ const Auth = ({ open, handleClose }) => {
                           ? "הסיסמא צריכה לכלול לפחות אות לטינית גדולה, קטנה ומספר"
                           : "סיסמא תקינה!"
                       }
-                      type="password"
+                      type={showPassword ? "text" : "password"}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="הצג סיסמא"
+                              onClick={handleClickShowPassword}
+                              onMouseDown={handleMouseDownPassword}
+                            >
+                              {showPassword ? (
+                                <Visibility />
+                              ) : (
+                                <VisibilityOff />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
                       fullWidth
                       variant="standard"
                       value={password}
@@ -291,6 +321,7 @@ const Auth = ({ open, handleClose }) => {
                   code={code}
                   setCode={setCode}
                   resetPassword={resetPassword}
+                  isAttempted={isAttemptedReset}
                 />
               ) : (
                 <ForgotPassword

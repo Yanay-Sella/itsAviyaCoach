@@ -19,6 +19,9 @@ const useSendCode = (
 ) => {
   const [code, setCode] = useState("");
   const [wrongCode, setWrongCode] = useState(false);
+  const [isAttempted, setIsAttempted] = useState(false);
+
+  const { isValidPassword } = useValidate(undefined, password, undefined);
 
   const sendVeriCode = async (e) => {
     if (e) e.preventDefault();
@@ -72,7 +75,10 @@ const useSendCode = (
 
   const resetPassword = async (e) => {
     if (e) e.preventDefault();
-
+    if (!isValidPassword) {
+      setIsAttempted(true);
+      return;
+    }
     setIsLoading(true);
     try {
       const response = await axios.post("/user/password", {
@@ -130,6 +136,7 @@ const useSendCode = (
     code,
     setCode,
     wrongCode,
+    isAttempted,
   };
 };
 
