@@ -13,6 +13,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import useAuth from "../../hooks/useAuth";
 
 const NavBar = () => {
+  const { context } = useAuth();
   const {
     isLogged,
     auth,
@@ -20,7 +21,7 @@ const NavBar = () => {
     setOpenAuth,
     handleLogOut,
     isLoadingLogOut,
-  } = useAuth();
+  } = context;
 
   const url = useLocation().pathname;
   const isHome = url === "/home";

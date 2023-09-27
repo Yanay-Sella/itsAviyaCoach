@@ -41,7 +41,7 @@ function App() {
           {/* ~!~should not be accessible to anyone~!~ */}
           <Route element={<ProtectedRoutes />}>
             <Route
-              path="blogger/new"
+              path="/blogger/new"
               element={<Page children={<NewPost />} />}
             />
           </Route>

@@ -9,13 +9,22 @@ const {
   handleSignUp,
   handleLogIn,
   handleLogout,
+} = require("../controllers/user/auth-controller.js");
+
+const {
   sendVeriCode,
   handleVefiry,
-} = require("../controllers/auth-controller.js");
+} = require("../controllers/user/verification");
+
+const {
+  sendVerifyForgot,
+  changePassword,
+} = require("../controllers/user/forgot-controller");
+
 const {
   handleRefreshToken,
-} = require("../controllers/refreshToken-controller.js");
-const { getUser, getRole } = require("../controllers/user-controller");
+} = require("../controllers/user/refreshToken-controller.js");
+const { getUser, getRole } = require("../controllers/user/user-controller");
 
 const router = express.Router();
 
@@ -24,6 +33,10 @@ router.post("/verify", handleVefiry);
 router.post("/signup", handleSignUp);
 router.post("/login", handleLogIn, sendVeriCode);
 router.get("/logout", handleLogout); // deletes refresh token, no longer access to many stuff
+
+//user modification
+router.post("/forgot", sendVerifyForgot);
+router.post("/password", changePassword);
 
 //tokens
 router.get("/refresh", handleRefreshToken);

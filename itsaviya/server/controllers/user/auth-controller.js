@@ -1,83 +1,9 @@
 const bcrypt = require("bcryptjs");
-const nodemailer = require("nodemailer");
-const { User } = require("../models/userModel.js");
+const { User } = require("../../models/userModel.js");
+const { validate } = require("./common-functions.js");
 
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: "testkipi233@gmail.com",
-    pass: "gbbipumuvknsnljw",
-  },
-});
-
-const handleVefiry = async (req, res) => {
-  let { email, code } = req.body;
-  email = email.toLowerCase();
-
-  //checking code validity
-  if (!code || code === null)
-    return res.status(404).json({ message: "code not valid" });
-
-  try {
-    const foundUser = await User.findOne({ email });
-    if (foundUser.code.toString() !== code) {
-      console.log(`wrong code by ${email}`);
-      return res.status(404).json({ message: "wrong code" });
-    }
-    foundUser.verified = true; // now user is verified
-    foundUser.code = null;
-    await foundUser.save();
-    console.log(`user ${foundUser.userName} is now verified`);
-    return res.status(200).json({ message: "user now verified :)" });
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const sendVeriCode = async (req, res) => {
-  let { email } = req.body;
-  email = email.toLowerCase();
-
-  const code = Math.floor(Math.random() * (9999 - 1000) + 1000);
-
-  const mailOptions = {
-    from: "testkipi233@gmail.com",
-    to: `${email}`,
-    subject: "קוד זיהוי חשבון קיפי!",
-    html: `<div dir="rtl">
-      <h1>תודה שנרשמת לאתר שלי 🥰</h1>
-      <p>באופן חד פעמי על מנת לאמת את כתובת המייל שלך נדרש לבצע אימות.</p>
-      </br>
-      <p>יש להזין את הקוד הנ"ל בשדה המתאים לו בחלון ההתחברות לאתר</p>
-      <h2>${code}</h2>
-    </div>`,
-  };
-
-  try {
-    const foundUser = await User.findOne({ email });
-    if (foundUser.verified === true)
-      return res.status(404).json({ message: "user already verified" });
-    foundUser.code = code; // setting the user's code to the generated code
-    await foundUser.save();
-  } catch (error) {
-    console.log(error);
-  }
-
-  //sending this code to the user if there were no errors
-  transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log("Email sent: " + info.response);
-      return res
-        .status(428)
-        .json({ message: "need to verify with email code" });
-    }
-  });
-};
 
 const handleSignUp = async (req, res) => {
   let { userName, email, password } = req.body;
@@ -85,15 +11,7 @@ const handleSignUp = async (req, res) => {
 
   console.log(`Sign up attempt from: ${email}`);
 
-  //validation
-  const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/; //email
-  const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/; // at least 8 characters and must include a-z,A-Z,0-9
-
-  const isValidPassword = passwordPattern.test(password);
-  const isValidEmail = emailPattern.test(email);
-  const isValidUserName = userName.length >= 3;
-
-  if (!isValidPassword || !isValidEmail || !isValidUserName)
+  if (!validate(email, password, userName))
     return res
       .status(400)
       .json({ message: "invalid user input, please try again" });
@@ -145,18 +63,10 @@ const handleLogIn = async (req, res, next) => {
 
   console.log(`Log in attempt from: ${email}`);
 
-  //validation
-  const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/; //email
-  const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/; // at least 8 characters and must include a-z,A-Z,0-9
-
-  const isLegalPassword = passwordPattern.test(password); //checking if the password is a legal string
-  const isValidEmail = emailPattern.test(email);
-
-  if (!isLegalPassword || !isValidEmail)
+  if (!validate(email, password))
     return res
       .status(400)
       .json({ message: "invalid user input, please try again" });
-  //~end validation
 
   let user;
   try {
@@ -246,6 +156,4 @@ module.exports = {
   handleSignUp,
   handleLogIn,
   handleLogout,
-  sendVeriCode,
-  handleVefiry,
 };

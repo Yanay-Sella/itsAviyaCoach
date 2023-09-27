@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
   role: { type: String, default: defaultRole },
   refreshToken: String,
   verified: { type: Boolean, default: false },
+  forgot: { type: Boolean, default: false },
   code: { type: Number, default: null },
 });
 

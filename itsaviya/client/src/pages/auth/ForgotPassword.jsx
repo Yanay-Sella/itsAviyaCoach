@@ -1,11 +1,19 @@
 import React from "react";
+import { useState } from "react";
 
 import DialogContent from "@mui/material/DialogContent";
 import { TextField } from "@mui/material";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
+import axios from "../../api/axios.js";
 
-const ForgotPassword = ({ email, setEmail, isValidEmail, handleClose }) => {
+const ForgotPassword = ({
+  email,
+  setEmail,
+  handleClose,
+  setForgot,
+  getForgotCode,
+}) => {
   return (
     <div>
       <DialogContent dir="rtl">
@@ -30,7 +38,9 @@ const ForgotPassword = ({ email, setEmail, isValidEmail, handleClose }) => {
           <div>
             נזכרת בסיסמא? יופי! לחצי{" "}
             <span
-              onClick={() => {}}
+              onClick={() => {
+                setForgot(false);
+              }}
               className="hover:underline text-secondary hover:cursor-pointer"
             >
               כאן
@@ -43,7 +53,7 @@ const ForgotPassword = ({ email, setEmail, isValidEmail, handleClose }) => {
         <Button onClick={handleClose}>
           <p className="text-thirdy">ביטול</p>
         </Button>
-        <Button onClick={() => {}}>
+        <Button onClick={getForgotCode}>
           <p className="text-thirdy">{"אפסי סיסמא"}</p>
         </Button>
       </DialogActions>
