@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from "react";
 
 import Hero from "./components/sections/Hero";
 import Sale from "./components/Sale";
@@ -13,7 +14,22 @@ import InfoSection from "../../general/InfoSection.jsx"; //a section with an ima
 import Footer from "../../general/footer/Footer";
 import FadeSection from "../../general/FadeSection";
 
+import axios from "../../api/axios";
+
 const Home = () => {
+  useEffect(() => {
+    //sending a request to the server to wake it up
+    // because "Render" free option puts it to sleep when not in use
+    const sayHello = async () => {
+      try {
+        const response = await axios.get("/");
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    sayHello();
+  }, []);
+
   return (
     <div
       className="flex flex-col md:mt-28 mt-32 md:gap-20 gap-20"
