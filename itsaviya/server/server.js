@@ -30,9 +30,15 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 mongoose.set("strictQuery", false);
 
+const awkwardRoute = express.Router();
+awkwardRoute.get("/", (req, res, next) => {
+  res.status(200).json({ msg: "Hello Client" });
+});
+
 //routes
 app.use("/api/blog", blogRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api", awkwardRoute);
 
 mongoose.connect(atlasUri).then(() => {
   app.listen(port, () => {
