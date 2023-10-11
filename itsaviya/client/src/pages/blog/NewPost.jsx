@@ -68,7 +68,7 @@ const NewPost = () => {
         {
           header: "",
           text: "",
-          showedText: [],
+          // showedText: [],
         },
       ];
     });
@@ -86,25 +86,25 @@ const NewPost = () => {
   const editPrgrph = (event) => {
     let { name, value, id } = event.target;
 
-    //changing the text
-    if (name === "text") {
-      const showedText = value.split("\n");
+    // //changing the text
+    // if (name === "text") {
+    //   const showedText = value.split("\n");
 
-      setArticle((prev) => {
-        return prev.map((element, index) => {
-          if (index == id) {
-            return {
-              ...element,
-              [name]: value,
-              showedText,
-            };
-          }
-          return element;
-        });
-      });
-      return;
-    }
-    //changing the header (not text)
+    //   setArticle((prev) => {
+    //     return prev.map((element, index) => {
+    //       if (index == id) {
+    //         return {
+    //           ...element,
+    //           [name]: value,
+    //           showedText,
+    //         };
+    //       }
+    //       return element;
+    //     });
+    //   });
+    //   return;
+    // }
+
     setArticle((prev) => {
       return prev.map((element, index) => {
         if (index == id) {
@@ -320,6 +320,7 @@ const NewPost = () => {
         </div>
 
         {/* the post itself */}
+        {/* TODO: maybe use a post component, same for post in list */}
         <div className="flex flex-col max-w-6xl w-full md:gap-4 gap-20 border-2 border-fourthy rounded-lg p-1">
           <InfoSection
             leftImg={true}
@@ -339,19 +340,12 @@ const NewPost = () => {
 
           <div className="flex flex-col gap-7 w-5/6 self-center">
             {article.map((e, index) => {
-              const { header, text, showedText } = e;
+              const { header, text } = e;
               console.log(e);
               return (
                 <div key={index}>
                   <h1 className="text-4xl mb-5">{header}</h1>
-                  {/* <p className="text-xl">{text}</p> */}
-                  {showedText.map((e, j) => {
-                    return (
-                      <p key={j} className="text-xl">
-                        {e}
-                      </p>
-                    );
-                  })}
+                  <p className="text-xl whitespace-pre-wrap">{text}</p>
                 </div>
               );
             })}

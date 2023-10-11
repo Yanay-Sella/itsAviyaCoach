@@ -175,3 +175,9 @@ code {
   -webkit-line-clamp: 4;
   white-space: pre-wrap; /* let the text wrap preserving spaces */
 }
+
+/* .new-liner {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  white-space: pre-wrap;
+} */

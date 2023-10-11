@@ -77,7 +77,7 @@ const PostPage = () => {
               return (
                 <div key={e._id}>
                   <h1 className="text-4xl mb-5">{e.header}</h1>
-                  <p className="text-xl">{e.text}</p>
+                  <p className="text-xl whitespace-pre-wrap">{e.text}</p>
                 </div>
               );
             })}
