@@ -86,16 +86,31 @@ const NewPost = () => {
   const editPrgrph = (event) => {
     let { name, value, id } = event.target;
 
-    const showedText = value.split("\n");
-    console.log(showedText);
+    //changing the text
+    if (name === "text") {
+      const showedText = value.split("\n");
 
+      setArticle((prev) => {
+        return prev.map((element, index) => {
+          if (index == id) {
+            return {
+              ...element,
+              [name]: value,
+              showedText,
+            };
+          }
+          return element;
+        });
+      });
+      return;
+    }
+    //changing the header (not text)
     setArticle((prev) => {
       return prev.map((element, index) => {
         if (index == id) {
           return {
             ...element,
             [name]: value,
-            showedText,
           };
         }
         return element;
