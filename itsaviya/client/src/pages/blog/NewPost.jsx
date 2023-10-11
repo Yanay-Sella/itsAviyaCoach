@@ -25,7 +25,7 @@ const NewPost = () => {
   const [name, setName] = useState("");
   const [title, setTitle] = useState("");
   const [intro, setIntro] = useState("");
-  const [article, setArticle] = useState([]); //content
+  const [article, setArticle] = useState([]); //content, array of paragraphs
   const [categories, setCategories] = useState(["", ""]);
 
   const [file, setFile] = useState(null);
@@ -68,6 +68,7 @@ const NewPost = () => {
         {
           header: "",
           text: "",
+          // showedText: [],
         },
       ];
     });
@@ -83,7 +84,27 @@ const NewPost = () => {
   };
 
   const editPrgrph = (event) => {
-    const { name, value, id } = event.target;
+    let { name, value, id } = event.target;
+
+    // //changing the text
+    // if (name === "text") {
+    //   const showedText = value.split("\n");
+
+    //   setArticle((prev) => {
+    //     return prev.map((element, index) => {
+    //       if (index == id) {
+    //         return {
+    //           ...element,
+    //           [name]: value,
+    //           showedText,
+    //         };
+    //       }
+    //       return element;
+    //     });
+    //   });
+    //   return;
+    // }
+
     setArticle((prev) => {
       return prev.map((element, index) => {
         if (index == id) {
@@ -99,7 +120,6 @@ const NewPost = () => {
 
   const editCategories = (event) => {
     const { value, id } = event.target;
-
     setCategories((prev) => {
       return prev.map((element, index) => {
         if (index == id) {
@@ -274,7 +294,7 @@ const NewPost = () => {
       {/*@@@@@ post preview @@@@@*/}
 
       <section className="flex flex-col items-center bg-primary text-thirdy gap-5 pb-10">
-        {/* the post preview */}
+        {/* the post in the blog list */}
         <div className="md:pl-10 transition-all flex w-full md:flex-row flex-col md:justify-end md:gap-16 gap-4 border-2 border-fourthy rounded-lg hover:-translate-y-1 hover:cursor-pointer shadow-md hover:shadow-xl md:h-64">
           <div className="flex flex-col gap-4 md:items-stretch items-center order-1 md:order-2 py-4">
             <div className="">
@@ -300,6 +320,7 @@ const NewPost = () => {
         </div>
 
         {/* the post itself */}
+        {/* TODO: maybe use a post component, same for post in list */}
         <div className="flex flex-col max-w-6xl w-full md:gap-4 gap-20 border-2 border-fourthy rounded-lg p-1">
           <InfoSection
             leftImg={true}
@@ -313,14 +334,18 @@ const NewPost = () => {
             imageSrc={previewUrl}
             key={"newPost"}
             alt="preview"
+            categories={categories}
+            date={`05/11/2001`}
           />
 
           <div className="flex flex-col gap-7 w-5/6 self-center">
             {article.map((e, index) => {
+              const { header, text } = e;
+              console.log(e);
               return (
                 <div key={index}>
-                  <h1 className="text-4xl mb-5">{e.header}</h1>
-                  <p className="text-xl">{e.text}</p>
+                  <h1 className="text-4xl mb-5">{header}</h1>
+                  <p className="text-xl whitespace-pre-wrap">{text}</p>
                 </div>
               );
             })}
