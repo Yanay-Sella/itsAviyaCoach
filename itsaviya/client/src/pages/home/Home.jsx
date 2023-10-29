@@ -23,6 +23,7 @@ const Home = () => {
     const sayHello = async () => {
       try {
         const response = await axios.get("/");
+        console.log(response.data.msg);
       } catch (error) {
         console.log(error);
       }

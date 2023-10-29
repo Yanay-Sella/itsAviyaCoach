@@ -32,7 +32,10 @@ mongoose.set("strictQuery", false);
 
 const awkwardRoute = express.Router();
 awkwardRoute.get("/", (req, res, next) => {
-  res.status(200).json({ msg: "Hello Client" });
+  console.log("hello from client");
+  res.status(200).json({
+    msg: "Hello developer, please don't hack this website, but if you insist, then let me know its vulnerabilities at my email: [undefined]",
+  });
 });
 
 //routes

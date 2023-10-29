@@ -10,6 +10,7 @@ import {
   faMoneyBill1,
   faHourglassHalf,
 } from "@fortawesome/free-solid-svg-icons";
+import logo from "../../../../../general/images/fullLogo.png";
 
 const PlanCard = ({
   header,
@@ -36,9 +37,13 @@ const PlanCard = ({
         className={`flip-card-inner relative`}
         style={!flip ? { transform: "rotateY(180deg)" } : null}
       >
-        <div className="flip-card-front bg-secondary rounded-lg shadow-md">
+        {/* card unrevealed */}
+        <div className="flip-card-front bg-secondary rounded-lg shadow-md flex flex-col items-center gap-5">
           <p className="text-3xl mt-4">{frontText}</p>
+          <img src={logo} alt={"logo"} className={"w-32 opacity-70"} />
         </div>
+
+        {/* card revealed */}
         <div className="flip-card-back bg-white flex flex-col justify-between items-center rounded-lg py-2 shadow-md">
           <div className="flex flex-col gap-6">
             <h1 className="text-2xl w-full">{header}</h1>

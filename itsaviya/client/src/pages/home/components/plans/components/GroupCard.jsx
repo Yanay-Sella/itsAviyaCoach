@@ -11,6 +11,7 @@ import {
   faMoneyBill1,
   faHourglassHalf,
 } from "@fortawesome/free-solid-svg-icons";
+import logo from "../../../../../general/images/onlyHedge.png";
 
 const GroupCard = ({
   header,
@@ -36,9 +37,18 @@ const GroupCard = ({
         className="flip-card-inner2"
         style={!flip ? { transform: "rotateX(180deg)" } : null}
       >
-        <div className="flip-card-front2 bg-secondary rounded-lg shadow-lg">
+        {/* card unrevealed */}
+        <div className="flip-card-front2 bg-secondary rounded-lg shadow-lg flex flex-col items-center gap-5">
           <p className="text-3xl mt-4">{frontText}</p>
+          <img src={logo} alt="logo" className="w-28 opacity-70" />
+          {/* <div className="flex items-center">
+            <img src={logo} alt="logo" className="w-16 opacity-70" />
+            <img src={logo} alt="logo" className="w-24 opacity-70" />
+            <img src={logo} alt="logo" className="w-16 opacity-70" />
+          </div> */}
         </div>
+
+        {/* card revealed */}
         <div className="flip-card-back2 bg-white flex flex-col justify-between items-center rounded-lg py-2 shadow-lg">
           <div className="flex flex-col gap-4">
             <h1 className="text-2xl w-full">{header}</h1>
