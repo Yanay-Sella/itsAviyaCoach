@@ -49,7 +49,7 @@ const NavBar = () => {
   };
 
   return (
-    <div className="flex items-center self-stretch bg-primary h-22 justify-around md:px-20 mb-2 pt-2 fixed top-0 left-0 right-0 z-10 gap-5">
+    <div className="flex items-center self-stretch bg-primary h-22 justify-around md:px-20 mb-2 pt-2 fixed top-0 left-0 right-0 z-10 gap-5 shadow-xl">
       <div className="flex flex-wrap md:gap-14 gap-5">
         <div dir="rtl">
           {/* TODO: use different popup */}
