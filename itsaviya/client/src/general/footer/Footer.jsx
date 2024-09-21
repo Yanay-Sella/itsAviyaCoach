@@ -22,14 +22,14 @@ const Footer = () => {
         <img src={logo} alt="logo" className="w-28" />
         <div className="flex gap-4 text-xl">
           <a
-            href="https://www.tiktok.com/@aviyafit"
+            href="#"
             className="transition-all hover:scale-110"
             target="_blank"
           >
             <FontAwesomeIcon icon={faTiktok} />
           </a>
           <a
-            href="https://www.instagram.com/itsaviyacoach/"
+            href="#"
             className="transition-all hover:scale-110"
             target="_blank"
           >
