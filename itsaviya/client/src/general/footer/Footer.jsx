@@ -59,7 +59,7 @@ const Footer = () => {
         <h1 className="text-xl font-semibold">כושר</h1>
         <FootLink
           text="צרי קשר"
-          to="https://api.whatsapp.com/message/DUMPMY75L6YRC1?autoload=1&app_absent=0"
+          // to="https://api.whatsapp.com/message/DUMPMY75L6YRC1?autoload=1&app_absent=0"
           size="md"
           newTab={true}
         />

@@ -124,7 +124,7 @@ const NavBar = () => {
         <NavBtn text="בלוג" to="/blog" size="lg" key={"blog"} />
         <NavBtn
           text="צרי קשר"
-          to="https://api.whatsapp.com/message/DUMPMY75L6YRC1?autoload=1&app_absent=0"
+          // to="https://api.whatsapp.com/message/DUMPMY75L6YRC1?autoload=1&app_absent=0"
           size="lg"
           newTab={true}
           key={"contact"}

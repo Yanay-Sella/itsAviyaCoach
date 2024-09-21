@@ -28,7 +28,7 @@ const Join = () => {
       </div>
 
       <a
-        href="https://api.whatsapp.com/message/DUMPMY75L6YRC1?autoload=1&app_absent=0"
+        // href="https://api.whatsapp.com/message/DUMPMY75L6YRC1?autoload=1&app_absent=0"
         target="_blank"
       >
         <div className="flex items-center p-3 border-2 border-white rounded-full w-30 h-10 hover:cursor-pointer transition-all  hover:-translate-y-0.7 hover:scale-105">
