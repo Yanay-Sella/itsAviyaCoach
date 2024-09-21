@@ -17,7 +17,7 @@ const PersonalPlans = () => {
           youGet={"אימון אחד"}
           youGive="100₪"
           time="חד פעמי"
-          // link="https://wa.me/972533336864?text=%D7%94%D7%99%D7%99%20%D7%90%D7%91%D7%99%D7%94%2C%0A%D7%90%D7%A0%D7%99%20%D7%9E%D7%A2%D7%95%D7%A0%D7%99%D7%99%D7%A0%D7%AA%20%D7%91%D7%90%D7%99%D7%9E%D7%95%D7%9F%20%D7%90%D7%99%D7%A9%D7%99%20%D7%91%D7%95%D7%93%D7%93%20%D7%95%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A7%D7%91%D7%9C%20%D7%A4%D7%A8%D7%98%D7%99%D7%9D%20%D7%A0%D7%95%D7%A1%D7%A4%D7%99%D7%9D."
+          link="https://wa.link/uymtt4"
           delay={700}
         />
 
@@ -27,7 +27,7 @@ const PersonalPlans = () => {
           youGet={"3 אימונים"}
           youGive="250₪"
           time="חד פעמי"
-          // link="https://wa.me/972533336864?text=%D7%94%D7%99%D7%99%20%D7%90%D7%91%D7%99%D7%94%2C%0A%D7%90%D7%A0%D7%99%20%D7%9E%D7%A2%D7%95%D7%A0%D7%99%D7%99%D7%A0%D7%AA%20%D7%91%D7%97%D7%91%D7%99%D7%9C%D7%AA%20%D7%A9%D7%9C%D7%95%D7%A9%D7%94%20%D7%90%D7%99%D7%9E%D7%95%D7%A0%D7%99%D7%9D%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A7%D7%91%D7%9C%20%D7%A4%D7%A8%D7%98%D7%99%D7%9D%20%D7%A0%D7%95%D7%A1%D7%A4%D7%99%D7%9D."
+          link="https://wa.link/uymtt4"
           delay={500}
         />
 
@@ -37,7 +37,7 @@ const PersonalPlans = () => {
           youGet={"8 אימונים"}
           youGive="600₪"
           time="חודשי"
-          // link="https://wa.me/972533336864?text=%D7%94%D7%99%D7%99%20%D7%90%D7%91%D7%99%D7%94%2C%0A%D7%90%D7%A0%D7%99%20%D7%9E%D7%A2%D7%95%D7%A0%D7%99%D7%99%D7%A0%D7%AA%20%D7%91%D7%9E%D7%A0%D7%95%D7%99%20%D7%97%D7%95%D7%93%D7%A9%D7%99%20%D7%95%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A7%D7%91%D7%9C%20%D7%A4%D7%A8%D7%98%D7%99%D7%9D%20%D7%A0%D7%95%D7%A1%D7%A4%D7%99%D7%9D."
+          link="https://wa.link/uymtt4"
           delay={300}
         />
       </div>
